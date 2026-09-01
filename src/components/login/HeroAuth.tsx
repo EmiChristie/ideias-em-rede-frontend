@@ -10,7 +10,7 @@ interface HeroAuthProps {
 
 export const HeroAuth: React.FC<HeroAuthProps> = ({ onOpenAuth }) => {
   return (
-    <section id="hero" className="relative pt-12 pb-24 lg:pt-16 lg:pb-32 overflow-hidden">
+    <section id="hero" className="relative h-[100vh] pt-12 pb-24 lg:pt-16 lg:pb-32 overflow-hidden">
       
       {/* Background Ambient Abstract Shapes flowing across the screen */}
       <div 
@@ -31,7 +31,7 @@ export const HeroAuth: React.FC<HeroAuthProps> = ({ onOpenAuth }) => {
           </div>
 
           {/* RIGHT SIDE: Editorial Outline & Solid Typography + Action Buttons */}
-          <div className="lg:col-span-6 space-y-7 text-left">
+          <div className="lg:col-span-6 ml-4 space-y-7 text-left">
             
             {/* Tag Badge (No pure white, uses transparent/semi-transparent background) 
             <div 

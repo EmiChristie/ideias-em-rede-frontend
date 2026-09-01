@@ -62,7 +62,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
       }}
     >
       {/* Top Brand (symbol only) */}
-      <div className="p-4 pb-2 flex justify-center">
+      <div className="p-4 pb-2 mt-2 flex justify-center">
         <Logo variant="icon-only" size="sm" />
       </div>
 

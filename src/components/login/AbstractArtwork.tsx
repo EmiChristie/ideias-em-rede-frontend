@@ -3,7 +3,7 @@ import { THEME_COLORS } from '../../constants/colors';
 
 export const AbstractArtwork: React.FC = () => {
   return (
-    <div className="relative -top-10 w-full max-w-lg lg:max-w-xl mx-auto select-none py-6">
+    <div className="relative -top-10 w-full max-w-lg lg:max-w-xl xl:-left-16 xl:scale-120 xl:-top-0 mx-auto select-none py-6">
       
       {/* Freestanding Unbounded Geometric Shapes (No White Box Canvas) */}
       <div className="relative w-full aspect-square flex items-center justify-center">

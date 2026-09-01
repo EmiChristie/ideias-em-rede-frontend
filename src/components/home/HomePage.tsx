@@ -117,16 +117,57 @@ export const HomePage: React.FC<HomePageProps> = () => {
         className="rounded-3xl p-8 sm:p-12 relative overflow-hidden"
       >
         
-        <div className="max-w-3xl mx-auto text-center space-y-8 relative z-10">
+        <div className="max-w-4xl mx-auto place-items-center space-y-8 relative z-10">
           
           {/* Main Title with Brand Outline & Solid Typography */}
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight leading-tight">
-            <span className="text-outline-dark">O que você quer </span>
-            <span style={{ color: THEME_COLORS.textDark }}>criar hoje?</span>
-          </h1>
+          <svg
+            viewBox="-6 0 774 100"
+            className=" h-auto hero-title-in"
+          >
+            <defs>
+              <linearGradient id="orangeGradient1" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stopColor="#f09a6a" />
+                <stop offset="50%" stopColor="#d66a3f" />
+                <stop offset="100%" stopColor="#8f3d24" />
+              </linearGradient>
+            </defs>
+            <defs>
+              <linearGradient id="orangeGradient2" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stopColor="#8f3d24" />
+                <stop offset="50%" stopColor="#d66a3f" />
+                <stop offset="100%" stopColor="#f09a6a" />
+              </linearGradient>
+            </defs>
+
+            <text
+              x="0"
+              y="70"
+              fontSize="56"
+              fontWeight="900"
+              fill="transparent"
+              stroke="url(#orangeGradient1)"
+              strokeWidth="2"
+            >
+              O que você quer
+            </text>
+
+            <text
+              x="475"
+              y="70"
+              fontSize="56"
+              fontWeight="900"
+              fill="url(#orangeGradient2)"
+            >
+              criar hoje?
+            </text>
+          </svg>
 
           {/* Central Search / Idea Creation Input */}
-          <form onSubmit={handleGenerateIdea} className="relative max-w-2xl mx-auto">
+          <form onSubmit={handleGenerateIdea} className="relative max-w-2xl mx-auto input-in"
+                style={{
+                  animationDelay: "180ms",
+                }}
+          >
             <div 
               className="flex items-center rounded-2xl border-2 p-2 shadow-md transition-all focus-within:border-[#b55b43]"
               style={{ 
@@ -151,24 +192,44 @@ export const HomePage: React.FC<HomePageProps> = () => {
           </form>
 
           {/* Quick Idea Inspiration Chips */}
-          <div className="flex flex-wrap items-center justify-center gap-2 pt-1">
+          <div  className="flex flex-wrap items-center justify-center gap-2 pt-1 chips-in"   
+                style={{
+                  animationDelay: "350ms",
+                }}
+          >
             <span className="text-xs font-bold text-stone-500 mr-1 flex items-center gap-1">
               <Zap className="w-3 h-3 text-amber-600" /> Sugestões:
             </span>
-            {inspirationChips.map((chip, idx) => (
-              <button
-                key={idx}
-                type="button"
-                onClick={() => setIdeaPrompt(chip)}
-                className="hover:bg-[#f7f5f4]/100 text-[11px] font-bold px-3 py-1.5 shadow-sm border rounded-full transition-all hover:border-[#b55b43] hover:text-[#b55b43] cursor-pointer"
-                style={{
-                  borderColor: THEME_COLORS.borderLight,
-                  color: THEME_COLORS.textDark,
-                }}
-              >
-                {chip}
-              </button>
-            ))}
+              {inspirationChips.map((chip, idx) => (
+                <button
+                  key={idx}
+                  type="button"
+                  onClick={() => setIdeaPrompt(chip)}
+                  className="
+                    chip-in
+                    hover:bg-[#f7f5f4]/100
+                    text-[11px]
+                    font-bold
+                    px-3
+                    py-1.5
+                    shadow-sm
+                    border
+                    rounded-full
+                    transition-all
+                    hover:border-[#b55b43]
+                    hover:text-[#b55b43]
+                    hover:-translate-y-0.5
+                    cursor-pointer
+                  "
+                  style={{
+                    borderColor: THEME_COLORS.borderLight,
+                    color: THEME_COLORS.textDark,
+                    animationDelay: `${450 + idx * 80}ms`,
+                  }}
+                >
+                  {chip}
+                </button>
+              ))}
           </div>
 
           {/* Toast Notification */}
@@ -385,6 +446,7 @@ export const HomePage: React.FC<HomePageProps> = () => {
       </section>
 
       </div>
+      <div className='h-12'></div>
     </div>
   );
 };
