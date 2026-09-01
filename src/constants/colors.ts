@@ -15,6 +15,7 @@ export const THEME_COLORS = {
 
   // Cor principal (Terracota)
   primary: '#b55b43',
+  lightPrimary: '#f5e4de',
 
   // Cor de destaque / Accent (Laranja Vibrante)
   accent: '#de5737',
@@ -22,6 +23,7 @@ export const THEME_COLORS = {
 
   // Cor secundária (Azul Petróleo)
   secondary: '#4b788b',
+  lightSecondary: '#dbeaf0',
 
   // Cinza Neutro
   gray: '#51595C',

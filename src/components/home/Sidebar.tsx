@@ -1,13 +1,14 @@
 ﻿import React, { useState } from 'react';
 import { 
   Lightbulb, Users, LayoutTemplate, BookOpen, 
-  Plus, User, Bell, Palette, LogOut
+  Plus, User, Bell, Palette, LogOut,
+  Home
 } from 'lucide-react';
 import { Logo } from '../general/Logo';
 import { THEME_COLORS } from '../../constants/colors';
 import { MOCK_TEACHER_PROFILE } from '../../data/mockData';
 
-export type SidebarMenuId = 'criar' | 'turmas' | 'templates' | 'materiais';
+export type SidebarMenuId = 'criar' | 'home' |'turmas' | 'templates' | 'materiais';
 
 interface SidebarProps {
   activeMenu: SidebarMenuId;
@@ -24,6 +25,11 @@ export const Sidebar: React.FC<SidebarProps> = ({
   const [isProfileDialogOpen, setIsProfileDialogOpen] = useState(false);
 
   const menuItems = [
+    {
+      id: 'home' as SidebarMenuId,
+      label: 'Início',
+      icon: Home,
+    },
     {
       id: 'turmas' as SidebarMenuId,
       label: 'Turmas',
