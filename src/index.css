@@ -239,3 +239,26 @@
 .settings-sidebar-in {
   animation: settings-sidebar-in 0.35s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
+
+@keyframes modal-in {
+  0% {
+    opacity: 0;
+    transform: translateY(28px) scale(0.95);
+    filter: blur(5px);
+  }
+
+  70% {
+    opacity: 1;
+    transform: translateY(-2px) scale(1.01);
+    filter: blur(0);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.modal-in {
+  animation: modal-in 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
+}

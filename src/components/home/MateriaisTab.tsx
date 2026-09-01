@@ -1,7 +1,6 @@
 import React, { useMemo, useState } from 'react';
 import {
   File,
-  FileScan,
   Plus,
   Search,
   ArrowDownAZ,
@@ -9,62 +8,25 @@ import {
 } from 'lucide-react';
 
 import { THEME_COLORS } from '../../constants/colors';
+import { MOCK_TURMAS } from '../../data/mockData';
+import { CriarMaterialModal } from '../criar/CriarMaterialModal';
 
-export const MateriaisTab: React.FC = () => {
-  const materiais = [
-    {
-      title: 'Livro de Português Ensino Médio Vol. 1',
-      autoral: false,
-      orientation: 'V',
-      type: 'source',
-      qtd: 4,
-    },
-    {
-      title: 'Livro de Português Ensino Médio Vol. 2',
-      autoral: false,
-      orientation: 'V',
-      type: 'source',
-      qtd: 2,
-    },
-    {
-      title: 'Escrita Argumentativa',
-      autoral: true,
-      orientation: 'H',
-      type: 'slide',
-      qtd: 5,
-    },
-    {
-      title: 'Português Ensino Médio Vol. 3',
-      autoral: false,
-      orientation: 'V',
-      type: 'source',
-      qtd: 0,
-    },
-    {
-      title: 'Redação',
-      autoral: true,
-      orientation: 'H',
-      type: 'slide',
-      qtd: 3,
-    },
-    {
-      title: 'Atividade de redação',
-      autoral: true,
-      orientation: 'V',
-      type: 'atv',
-      qtd: 6,
-    },
-    {
-      title: 'Planejamento de Atividade assíncrona',
-      autoral: true,
-      orientation: 'V',
-      type: 'atv',
-      qtd: 1,
-    },
-  ];
+interface MateriaisTabProps {}
 
-  const [isAddMaterialDialogOpen, setIsAddMaterialDialogOpen] =
-    useState(false);
+const INITIAL_MATERIAIS = [
+  { title: 'Livro de Português Ensino Médio Vol. 1', autoral: false, orientation: 'V', type: 'source', qtd: 4 },
+  { title: 'Livro de Português Ensino Médio Vol. 2', autoral: false, orientation: 'V', type: 'source', qtd: 2 },
+  { title: 'Escrita Argumentativa', autoral: true, orientation: 'H', type: 'slide', qtd: 5 },
+  { title: 'Português Ensino Médio Vol. 3', autoral: false, orientation: 'V', type: 'source', qtd: 0 },
+  { title: 'Redação', autoral: true, orientation: 'H', type: 'slide', qtd: 3 },
+  { title: 'Atividade de redação', autoral: true, orientation: 'V', type: 'atv', qtd: 6 },
+  { title: 'Planejamento de Atividade assíncrona', autoral: true, orientation: 'V', type: 'atv', qtd: 1 },
+];
+
+export const MateriaisTab: React.FC<MateriaisTabProps> = () => {
+  const [materiais, setMateriais] = useState(INITIAL_MATERIAIS);
+
+  const [isCreateOpen, setIsCreateOpen] = useState(false);
 
   const [search, setSearch] = useState('');
 
@@ -237,9 +199,7 @@ export const MateriaisTab: React.FC = () => {
 
           <button
             type="button"
-            onClick={() =>
-              setIsAddMaterialDialogOpen((open) => !open)
-            }
+            onClick={() => setIsCreateOpen(true)}
             className="
               mt-2
               inline-flex
@@ -263,118 +223,6 @@ export const MateriaisTab: React.FC = () => {
 
             Adicionar material
           </button>
-
-          <div
-            className="
-              p-4
-              flex
-              justify-center
-              relative
-            "
-          >
-            {isAddMaterialDialogOpen && (
-              <div
-                className="
-                  absolute
-                  -bottom-22
-                  w-72
-                  rounded-3xl
-                  border
-                  bg-white
-                  shadow-xl
-                  overflow-hidden
-                "
-                style={{
-                  borderColor:
-                    THEME_COLORS.borderLight,
-                }}
-              >
-                <div className="p-2">
-                  <button
-                    type="button"
-                    className="
-                      w-full
-                      flex
-                      items-center
-                      gap-3
-                      px-3
-                      py-2.5
-                      rounded-xl
-                      text-left
-                      transition-all
-                      cursor-pointer
-                      hover:bg-black/[0.05]
-                    "
-                  >
-                    <span
-                      className="
-                        w-8
-                        h-8
-                        rounded-lg
-                        flex
-                        items-center
-                        justify-center
-                        shrink-0
-                      "
-                    >
-                      <FileScan className="w-4 h-4 stroke-[2.5]" />
-                    </span>
-
-                    <span
-                      className="text-xs font-bold"
-                      style={{
-                        color:
-                          THEME_COLORS.textDark,
-                      }}
-                    >
-                      Carregar material de arquivo
-                    </span>
-                  </button>
-
-                  <button
-                    type="button"
-                    className="
-                      w-full
-                      flex
-                      items-center
-                      gap-3
-                      px-3
-                      py-2.5
-                      rounded-xl
-                      text-left
-                      transition-all
-                      cursor-pointer
-                      hover:bg-black/[0.05]
-                    "
-                  >
-                    <span
-                      className="
-                        w-8
-                        h-8
-                        rounded-lg
-                        flex
-                        items-center
-                        justify-center
-                        shrink-0
-                      "
-                    >
-                      <Plus className="w-4 h-4 stroke-[2.5]" />
-                    </span>
-
-                    <span
-                      className="text-xs font-bold"
-                      style={{
-                        color:
-                          THEME_COLORS.textDark,
-                      }}
-                    >
-                      Criar novo material
-                    </span>
-                  </button>
-                </div>
-              </div>
-            )}
-          </div>
         </div>
       ) : (
         <>
@@ -833,58 +681,13 @@ export const MateriaisTab: React.FC = () => {
                   Adicionar material
                 </span>
 
-                <div className="mt-2 flex flex-col gap-2">
-                  {/* Upload */}
-                  <button
-                    type="button"
-                    className="
-                      flex
-                      items-center
-                      gap-3
-                      p-3
-                      rounded-xl
-                      border
-                      transition-all
-                      hover:scale-[1.02]
-                      cursor-pointer
-                    "
-                    style={{
-                      backgroundColor:
-                        THEME_COLORS.lightPrimary,
-                      borderColor:
-                        THEME_COLORS.lightPrimary,
-                      color:
-                        THEME_COLORS.primary,
-                    }}
-                  >
-                    <div
-                      className="
-                        w-10
-                        h-10
-                        rounded-lg
-                        flex
-                        items-center
-                        justify-center
-                      "
-                    >
-                      <File className="w-5 h-5" />
-                    </div>
-
-                    <div className="text-left">
-                      <p className="text-sm font-bold">
-                        Carregar arquivo
-                      </p>
-
-                      <p className="text-[10px] font-medium opacity-70">
-                        Subtítulo
-                      </p>
-                    </div>
-                  </button>
-
+                <div className="mt-2">
                   {/* Create */}
                   <button
                     type="button"
+                    onClick={() => setIsCreateOpen(true)}
                     className="
+                      w-full
                       flex
                       items-center
                       gap-3
@@ -923,7 +726,7 @@ export const MateriaisTab: React.FC = () => {
                       </p>
 
                       <p className="text-[10px] font-medium opacity-70">
-                        Subtítulo
+                        Crie um novo material
                       </p>
                     </div>
                   </button>
@@ -991,6 +794,16 @@ export const MateriaisTab: React.FC = () => {
             </div>
           )}
         </>
+      )}
+
+      {isCreateOpen && (
+        <CriarMaterialModal
+          turmas={MOCK_TURMAS}
+          onClose={() => setIsCreateOpen(false)}
+          onCreated={(material) => {
+            setMateriais((current) => [...current, material]);
+          }}
+        />
       )}
     </div>
   );

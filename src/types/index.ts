@@ -5,6 +5,17 @@
 
 export type AuthMode = 'login' | 'register' | 'forgot_password';
 
+export type MaterialType = 'source' | 'slide' | 'atv';
+
+export interface Turma {
+  school: string;
+  series: string;
+  idSeries: string;
+  qtd: number;
+  color?: string;
+  image?: string;
+}
+
 export interface TeacherProfile {
   name: string;
   email: string;

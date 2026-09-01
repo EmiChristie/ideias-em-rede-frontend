@@ -1,7 +1,6 @@
 import React, { useMemo, useState } from 'react';
 import {
   File,
-  FileScan,
   Plus,
   Search,
   ArrowDownAZ,
@@ -9,8 +8,10 @@ import {
 } from 'lucide-react';
 
 import { THEME_COLORS } from '../../constants/colors';
+import { MOCK_TURMAS } from '../../data/mockData';
+import { CriarTemplateModal } from '../criar/CriarTemplateModal';
 
-const templates = [
+const INITIAL_TEMPLATES = [
   {
     title: 'Escola XYZ Nome Maior Pra Comer Espaço Grande Aaaaaa',
     qtd: 1,
@@ -45,11 +46,12 @@ type SortOption = 'alphabetical' | 'quantity';
 
 type SortDirection = 'asc' | 'desc';
 
-export const TemplatesTab: React.FC = () => {
-  const [
-    isAddTemplateDialogOpen,
-    setIsAddTemplateDialogOpen,
-  ] = useState(false);
+interface TemplatesTabProps {}
+
+export const TemplatesTab: React.FC<TemplatesTabProps> = () => {
+  const [templates, setTemplates] = useState(INITIAL_TEMPLATES);
+
+  const [isCreateOpen, setIsCreateOpen] = useState(false);
 
   const [search, setSearch] = useState('');
 
@@ -94,7 +96,7 @@ export const TemplatesTab: React.FC = () => {
           ? comparison
           : -comparison;
       });
-  }, [search, sortOption, sortDirection]);
+  }, [search, sortOption, sortDirection, templates]);
 
   const hasActiveSearch = search.trim() !== '';
 
@@ -221,11 +223,7 @@ export const TemplatesTab: React.FC = () => {
 
           <button
             type="button"
-            onClick={() =>
-              setIsAddTemplateDialogOpen(
-                (open) => !open
-              )
-            }
+            onClick={() => setIsCreateOpen(true)}
             className="
               mt-2
               inline-flex
@@ -250,118 +248,6 @@ export const TemplatesTab: React.FC = () => {
 
             Adicionar template
           </button>
-
-          <div
-            className="
-              p-4
-              flex
-              justify-center
-              relative
-            "
-          >
-            {isAddTemplateDialogOpen && (
-              <div
-                className="
-                  absolute
-                  -bottom-22
-                  w-72
-                  rounded-3xl
-                  border
-                  bg-white
-                  shadow-xl
-                  overflow-hidden
-                "
-                style={{
-                  borderColor:
-                    THEME_COLORS.borderLight,
-                }}
-              >
-                <div className="p-2">
-                  <button
-                    type="button"
-                    className="
-                      w-full
-                      flex
-                      items-center
-                      gap-3
-                      px-3
-                      py-2.5
-                      rounded-xl
-                      text-left
-                      transition-all
-                      cursor-pointer
-                      hover:bg-black/[0.05]
-                    "
-                  >
-                    <span
-                      className="
-                        w-8
-                        h-8
-                        rounded-lg
-                        flex
-                        items-center
-                        justify-center
-                        shrink-0
-                      "
-                    >
-                      <FileScan className="w-4 h-4 stroke-[2.5]" />
-                    </span>
-
-                    <span
-                      className="text-xs font-bold"
-                      style={{
-                        color:
-                          THEME_COLORS.textDark,
-                      }}
-                    >
-                      Carregar template de arquivo
-                    </span>
-                  </button>
-
-                  <button
-                    type="button"
-                    className="
-                      w-full
-                      flex
-                      items-center
-                      gap-3
-                      px-3
-                      py-2.5
-                      rounded-xl
-                      text-left
-                      transition-all
-                      cursor-pointer
-                      hover:bg-black/[0.05]
-                    "
-                  >
-                    <span
-                      className="
-                        w-8
-                        h-8
-                        rounded-lg
-                        flex
-                        items-center
-                        justify-center
-                        shrink-0
-                      "
-                    >
-                      <Plus className="w-4 h-4 stroke-[2.5]" />
-                    </span>
-
-                    <span
-                      className="text-xs font-bold"
-                      style={{
-                        color:
-                          THEME_COLORS.textDark,
-                      }}
-                    >
-                      Criar novo template
-                    </span>
-                  </button>
-                </div>
-              </div>
-            )}
-          </div>
         </div>
       ) : (
         <>
@@ -738,58 +624,13 @@ export const TemplatesTab: React.FC = () => {
                   Adicionar template
                 </span>
 
-                <div className="mt-2 flex flex-col gap-2">
-                  {/* Upload */}
-                  <button
-                    type="button"
-                    className="
-                      flex
-                      items-center
-                      gap-3
-                      p-3
-                      rounded-xl
-                      border
-                      transition-all
-                      hover:scale-[1.02]
-                      cursor-pointer
-                    "
-                    style={{
-                      backgroundColor:
-                        THEME_COLORS.lightPrimary,
-                      borderColor:
-                        THEME_COLORS.lightPrimary,
-                      color:
-                        THEME_COLORS.primary,
-                    }}
-                  >
-                    <div
-                      className="
-                        w-10
-                        h-10
-                        rounded-lg
-                        flex
-                        items-center
-                        justify-center
-                      "
-                    >
-                      <File className="w-5 h-5" />
-                    </div>
-
-                    <div className="text-left">
-                      <p className="text-sm font-bold">
-                        Carregar arquivo
-                      </p>
-
-                      <p className="text-[10px] font-medium opacity-70">
-                        Use um template existente
-                      </p>
-                    </div>
-                  </button>
-
+                <div className="mt-2">
                   {/* Create */}
                   <button
                     type="button"
+                    onClick={() => setIsCreateOpen(true)}
                     className="
+                      w-full
                       flex
                       items-center
                       gap-3
@@ -837,6 +678,16 @@ export const TemplatesTab: React.FC = () => {
             </div>
           )}
         </>
+      )}
+
+      {isCreateOpen && (
+        <CriarTemplateModal
+          turmas={MOCK_TURMAS}
+          onClose={() => setIsCreateOpen(false)}
+          onCreated={(template) => {
+            setTemplates((current) => [...current, template]);
+          }}
+        />
       )}
     </div>
   );

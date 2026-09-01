@@ -1,4 +1,4 @@
-﻿import type { TeacherProfile, RecentWorkItem } from '../types';
+﻿import type { TeacherProfile, RecentWorkItem, Turma } from '../types';
 import { THEME_COLORS } from '../constants/colors';
 
 export const MOCK_TEACHER_PROFILE: TeacherProfile = {
@@ -12,6 +12,22 @@ export const MOCK_TEACHER_PROFILE: TeacherProfile = {
   generatedMaterialsCount: 58,
   createdWorksCount: 13,
 };
+
+export const MOCK_TURMAS: Turma[] = [
+  { school: 'E.E. Cecília Meireles', series: '6º Ano', idSeries: 'A', qtd: 32, color: '#b55b43' },
+  { school: 'Colégio Alvorada', series: '6º Ano', idSeries: 'A', qtd: 40, color: '#c98a5e' },
+  { school: 'E.E. Maria Aparecida', series: '6º Ano', idSeries: 'A', qtd: 18, color: '#7d9465' },
+  { school: 'Colégio São Bento', series: '7º Ano', idSeries: 'A', qtd: 29, color: '#5b8fa3' },
+  { school: 'E.E. Cecília Meireles', series: '7º Ano', idSeries: 'A', qtd: 27, color: '#d5b657' },
+  { school: 'Instituto Alpha', series: '7º Ano', idSeries: 'A', qtd: 35, color: '#9b6fa3' },
+  { school: 'Colégio Alvorada', series: '8º Ano', idSeries: 'A', qtd: 22, color: '#e07b7b' },
+  { school: 'E.E. Fernando Pessoa', series: '8º Ano', idSeries: 'A', qtd: 31, color: '#6f8691' },
+  { school: 'Escola Nova Esperança', series: '8º Ano', idSeries: 'A', qtd: 0, color: '#b55b43' },
+  { school: 'Instituto Alpha', series: '9º Ano', idSeries: 'A', qtd: 38, color: '#5b8fa3' },
+  { school: 'E.E. Cecília Meireles', series: '1º Ano EM', idSeries: 'A', qtd: 36, color: '#9b6fa3' },
+  { school: 'Colégio Alvorada', series: '2º Ano EM', idSeries: 'A', qtd: 24, color: '#7d9465' },
+  { school: 'Instituto Alpha', series: '3º Ano EM', idSeries: 'A', qtd: 26, color: '#e07b7b' },
+];
 
 export const MOCK_RECENT_WORKS: RecentWorkItem[] = [
   {

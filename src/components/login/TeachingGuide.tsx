@@ -135,7 +135,7 @@ export const TeachingGuide: React.FC = () => {
                 <div className="lg:col-span-6 space-y-6">
                   <div className="flex items-center gap-4">
                     <div 
-                      className="w-14 h-14 rounded-2xl text-white flex items-center justify-center shadow-sm"
+                      className="w-14 h-14 px-4 rounded-2xl text-white flex items-center justify-center shadow-sm"
                       style={{ backgroundColor: THEME_COLORS.primary }}
                     >
                       <Icon className="w-7 h-7 stroke-[2.5]" />

@@ -7,7 +7,13 @@ import { Logo } from '../general/Logo';
 import { THEME_COLORS } from '../../constants/colors';
 import { MOCK_TEACHER_PROFILE } from '../../data/mockData';
 
-export type SidebarMenuId = 'criar' | 'settings' | 'home' |'turmas' | 'templates' | 'materiais';
+export type SidebarMenuId =
+  | 'criar'
+  | 'settings'
+  | 'home'
+  | 'turmas'
+  | 'templates'
+  | 'materiais';
 
 interface SidebarProps {
   activeMenu: SidebarMenuId;

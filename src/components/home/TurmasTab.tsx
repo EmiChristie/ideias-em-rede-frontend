@@ -8,29 +8,9 @@ import {
   ChevronDown,
 } from 'lucide-react';
 import { THEME_COLORS } from '../../constants/colors';
-
-interface Turma {
-  school: string;
-  series: string;
-  idSeries: string;
-  qtd: number;
-}
-
-const turmas: Turma[] = [
-  { school: 'E.E. Cecília Meireles', series: '6º Ano', idSeries: 'A', qtd: 32 },
-  { school: 'Colégio Alvorada', series: '6º Ano', idSeries: 'A', qtd: 40 },
-  { school: 'E.E. Maria Aparecida', series: '6º Ano', idSeries: 'A', qtd: 18 },
-  { school: 'Colégio São Bento', series: '7º Ano', idSeries: 'A', qtd: 29 },
-  { school: 'E.E. Cecília Meireles', series: '7º Ano', idSeries: 'A', qtd: 27 },
-  { school: 'Instituto Alpha', series: '7º Ano', idSeries: 'A', qtd: 35 },
-  { school: 'Colégio Alvorada', series: '8º Ano', idSeries: 'A', qtd: 22 },
-  { school: 'E.E. Fernando Pessoa', series: '8º Ano', idSeries: 'A', qtd: 31 },
-  { school: 'Escola Nova Esperança', series: '8º Ano',idSeries: 'A',  qtd: 0 },
-  { school: 'Instituto Alpha', series: '9º Ano', idSeries: 'A', qtd: 38 },
-  { school: 'E.E. Cecília Meireles', series: '1º Ano EM', idSeries: 'A', qtd: 36 },
-  { school: 'Colégio Alvorada', series: '2º Ano EM', idSeries: 'A', qtd: 24 },
-  { school: 'Instituto Alpha', series: '3º Ano EM', idSeries: 'A', qtd: 26 },
-];
+import { MOCK_TURMAS } from '../../data/mockData';
+import type { Turma } from '../../types';
+import { CriarTurmaModal } from '../criar/CriarTurmaModal';
 
 const SERIES_ORDER = [
   '6º Ano',
@@ -46,7 +26,13 @@ type SortOption = 'alphabetical' | 'quantity';
 
 type SortDirection = 'asc' | 'desc';
 
-export const TurmasTab: React.FC = () => {
+interface TurmasTabProps {}
+
+export const TurmasTab: React.FC<TurmasTabProps> = () => {
+  const [turmas, setTurmas] = useState<Turma[]>(MOCK_TURMAS);
+
+  const [isCreateOpen, setIsCreateOpen] = useState(false);
+
   const [search, setSearch] = useState('');
 
   const [seriesFilter, setSeriesFilter] = useState('all');
@@ -63,7 +49,7 @@ export const TurmasTab: React.FC = () => {
         (a, b) =>
           SERIES_ORDER.indexOf(a) - SERIES_ORDER.indexOf(b)
       ),
-    []
+    [turmas]
   );
 
   const filteredTurmas = useMemo(() => {
@@ -103,7 +89,7 @@ export const TurmasTab: React.FC = () => {
           ? comparison
           : -comparison;
       });
-  }, [search, seriesFilter, sortOption, sortDirection]);
+  }, [search, seriesFilter, sortOption, sortDirection, turmas]);
 
   const hasActiveFilters =
     search.trim() !== '' || seriesFilter !== 'all';
@@ -193,6 +179,7 @@ export const TurmasTab: React.FC = () => {
 
           <button
             type="button"
+            onClick={() => setIsCreateOpen(true)}
             className="mt-2 inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold text-white transition-all hover:scale-105 cursor-pointer"
             style={{
               backgroundColor: THEME_COLORS.primary,
@@ -497,14 +484,23 @@ export const TurmasTab: React.FC = () => {
                     animationDelay: `${300 + idx * 90}ms`,
                   }}
                 >
-                  <div
-                    className="h-36 relative flex flex-col justify-between overflow-hidden shrink-0"
-                    style={{
-                      backgroundColor:
-                        'rgba(240, 235, 234, 0.4)',
-                    }}
-                  >
-                  </div>
+<div
+                  className="h-36 relative rounded-t-2xl flex items-center justify-center overflow-hidden shrink-0"
+                  style={{
+                    backgroundColor:
+                      turma.color ?? 'rgba(240, 235, 234, 0.4)',
+                  }}
+                >
+                  {turma.image ? (
+                    <img
+                      src={turma.image}
+                      alt={`${turma.series} ${turma.idSeries}`}
+                      className="w-full h-full object-cover rounded-t-2xl"
+                    />
+                  ) : (
+                    <></>
+                  )}
+                </div>
 
                   <div className="p-6 flex flex-col flex-1 space-y-4">
                     <div>
@@ -560,6 +556,7 @@ export const TurmasTab: React.FC = () => {
 
                 <button
                   type="button"
+                  onClick={() => setIsCreateOpen(true)}
                   className="
                     mt-2
                     flex
@@ -597,6 +594,15 @@ export const TurmasTab: React.FC = () => {
             </div>
           )}
         </>
+      )}
+
+      {isCreateOpen && (
+        <CriarTurmaModal
+          onClose={() => setIsCreateOpen(false)}
+          onCreated={(turma) => {
+            setTurmas((current) => [...current, turma]);
+          }}
+        />
       )}
     </div>
   );
