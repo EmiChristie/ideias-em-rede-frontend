@@ -6,10 +6,11 @@ export const MOCK_TEACHER_PROFILE: TeacherProfile = {
   email: 'henrique.ramos@educacao.gov.br',
   role: 'Educador da Educação Básica',
   avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=200&auto=format&fit=crop&q=80',
-  school: 'E.E. Cecília Meireles & Colégio Alvorada',
+  schools: ['E.E. Cecília Meireles', 'Colégio Alvorada'],
   activeClassesCount: 6,
   createdPlansCount: 24,
   generatedMaterialsCount: 58,
+  createdWorksCount: 13,
 };
 
 export const MOCK_RECENT_WORKS: RecentWorkItem[] = [

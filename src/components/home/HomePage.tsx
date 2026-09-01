@@ -341,6 +341,17 @@ export const HomePage: React.FC<HomePageProps> = () => {
             >
               Planos de Aula
             </button>
+            <button
+              type="button"
+              onClick={() => setFilterCategory('material')}
+              className={`px-3.5 py-1.5 rounded-full text-xs shadow-sm font-bold transition-all border cursor-pointer ${
+                filterCategory === 'material'
+                  ? 'bg-[#b55b43] text-white border-[#b55b43]'
+                  : 'bg-white text-stone-700 border-[#f3ebea] hover:bg-black/[0.05]'
+              }`}
+            >
+              Materiais complementares
+            </button>
           </div>
         </div>
 

@@ -1,0 +1,1 @@
+export type SettingsTabId = 'profile' | 'notifications';

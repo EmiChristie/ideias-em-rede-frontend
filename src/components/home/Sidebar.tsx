@@ -1,29 +1,27 @@
-﻿import React, { useState } from 'react';
+﻿import React from 'react';
 import { 
-  Lightbulb, Users, LayoutTemplate, BookOpen, 
-  Plus, User, Bell, Palette, LogOut,
-  Home
+  Users, LayoutTemplate, BookOpen, 
+  Plus, Home
 } from 'lucide-react';
 import { Logo } from '../general/Logo';
 import { THEME_COLORS } from '../../constants/colors';
 import { MOCK_TEACHER_PROFILE } from '../../data/mockData';
 
-export type SidebarMenuId = 'criar' | 'home' |'turmas' | 'templates' | 'materiais';
+export type SidebarMenuId = 'criar' | 'settings' | 'home' |'turmas' | 'templates' | 'materiais';
 
 interface SidebarProps {
   activeMenu: SidebarMenuId;
   onSelectMenu: (menu: SidebarMenuId) => void;
   onOpenNewIdea: () => void;
-  onOpenProfile: () => void;
+  onOpenSettings: () => void;
 }
 
 export const Sidebar: React.FC<SidebarProps> = ({
   activeMenu,
   onSelectMenu,
   onOpenNewIdea,
+  onOpenSettings,
 }) => {
-  const [isProfileDialogOpen, setIsProfileDialogOpen] = useState(false);
-
   const menuItems = [
     {
       id: 'home' as SidebarMenuId,
@@ -45,12 +43,6 @@ export const Sidebar: React.FC<SidebarProps> = ({
       label: 'Materiais',
       icon: BookOpen,
     },
-  ];
-
-  const dialogItems = [
-    { icon: User, label: 'Perfil & Conta' },
-    { icon: Bell, label: 'Notificações' },
-    { icon: Palette, label: 'Aparência' },
   ];
 
   return (
@@ -126,83 +118,30 @@ export const Sidebar: React.FC<SidebarProps> = ({
         })}
       </nav>
 
-      {/* Bottom Profile Trigger (round avatar) + inline dialog */}
-      <div className="p-4 flex justify-center relative" style={{ borderColor: THEME_COLORS.borderLight }}>
+      {/* Bottom Profile Trigger opens the Settings screen */}
+      <div className="p-4 flex justify-center" style={{ borderColor: THEME_COLORS.borderLight }}>
         <button
           type="button"
-          onClick={() => setIsProfileDialogOpen((open) => !open)}
+          onClick={onOpenSettings}
           className="relative rounded-full transition-transform hover:scale-105 cursor-pointer"
-          title={MOCK_TEACHER_PROFILE.name}
+          title={`${MOCK_TEACHER_PROFILE.name} — Configurações`}
         >
           <img
             src={MOCK_TEACHER_PROFILE.avatar}
             alt={MOCK_TEACHER_PROFILE.name}
             className="w-10 h-10 rounded-full object-cover shadow-sm"
-            style={{ borderColor: THEME_COLORS.primary }}
+            style={{
+              borderColor: THEME_COLORS.primary,
+              boxShadow:
+                activeMenu === 'settings'
+                  ? `0 0 0 2px ${THEME_COLORS.bgLight}, 0 0 0 4px ${THEME_COLORS.primary}`
+                  : undefined,
+            }}
           />
         </button>
-
-        {isProfileDialogOpen && (
-          <div
-            className="absolute bottom-4 left-[calc(100%+12px)] w-72 rounded-3xl border-2 bg-[#ffffff] shadow-xl overflow-hidden"
-            style={{ borderColor: THEME_COLORS.borderLight }}
-          >
-            {/* Dialog header with profile */}
-            <div className="py-5 mx-5 border-b flex items-center gap-3" style={{ borderColor: THEME_COLORS.borderLight }}>
-              <img
-                src={MOCK_TEACHER_PROFILE.avatar}
-                alt={MOCK_TEACHER_PROFILE.name}
-                className="w-12 h-12 rounded-full object-cover shadow-sm shrink-0"
-                style={{ borderColor: THEME_COLORS.primary }}
-              />
-              <div className="min-w-0">
-                <p className="text-sm font-black truncate leading-tight" style={{ color: THEME_COLORS.textDark }}>
-                  {MOCK_TEACHER_PROFILE.name}
-                </p>
-                <p className="text-[11px] font-semibold text-stone-500 truncate mt-0.5">
-                  {MOCK_TEACHER_PROFILE.email}
-                </p>
-              </div>
-            </div>
-
-            {/* Dialog menu items */}
-            <div className="p-2">
-              {dialogItems.map((item) => {
-                const Icon = item.icon;
-                return (
-                  <button
-                    key={item.label}
-                    type="button"
-                    className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-left transition-all cursor-pointer hover:bg-black/[0.05]"
-                  >
-                    <span
-                      className="w-8 h-8 rounded-lg flex items-center justify-center shrink-0"
-                    >
-                      <Icon className="w-4 h-4 stroke-[2.5]" />
-                    </span>
-                    <span className="text-xs font-bold" style={{ color: THEME_COLORS.textDark }}>
-                      {item.label}
-                    </span>
-                  </button>
-                );
-              })}
-            </div>
-
-            {/* Dialog footer with settings & logout */}
-            <div className="p-2 border-t" style={{ borderColor: THEME_COLORS.borderLight }}>
-              <button
-                type="button"
-                className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-left text-xs font-bold text-red-600 hover:text-red-800 transition-all cursor-pointer hover:bg-red-50"
-              >
-                <span className="w-8 h-8 rounded-lg flex items-center justify-center shrink-0 bg-red-50">
-                  <LogOut className="w-4 h-4 stroke-[2.5] text-red-600" />
-                </span>
-                <span>Sair da Conta</span>
-              </button>
-            </div>
-          </div>
-        )}
       </div>
     </aside>
   );
 };
+
+export default Sidebar;

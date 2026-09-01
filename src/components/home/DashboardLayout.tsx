@@ -6,13 +6,12 @@ import { HomePage } from './HomePage';
 import { TurmasTab } from './TurmasTab';
 import { TemplatesTab } from './TemplatesTab';
 import { MateriaisTab } from './MateriaisTab';
-import { ProfileSettingsModal } from './ProfileSettingsModal';
+import { SettingsPage } from '../settings/SettingsPage';
 import { THEME_COLORS } from '../../constants/colors';
 
 export const DashboardLayout: React.FC = () => {
   const navigate = useNavigate();
   const [activeMenu, setActiveMenu] = useState<SidebarMenuId>('criar');
-  const [isProfileOpen, setIsProfileOpen] = useState(false);
 
   return (
     <div 
@@ -31,7 +30,7 @@ export const DashboardLayout: React.FC = () => {
           const searchInput = document.querySelector('input[type="text"]');
           if (searchInput) (searchInput as HTMLInputElement).focus();
         }}
-        onOpenProfile={() => setIsProfileOpen(true)}
+        onOpenSettings={() => setActiveMenu('settings')}
       />
 
       {/* 2. Main Content Canvas */}
@@ -46,7 +45,6 @@ export const DashboardLayout: React.FC = () => {
       }}
       className="flex-grow flex flex-col min-w-0 overflow-x-hidden">
         
-        
         {/* Main View Router */}
         {(activeMenu === 'criar' || activeMenu === 'home') && <HomePage />}
 
@@ -56,14 +54,11 @@ export const DashboardLayout: React.FC = () => {
 
         {activeMenu === 'materiais' && <MateriaisTab />}
 
-      </main>
+        {activeMenu === 'settings' && <SettingsPage onLogout={() => navigate('/login')} />}
 
-      {/* 3. Settings / Profile Modal */}
-      <ProfileSettingsModal
-        isOpen={isProfileOpen}
-        onClose={() => setIsProfileOpen(false)}
-        onLogout={() => navigate('/login')}
-      />
+      </main>
     </div>
   );
 };
+
+export default DashboardLayout;

@@ -10,10 +10,11 @@ export interface TeacherProfile {
   email: string;
   role: string;
   avatar: string;
-  school?: string;
+  schools: string[];
   activeClassesCount: number;
   createdPlansCount: number;
   generatedMaterialsCount: number;
+  createdWorksCount: number;
 }
 
 export interface RecentWorkItem {

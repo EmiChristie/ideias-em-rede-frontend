@@ -223,3 +223,19 @@
 .template-action-in {
   animation: template-action-in 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
+
+@keyframes settings-sidebar-in {
+  0% {
+    opacity: 0;
+    transform: translateX(-18px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.settings-sidebar-in {
+  animation: settings-sidebar-in 0.35s cubic-bezier(0.22, 1, 0.36, 1) both;
+}

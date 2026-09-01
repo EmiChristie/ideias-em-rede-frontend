@@ -551,7 +551,6 @@ export const TemplatesTab: React.FC = () => {
                 p-12
                 text-center
                 rounded-3xl
-                border
                 template-card-in
               "
               style={{
