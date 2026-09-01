@@ -1,0 +1,56 @@
+﻿export interface User {
+  name: string;
+  email: string;
+}
+
+export type AuthMode = 'login' | 'register' | 'forgot_password';
+
+export interface TeacherProfile {
+  name: string;
+  email: string;
+  role: string;
+  avatar: string;
+  school?: string;
+  activeClassesCount: number;
+  createdPlansCount: number;
+  generatedMaterialsCount: number;
+}
+
+export interface RecentWorkItem {
+  id: string;
+  title: string;
+  category: 'debate' | 'plano' | 'redacao' | 'simulacao' | 'brainstorm';
+  categoryLabel: string;
+  lastModified: string;
+  tags: string[];
+  excerpt: string;
+  status: 'Em andamento' | 'Rascunho' | 'Pronto para aula';
+  accentColor: string;
+  questionsCount?: number;
+  duration?: string;
+}
+
+export interface QuickCategory {
+  id: string;
+  label: string;
+  iconName: string;
+  description: string;
+  color: string;
+}
+
+export interface TeamMember {
+  name: string;
+  role: string;
+  bio: string;
+  avatar: string;
+  badges: string[];
+}
+
+export interface TeachingTip {
+  title: string;
+  category: string;
+  description: string;
+  tags: string[];
+  iconName: string;
+  steps: string[];
+}

@@ -1,0 +1,50 @@
+﻿@import "tailwindcss";
+
+:root {
+  --color-primary: #b55b43;
+  --color-accent: #de5737;
+  --color-secondary: #4b788b;
+  --color-gray: #51595C;
+  --color-text-dark: #291C19;
+  --color-bg-light: #F0EBEA;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    background-color: #F0EBEA;
+    color: #291C19;
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  }
+
+  body {
+    background-color: #F0EBEA;
+    color: #291C19;
+  }
+}
+
+/* Tipografia Vazada (Outline / Stroke) como identidade de marca */
+.text-outline-dark {
+  color: transparent;
+  -webkit-text-stroke: 2px #291C19;
+}
+
+.text-outline-primary {
+  color: transparent;
+  -webkit-text-stroke: 2px #b55b43;
+}
+
+.text-outline-secondary {
+  color: transparent;
+  -webkit-text-stroke: 2px #4b788b;
+}
+
+.text-outline-accent {
+  color: transparent;
+  -webkit-text-stroke: 2px #de5737;
+}
+
+.text-outline-light {
+  color: transparent;
+  -webkit-text-stroke: 2px #F0EBEA;
+}
