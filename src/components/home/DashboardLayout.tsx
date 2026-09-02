@@ -1,5 +1,5 @@
 ﻿import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation, Outlet } from 'react-router-dom';
 import { Sidebar } from './Sidebar';
 import type { SidebarMenuId } from './Sidebar';
 import { HomePage } from './HomePage';
@@ -11,7 +11,15 @@ import { THEME_COLORS } from '../../constants/colors';
 
 export const DashboardLayout: React.FC = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const [activeMenu, setActiveMenu] = useState<SidebarMenuId>('criar');
+
+  const isTurmaDetail = location.pathname.startsWith('/home/turmas/');
+
+  const handleSelectMenu = (menu: SidebarMenuId) => {
+    setActiveMenu(menu);
+    navigate('/home');
+  };
 
   return (
     <div 
@@ -24,39 +32,47 @@ export const DashboardLayout: React.FC = () => {
       {/* 1. Canva-style Sidebar */}
       <Sidebar
         activeMenu={activeMenu}
-        onSelectMenu={(menu) => setActiveMenu(menu)}
+        onSelectMenu={handleSelectMenu}
         onOpenNewIdea={() => {
           setActiveMenu('criar');
+          navigate('/home');
           const searchInput = document.querySelector('input[type="text"]');
           if (searchInput) (searchInput as HTMLInputElement).focus();
         }}
-        onOpenSettings={() => setActiveMenu('settings')}
+        onOpenSettings={() => {
+          setActiveMenu('settings');
+          navigate('/home');
+        }}
       />
 
-      {/* 2. Main Content Canvas */}
-      <main
-            style={{
-        background: `linear-gradient(
-          to bottom,
-          ${THEME_COLORS.lightAccent} -15%,
-          ${THEME_COLORS.bgLight} 10%,
-          #faf9f8 60%
-        )`,
-      }}
-      className="flex-grow flex flex-col min-w-0 overflow-x-hidden">
-        
-        {/* Main View Router */}
-        {(activeMenu === 'criar' || activeMenu === 'home') && <HomePage />}
+      {/* Rota de detalhe da turma: renderiza fora do <main> para ocupar a página cheia
+          mantendo a Sidebar global do app */}
+      {isTurmaDetail ? (
+        <Outlet />
+      ) : (
+        <main
+              style={{
+          background: `linear-gradient(
+            to bottom,
+            ${THEME_COLORS.lightAccent} -15%,
+            ${THEME_COLORS.bgLight} 10%,
+            #faf9f8 60%
+          )`,
+        }}
+        className="flex-grow flex flex-col min-w-0 overflow-x-hidden">
 
-        {activeMenu === 'turmas' && <TurmasTab />}
+          {/* Main View Router */}
+          {(activeMenu === 'criar' || activeMenu === 'home') && <HomePage />}
 
-        {activeMenu === 'templates' && <TemplatesTab />}
+          {activeMenu === 'turmas' && <TurmasTab />}
 
-        {activeMenu === 'materiais' && <MateriaisTab />}
+          {activeMenu === 'templates' && <TemplatesTab />}
 
-        {activeMenu === 'settings' && <SettingsPage onLogout={() => navigate('/login')} />}
+          {activeMenu === 'materiais' && <MateriaisTab />}
 
-      </main>
+          {activeMenu === 'settings' && <SettingsPage onLogout={() => navigate('/login')} />}
+        </main>
+      )}
     </div>
   );
 };

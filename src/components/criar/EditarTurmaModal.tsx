@@ -14,9 +14,10 @@ import { MOCK_TEACHER_PROFILE } from '../../data/mockData';
 import type { Turma } from '../../types';
 import { BaseModal } from './BaseModal';
 
-interface CriarTurmaModalProps {
+interface EditarTurmaModalProps {
+  turma: Turma;
   onClose: () => void;
-  onCreated: (turma: Turma) => void;
+  onUpdated: (turma: Turma) => void;
 }
 
 const SERIES = [
@@ -43,19 +44,18 @@ const TURMA_COLORS = [
 const inputClassName =
   'w-full pl-10 pr-4 py-2.5 rounded-xl text-sm border focus:outline-none focus:ring-2 focus:ring-[#b55b43]/10';
 
-export const CriarTurmaModal: React.FC<CriarTurmaModalProps> = ({
+export const EditarTurmaModal: React.FC<EditarTurmaModalProps> = ({
+  turma,
   onClose,
-  onCreated,
+  onUpdated,
 }) => {
-  const [school, setSchool] = useState(
-    MOCK_TEACHER_PROFILE.schools[0] ?? ''
-  );
-  const [series, setSeries] = useState(SERIES[0]);
-  const [idLabel, setIdLabel] = useState('A');
-  const [students, setStudents] = useState(1);
-  const [name, setName] = useState('');
-  const [color, setColor] = useState(TURMA_COLORS[0]);
-  const [image, setImage] = useState('');
+  const [school, setSchool] = useState(turma.school);
+  const [series, setSeries] = useState(turma.series);
+  const [idLabel, setIdLabel] = useState(turma.idSeries);
+  const [students, setStudents] = useState(turma.qtd);
+  const [name, setName] = useState(turma.name ?? '');
+  const [color, setColor] = useState(turma.color ?? TURMA_COLORS[0]);
+  const [image, setImage] = useState(turma.image ?? '');
   const [saved, setSaved] = useState(false);
 
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -79,8 +79,8 @@ export const CriarTurmaModal: React.FC<CriarTurmaModalProps> = ({
     setSaved(true);
 
     timerRef.current = setTimeout(() => {
-      onCreated({
-        id: crypto.randomUUID(),
+      onUpdated({
+        ...turma,
         school,
         series,
         idSeries: idLabel.trim() || 'A',
@@ -103,7 +103,7 @@ export const CriarTurmaModal: React.FC<CriarTurmaModalProps> = ({
             className="text-lg font-bold"
             style={{ color: THEME_COLORS.textDark }}
           >
-            Turma criada com sucesso!
+            Turma atualizada com sucesso!
           </h3>
 
           <p className="text-xs font-semibold text-stone-500">
@@ -119,12 +119,12 @@ export const CriarTurmaModal: React.FC<CriarTurmaModalProps> = ({
               className="text-2xl font-black tracking-tight"
               style={{ color: THEME_COLORS.textDark }}
             >
-              Nova Turma
+              Editar Turma
             </h2>
 
             <p className="mt-1 text-xs font-semibold text-stone-500">
-              Associe uma cor ou imagem para identificar a
-              turma com facilidade
+              Atualize as informações da turma para
+              mantê-las sempre organizadas
             </p>
           </div>
 
@@ -375,7 +375,7 @@ export const CriarTurmaModal: React.FC<CriarTurmaModalProps> = ({
               className="px-6 py-2.5 rounded-xl text-xs font-black uppercase tracking-wider text-white shadow-sm transition-all hover:scale-105 cursor-pointer"
               style={{ backgroundColor: THEME_COLORS.primary }}
             >
-              Criar Turma
+              Salvar Alterações
             </button>
           </div>
         </form>
@@ -384,4 +384,4 @@ export const CriarTurmaModal: React.FC<CriarTurmaModalProps> = ({
   );
 };
 
-export default CriarTurmaModal;
+export default EditarTurmaModal;

@@ -8,12 +8,44 @@ export type AuthMode = 'login' | 'register' | 'forgot_password';
 export type MaterialType = 'source' | 'slide' | 'atv';
 
 export interface Turma {
+  id: string;
   school: string;
   series: string;
   idSeries: string;
   qtd: number;
+  name?: string;
   color?: string;
   image?: string;
+}
+
+export type ContentStatus = 'Em andamento' | 'Pronto para usar';
+
+export interface PlanoDeAula {
+  id: string;
+  title: string;
+  description?: string;
+  duration?: string;
+  status: ContentStatus;
+  turmaId: string;
+}
+
+export type AtividadeType = 'prova' | 'trabalho' | 'exercicio' | 'oficina';
+
+export interface Atividade {
+  id: string;
+  title: string;
+  type: AtividadeType;
+  description?: string;
+  status: ContentStatus;
+  turmaId: string;
+}
+
+export interface MaterialTurma {
+  id: string;
+  title: string;
+  type: MaterialType;
+  status: ContentStatus;
+  turmaId: string;
 }
 
 export interface TeacherProfile {

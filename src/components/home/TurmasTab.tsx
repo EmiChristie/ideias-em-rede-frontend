@@ -1,4 +1,5 @@
 import React, { useMemo, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
   Plus,
   Search,
@@ -8,7 +9,7 @@ import {
   ChevronDown,
 } from 'lucide-react';
 import { THEME_COLORS } from '../../constants/colors';
-import { MOCK_TURMAS } from '../../data/mockData';
+import { getAllTurmas, addTurma } from '../../data/mockData';
 import type { Turma } from '../../types';
 import { CriarTurmaModal } from '../criar/CriarTurmaModal';
 
@@ -29,7 +30,8 @@ type SortDirection = 'asc' | 'desc';
 interface TurmasTabProps {}
 
 export const TurmasTab: React.FC<TurmasTabProps> = () => {
-  const [turmas, setTurmas] = useState<Turma[]>(MOCK_TURMAS);
+  const navigate = useNavigate();
+  const [turmas, setTurmas] = useState<Turma[]>(getAllTurmas());
 
   const [isCreateOpen, setIsCreateOpen] = useState(false);
 
@@ -467,7 +469,8 @@ export const TurmasTab: React.FC<TurmasTabProps> = () => {
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
               {filteredTurmas.map((turma, idx) => (
                 <div
-                  key={`${turma.school}-${turma.series}`}
+                  key={`${turma.school}-${turma.series}-${turma.idSeries}-${turma.id}`}
+                  onClick={() => navigate(`/home/turmas/${turma.id}`)}
                   className="
                     template-card-in
                     cursor-pointer
@@ -600,6 +603,7 @@ export const TurmasTab: React.FC<TurmasTabProps> = () => {
         <CriarTurmaModal
           onClose={() => setIsCreateOpen(false)}
           onCreated={(turma) => {
+            addTurma(turma);
             setTurmas((current) => [...current, turma]);
           }}
         />

@@ -530,8 +530,8 @@ export const TemplatesTab: React.FC<TemplatesTabProps> = () => {
                         h-36
                         relative
                         flex
-                        flex-col
-                        justify-between
+                        items-center
+                        justify-center
                         overflow-hidden
                         shrink-0
                       "
@@ -539,7 +539,17 @@ export const TemplatesTab: React.FC<TemplatesTabProps> = () => {
                         backgroundColor:
                           'rgba(240, 235, 234, 0.4)',
                       }}
-                    />
+                    >
+                      <div
+                        className="w-14 h-14 rounded-2xl flex items-center justify-center"
+                        style={{
+                          backgroundColor: '#ffffffcc',
+                          color: '#9e9a97',
+                        }}
+                      >
+                        <File className="w-6 h-6" />
+                      </div>
+                    </div>
 
                     {/* Content */}
                     <div
