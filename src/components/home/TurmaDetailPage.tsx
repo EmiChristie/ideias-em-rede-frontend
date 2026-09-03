@@ -14,14 +14,13 @@ import { THEME_COLORS } from '../../constants/colors';
 import {
   getTurmaById,
   getAllTurmas,
-  getPlanosByTurmaId,
-  getAtividadesByTurmaId,
   getMateriaisByTurmaId,
   updateTurma,
   addTurma,
   removeTurma,
 } from '../../data/mockData';
-import type { MaterialTurma, Atividade, Turma, ContentStatus } from '../../types';
+import type { Turma, ContentStatus } from '../../types';
+import { HtmlPreview } from '../general/HtmlPreview';
 import { EditarTurmaModal } from '../criar/EditarTurmaModal';
 import { CriarTurmaModal } from '../criar/CriarTurmaModal';
 import { ConfirmDeleteModal } from '../criar/ConfirmDeleteModal';
@@ -37,17 +36,11 @@ const STATUS_COLORS: Record<ContentStatus, string> = {
   'Pronto para usar': '#7d9465',
 };
 
-const ATIVIDADE_TYPE_LABEL: Record<Atividade['type'], string> = {
-  prova: 'Prova',
-  trabalho: 'Trabalho',
-  exercicio: 'Exercício',
-  oficina: 'Oficina',
-};
-
-const MATERIAL_TYPE_LABEL: Record<MaterialTurma['type'], string> = {
-  source: 'Fonte',
-  slide: 'Slides',
-  atv: 'Atividade',
+const CONTENT_TYPE_LABEL: Record<ContentFilter, string> = {
+  all: 'Todos',
+  plano: 'Plano de Aula',
+  atividade: 'Atividade',
+  material: 'Material',
 };
 
 export const TurmaDetailPage: React.FC = () => {
@@ -75,8 +68,6 @@ export const TurmaDetailPage: React.FC = () => {
     [id, version]
   );
 
-  const planos = useMemo(() => (id ? getPlanosByTurmaId(id) : []), [id]);
-  const atividades = useMemo(() => (id ? getAtividadesByTurmaId(id) : []), [id]);
   const materiais = useMemo(() => (id ? getMateriaisByTurmaId(id) : []), [id]);
 
   const allContent = useMemo(() => {
@@ -87,43 +78,25 @@ export const TurmaDetailPage: React.FC = () => {
       subtitle: string;
       color: string;
       status: ContentStatus;
+      htmlContent: string;
+      orientation: 'V' | 'H';
     }> = [];
-
-    planos.forEach((p) =>
-      items.push({
-        key: p.id,
-        title: p.title,
-        type: 'plano',
-        subtitle: p.duration ?? '',
-        color: STATUS_COLORS[p.status],
-        status: p.status,
-      })
-    );
-
-    atividades.forEach((a) =>
-      items.push({
-        key: a.id,
-        title: a.title,
-        type: 'atividade',
-        subtitle: ATIVIDADE_TYPE_LABEL[a.type],
-        color: STATUS_COLORS[a.status],
-        status: a.status,
-      })
-    );
 
     materiais.forEach((m) =>
       items.push({
         key: m.id,
         title: m.title,
-        type: 'material',
-        subtitle: MATERIAL_TYPE_LABEL[m.type],
+        type: m.category,
+        subtitle: CONTENT_TYPE_LABEL[m.category],
         color: STATUS_COLORS[m.status],
         status: m.status,
+        htmlContent: m.htmlContent,
+        orientation: m.orientation,
       })
     );
 
     return items;
-  }, [planos, atividades, materiais]);
+  }, [materiais]);
 
   const filteredContent = useMemo(() => {
     const normalizedSearch = search.toLowerCase().trim();
@@ -429,28 +402,32 @@ export const TurmaDetailPage: React.FC = () => {
               )}
             </div>
           ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-5">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-5 [grid-auto-flow:dense]">
               {filteredContent.map((item, idx) => (
                 <div
                   key={item.key}
-                  className="template-card-in cursor-pointer transition-all hover:scale-105 rounded-2xl border shadow-sm flex flex-col"
+                  onClick={() => navigate(`/home/materiais/${item.key}`)}
+                  className={`template-card-in cursor-pointer transition-all hover:scale-105 rounded-2xl border shadow-sm flex flex-col overflow-hidden ${
+                    item.orientation === 'H' ? 'col-span-2' : 'col-span-1'
+                  }`}
                   style={{
                     backgroundColor: '#ffffff60',
                     borderColor: THEME_COLORS.borderLight,
                     animationDelay: `${300 + idx * 80}ms`,
                   }}
                 >
-                  {/* Thumbnail genérica de arquivo */}
+                  {/* Thumbnail do conteúdo */}
                   <div
-                    className="h-36 relative flex flex-col items-center justify-center overflow-hidden shrink-0"
+                    className="h-36 relative overflow-hidden shrink-0"
                     style={{ backgroundColor: 'rgba(240, 235, 234, 0.4)' }}
                   >
-                    <div
-                      className="w-14 h-14 rounded-2xl flex items-center justify-center"
-                      style={{ backgroundColor: '#ffffffcc', color: '#9e9a97' }}
-                    >
-                      <File className="w-6 h-6" />
-                    </div>
+                    <HtmlPreview
+                      html={item.htmlContent}
+                      fit
+                      refWidth={item.orientation === 'H' ? 1900 : 900}
+                      refHeight={item.orientation === 'H' ? 900 : 1273}
+                      className="w-full h-full"
+                    />
                   </div>
 
                   {/* Content */}

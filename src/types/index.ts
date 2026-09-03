@@ -7,17 +7,23 @@ export type AuthMode = 'login' | 'register' | 'forgot_password';
 
 export type MaterialType = 'source' | 'slide' | 'atv';
 
+export type MaterialCategory = 'plano' | 'material' | 'atividade';
+
 export interface Material {
   id: string;
   title: string;
   autoral: boolean;
   orientation: 'V' | 'H';
   type: MaterialType;
+  category: MaterialCategory;
   fileType: 'pdf' | 'html';
   qtd: number;
+  status: ContentStatus;
   htmlContent: string;
   fileUrl?: string;
   turmaIds?: string[];
+  lastModified?: string;
+  lastModifiedAt?: number;
 }
 
 export interface Turma {
@@ -29,6 +35,7 @@ export interface Turma {
   name?: string;
   color?: string;
   image?: string;
+  lastModifiedAt?: number;
 }
 
 export interface Template {
@@ -38,6 +45,7 @@ export interface Template {
   description?: string;
   htmlContent: string;
   turmaIds?: string[];
+  lastModifiedAt?: number;
 }
 
 export type ContentStatus = 'Criando' | 'Pronto para usar';

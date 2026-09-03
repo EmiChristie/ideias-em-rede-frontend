@@ -5,6 +5,7 @@ import {
   Plus,
   Search,
   ArrowDownAZ,
+  Clock,
   Filter,
 } from 'lucide-react';
 
@@ -25,8 +26,11 @@ export const MateriaisTab: React.FC<MateriaisTabProps> = () => {
 
   const [search, setSearch] = useState('');
 
+  const [sortOption, setSortOption] =
+    useState<'recent' | 'alphabetical'>('recent');
+
   const [sortDirection, setSortDirection] =
-    useState<'asc' | 'desc'>('asc');
+    useState<'asc' | 'desc'>('desc');
 
   const [autoralFilter, setAutoralFilter] =
     useState<'all' | 'autoral' | 'nao-autoral'>('all');
@@ -34,10 +38,28 @@ export const MateriaisTab: React.FC<MateriaisTabProps> = () => {
   const [typeFilter, setTypeFilter] =
     useState<'all' | 'source' | 'slide' | 'atv'>('all');
 
-  const handleSort = () => {
-    setSortDirection((current) =>
-      current === 'asc' ? 'desc' : 'asc'
-    );
+  const handleRecentSort = () => {
+    if (sortOption === 'recent') {
+      setSortDirection((current) =>
+        current === 'desc' ? 'asc' : 'desc'
+      );
+      return;
+    }
+
+    setSortOption('recent');
+    setSortDirection('desc');
+  };
+
+  const handleAlphabeticalSort = () => {
+    if (sortOption === 'alphabetical') {
+      setSortDirection((current) =>
+        current === 'asc' ? 'desc' : 'asc'
+      );
+      return;
+    }
+
+    setSortOption('alphabetical');
+    setSortDirection('asc');
   };
 
   const filteredMateriais = useMemo(() => {
@@ -73,8 +95,17 @@ export const MateriaisTab: React.FC<MateriaisTabProps> = () => {
         return material.type === typeFilter;
       })
 
-      // Ordenação alfabética
+      // Ordenação
       .sort((a, b) => {
+        if (sortOption === 'recent') {
+          const comparison =
+            (b.lastModifiedAt ?? 0) -
+            (a.lastModifiedAt ?? 0);
+          return sortDirection === 'desc'
+            ? comparison
+            : -comparison;
+        }
+
         const comparison = a.title.localeCompare(
           b.title,
           'pt-BR',
@@ -92,6 +123,7 @@ export const MateriaisTab: React.FC<MateriaisTabProps> = () => {
     search,
     autoralFilter,
     typeFilter,
+    sortOption,
     sortDirection,
   ]);
 
@@ -294,11 +326,11 @@ export const MateriaisTab: React.FC<MateriaisTabProps> = () => {
                 />
               </div>
 
-              {/* Ordenação */}
+              {/* Ordenação por mais recente */}
               <button
                 type="button"
-                onClick={handleSort}
-                className="
+                onClick={handleRecentSort}
+                className={`
                   h-10
                   inline-flex
                   items-center
@@ -307,26 +339,68 @@ export const MateriaisTab: React.FC<MateriaisTabProps> = () => {
                   px-4
                   rounded-xl
                   border
-                  bg-white/60
                   text-xs
                   font-bold
-                  text-stone-600
                   transition-all
                   cursor-pointer
                   hover:-translate-y-0.5
-                  hover:border-[#b55b43]
-                "
-                style={{
-                  borderColor:
-                    THEME_COLORS.borderLight,
-                }}
+                  ${
+                    sortOption === 'recent'
+                      ? 'bg-[#b55b43] text-white border-[#b55b43]'
+                      : 'bg-white/60 text-stone-600 hover:border-[#b55b43]'
+                  }
+                `}
+                style={
+                  sortOption === 'recent'
+                    ? undefined
+                    : {
+                        borderColor:
+                          THEME_COLORS.borderLight,
+                      }
+                }
+              >
+                <Clock className="w-4 h-4" />
+
+                <span>Recentes</span>
+              </button>
+
+              {/* Ordenação alfabética */}
+              <button
+                type="button"
+                onClick={handleAlphabeticalSort}
+                className={`
+                  h-10
+                  inline-flex
+                  items-center
+                  justify-center
+                  gap-2
+                  px-4
+                  rounded-xl
+                  border
+                  text-xs
+                  font-bold
+                  transition-all
+                  cursor-pointer
+                  hover:-translate-y-0.5
+                  ${
+                    sortOption === 'alphabetical'
+                      ? 'bg-[#b55b43] text-white border-[#b55b43]'
+                      : 'bg-white/60 text-stone-600 hover:border-[#b55b43]'
+                  }
+                `}
+                style={
+                  sortOption === 'alphabetical'
+                    ? undefined
+                    : {
+                        borderColor:
+                          THEME_COLORS.borderLight,
+                      }
+                }
               >
                 <ArrowDownAZ className="w-4 h-4" />
 
                 <span>
-                  {sortDirection === 'asc'
-                    ? 'A–Z'
-                    : 'Z–A'}
+                  {sortDirection === 'asc' ? 'A–Z' : 'Z–A'}
                 </span>
               </button>
             </div>
@@ -548,8 +622,79 @@ export const MateriaisTab: React.FC<MateriaisTabProps> = () => {
                 sm:grid-cols-2
                 lg:grid-cols-5
                 gap-6
+                [grid-auto-flow:dense]
               "
             >
+              {/* ================================================= */}
+              {/* ADD MATERIAL */}
+              {/* ================================================= */}
+
+              <div
+                className="
+                  flex
+                  flex-col
+                  template-action-in
+                "
+                style={{
+                  animationDelay: `350ms`,
+                }}
+              >
+                <span className="text-lg font-bold mb-2 pl-1">
+                  Adicionar material
+                </span>
+
+                <div className="mt-2">
+                  {/* Create */}
+                  <button
+                    type="button"
+                    onClick={() => setIsCreateOpen(true)}
+                    className="
+                      w-full
+                      flex
+                      items-center
+                      gap-3
+                      p-3
+                      rounded-xl
+                      border
+                      transition-all
+                      hover:scale-[1.02]
+                      cursor-pointer
+                    "
+                    style={{
+                      backgroundColor:
+                        THEME_COLORS.lightSecondary,
+                      borderColor:
+                        THEME_COLORS.lightSecondary,
+                      color:
+                        THEME_COLORS.secondary,
+                    }}
+                  >
+                    <div
+                      className="
+                        w-10
+                        h-10
+                        rounded-lg
+                        flex
+                        items-center
+                        justify-center
+                      "
+                    >
+                      <Plus className="w-5 h-5" />
+                    </div>
+
+                    <div className="text-left">
+                      <p className="text-sm font-bold">
+                        Criar material
+                      </p>
+
+                      <p className="text-[10px] font-medium opacity-70">
+                        Crie um novo material
+                      </p>
+                    </div>
+                  </button>
+                </div>
+              </div>
+
               {filteredMateriais.map(
                 (material, idx) => (
                   <div
@@ -662,79 +807,6 @@ export const MateriaisTab: React.FC<MateriaisTabProps> = () => {
                   </div>
                 )
               )}
-
-              {/* ================================================= */}
-              {/* ADD MATERIAL */}
-              {/* ================================================= */}
-
-              <div
-                className="
-                  flex
-                  flex-col
-                  template-action-in
-                "
-                style={{
-                  animationDelay: `${
-                    350 +
-                    filteredMateriais.length * 90
-                  }ms`,
-                }}
-              >
-                <span className="text-lg font-bold mb-2 pl-1">
-                  Adicionar material
-                </span>
-
-                <div className="mt-2">
-                  {/* Create */}
-                  <button
-                    type="button"
-                    onClick={() => setIsCreateOpen(true)}
-                    className="
-                      w-full
-                      flex
-                      items-center
-                      gap-3
-                      p-3
-                      rounded-xl
-                      border
-                      transition-all
-                      hover:scale-[1.02]
-                      cursor-pointer
-                    "
-                    style={{
-                      backgroundColor:
-                        THEME_COLORS.lightSecondary,
-                      borderColor:
-                        THEME_COLORS.lightSecondary,
-                      color:
-                        THEME_COLORS.secondary,
-                    }}
-                  >
-                    <div
-                      className="
-                        w-10
-                        h-10
-                        rounded-lg
-                        flex
-                        items-center
-                        justify-center
-                      "
-                    >
-                      <Plus className="w-5 h-5" />
-                    </div>
-
-                    <div className="text-left">
-                      <p className="text-sm font-bold">
-                        Criar material
-                      </p>
-
-                      <p className="text-[10px] font-medium opacity-70">
-                        Crie um novo material
-                      </p>
-                    </div>
-                  </button>
-                </div>
-              </div>
             </div>
           ) : (
             /* =================================================== */

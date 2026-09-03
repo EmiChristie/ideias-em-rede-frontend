@@ -15,6 +15,7 @@ import { THEME_COLORS } from '../../constants/colors';
 import {
   getAllMateriais,
   addMaterial,
+  updateMaterial,
   removeMaterial,
   getMaterialById,
   getTurmasByMaterialId,
@@ -25,6 +26,7 @@ import type { Material, MaterialType } from '../../types';
 import { downloadMaterialHtml } from '../../utils/downloadMaterial';
 import { HtmlPreview } from '../general/HtmlPreview';
 import { CriarMaterialModal } from '../criar/CriarMaterialModal';
+import { EditarMaterialModal } from '../criar/EditarMaterialModal';
 import { ConfirmDeleteModal } from '../criar/ConfirmDeleteModal';
 
 const TYPE_LABELS: Record<MaterialType, string> = {
@@ -138,6 +140,7 @@ export const MaterialDetailPage: React.FC = () => {
 
   const [version, setVersion] = useState(0);
   const [isCreateOpen, setIsCreateOpen] = useState(false);
+  const [isEditOpen, setIsEditOpen] = useState(false);
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
 
   const materiais = useMemo(() => getAllMateriais(), [version]);
@@ -211,6 +214,7 @@ export const MaterialDetailPage: React.FC = () => {
 
                 <button
                   type="button"
+                  onClick={() => setIsEditOpen(true)}
                   aria-label="Editar material"
                   title="Editar material"
                   className="p-2.5 rounded-xl transition-all hover:scale-105 cursor-pointer border"
@@ -416,6 +420,17 @@ export const MaterialDetailPage: React.FC = () => {
             addMaterial(newMaterial);
             setVersion((v) => v + 1);
             navigate(`/home/materiais/${newMaterial.id}`);
+          }}
+        />
+      )}
+
+      {isEditOpen && (
+        <EditarMaterialModal
+          material={material}
+          onClose={() => setIsEditOpen(false)}
+          onUpdated={(updated) => {
+            updateMaterial(updated);
+            setVersion((v) => v + 1);
           }}
         />
       )}

@@ -1,21 +1,24 @@
 ﻿import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { 
   Search, Sparkles, MessageSquareQuote, LayoutTemplate, BookOpen, 
-  FileText, Clock, ArrowRight, CheckCircle2,
+  FileText, Clock, CheckCircle2,
   FolderOpen, Layers, Zap,
   PencilSparkles
 } from 'lucide-react';
 import { THEME_COLORS } from '../../constants/colors';
-import { MOCK_RECENT_WORKS } from '../../data/mockData';
-import type { RecentWorkItem } from '../../types';
+import { getAllMateriais } from '../../data/mockData';
+import { HtmlPreview } from '../general/HtmlPreview';
+import type { Material } from '../../types';
 
 interface HomePageProps {
   onOpenNewIdeaPrompt?: (prompt: string) => void;
 }
 
 export const HomePage: React.FC<HomePageProps> = () => {
+  const navigate = useNavigate();
   const [ideaPrompt, setIdeaPrompt] = useState('');
-  const [works, setWorks] = useState<RecentWorkItem[]>(MOCK_RECENT_WORKS);
+  const [materiais] = useState<Material[]>(() => getAllMateriais());
   const [filterCategory, setFilterCategory] = useState<string>('all');
   const [generatedToast, setGeneratedToast] = useState<string | null>(null);
 
@@ -81,28 +84,16 @@ export const HomePage: React.FC<HomePageProps> = () => {
     setGeneratedToast(`Gerando rascunho pedagógico para: "${ideaPrompt}"...`);
     
     setTimeout(() => {
-      const newItem: RecentWorkItem = {
-        id: `work-${Date.now()}`,
-        title: ideaPrompt,
-        category: 'brainstorm',
-        categoryLabel: 'Brainstorm Pedagógico',
-        lastModified: 'Criado agora',
-        tags: ['Educação Básica', 'Metodologias Ativas', 'Novo'],
-        excerpt: 'Plano estruturado gerado a partir do brainstorm docente. Contém problematização inicial, textos motivadores e critérios de avaliação formativa.',
-        status: 'Criando',
-        accentColor: THEME_COLORS.accent,
-        duration: 'A definir',
-      };
-      setWorks([newItem, ...works]);
       setIdeaPrompt('');
       setGeneratedToast('Novo plano adicionado ao seu painel!');
       setTimeout(() => setGeneratedToast(null), 3000);
     }, 1200);
   };
 
-  const filteredWorks = works.filter((w) => {
+  const filteredMateriais = materiais.filter((m) => {
+    if (m.status !== 'Criando') return false;
     if (filterCategory === 'all') return true;
-    return w.category === filterCategory;
+    return m.category === filterCategory;
   });
 
   return (
@@ -317,13 +308,13 @@ export const HomePage: React.FC<HomePageProps> = () => {
                   : 'bg-white text-stone-700 border-[#f3ebea] hover:bg-black/[0.05]'
               }`}
             >
-              Todos ({works.length})
+              Todos ({materiais.filter((m) => m.status === 'Criando').length})
             </button>
             <button
               type="button"
-              onClick={() => setFilterCategory('debate')}
+              onClick={() => setFilterCategory('atividade')}
               className={`px-3.5 py-1.5 rounded-full text-xs font-bold shadow-sm transition-all border cursor-pointer ${
-                filterCategory === 'debate'
+                filterCategory === 'atividade'
                   ? 'bg-[#b55b43] text-white border-[#b55b43]'
                   : 'bg-white text-stone-700 border-[#f3ebea] hover:bg-black/[0.05]'
               }`}
@@ -356,89 +347,54 @@ export const HomePage: React.FC<HomePageProps> = () => {
         </div>
 
         {/* Desktop Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredWorks.map((item) => {
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6 [grid-auto-flow:dense]">
+          {filteredMateriais.map((material) => {
             return (
               <div
-                key={item.id}
-                className="rounded-3xl shadow-sm border-r overflow-hidden flex flex-col justify-between transition-all hover:shadow-md hover:-translate-y-1 group"
+                key={material.id}
+                onClick={() => navigate(`/home/materiais/${material.id}`)}
+                className={`
+                  rounded-3xl shadow-sm border overflow-hidden flex flex-col
+                  transition-all hover:shadow-md hover:-translate-y-1 cursor-pointer group
+                  ${material.orientation === 'H' ? 'col-span-2' : 'col-span-1'}
+                `}
                 style={{ 
                   backgroundColor: '#ffffff40', 
                   borderColor: THEME_COLORS.borderLight 
                 }}
               >
-                {/* Visual Thumbnail Header */}
+                {/* Thumbnail */}
                 <div 
-                  className="h-32 p-4 relative flex flex-col justify-between overflow-hidden"
+                  className="h-40 relative overflow-hidden shrink-0"
                   style={{ backgroundColor: 'rgba(240, 235, 234, 0.4)' }}
                 >
-                  {/* Top Badges: Category + Status */}
-                  <div className="flex items-center justify-between relative z-10">
-                    <span 
-                      className="px-2.5 py-1 rounded-full text-[10px] font-black uppercase tracking-wider text-white"
-                      style={{
-                        backgroundColor: `color-mix(in srgb, ${item.accentColor} 70%, transparent)`
-                      }}
-                    >
-                      {item.categoryLabel}
-                    </span>
-                  </div>
-
-                  {/* Duration Tag */}
-                  {item.duration && (
-                    <div className="text-[11px] font-bold text-stone-500 relative z-10 flex items-center gap-1">
-                      <Clock className="w-3 h-3" />
-                      <span>{item.duration}</span>
-                    </div>
-                  )}
+                  <HtmlPreview
+                    html={material.htmlContent}
+                    fit
+                    refWidth={material.orientation === 'H' ? 1900 : 900}
+                    refHeight={material.orientation === 'H' ? 900 : 1273}
+                    className="w-full h-full"
+                  />
                 </div>
 
-                {/* Card Body */}
-                <div className="p-6 flex-grow flex flex-col justify-between space-y-4">
-                  <div className="space-y-2">
-                    <h3 className="text-base font-black leading-snug group-hover:text-[#b55b43] transition-colors" style={{ color: THEME_COLORS.textDark }}>
-                      {item.title}
-                    </h3>
-                    <p className="text-xs leading-relaxed font-medium line-clamp-2" style={{ color: THEME_COLORS.gray }}>
-                      {item.excerpt}
-                    </p>
-                  </div>
-
-                  {/* Tags */}
-                  <div className="flex flex-wrap gap-1.5 pt-1">
-                    {item.tags.map((tag, tIdx) => (
-                      <span
-                        key={tIdx}
-                        className="px-2 py-0.5 rounded-md text-[10px] font-bold border"
-                        style={{ 
-                          backgroundColor: THEME_COLORS.bgLight, 
-                          borderColor: THEME_COLORS.borderLight, 
-                          color: THEME_COLORS.textDark 
-                        }}
-                      >
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
+                {/* Content */}
+                <div className="p-6 flex flex-col flex-1 space-y-4">
+                  <h3 className="line-clamp-2 text-base font-bold leading-snug group-hover:text-[#b55b43] transition-colors" style={{ color: THEME_COLORS.textDark }}>
+                    {material.title}
+                  </h3>
                 </div>
 
-                {/* Card Footer Actions */}
+                {/* Footer */}
                 <div 
-                  className="p-4 px-6 border-t flex items-center justify-between text-xs"
+                  className="p-4 px-6 border-t flex items-center text-xs"
                   style={{ borderColor: THEME_COLORS.borderLight, backgroundColor: 'rgba(0, 0, 0, 0.015)' }}
                 >
-                  <span className="text-[11px] font-semibold text-stone-500">
-                    {item.lastModified}
+                  <span className="text-[11px] font-semibold text-stone-500 flex items-center gap-1">
+                    {material.lastModified && (
+                      <Clock className="w-3 h-3" />
+                    )}
+                    {material.lastModified}
                   </span>
-
-                  <button
-                    type="button"
-                    className="inline-flex items-center gap-1.5 font-bold transition-transform group-hover:translate-x-1 cursor-pointer"
-                    style={{ color: item.accentColor }}
-                  >
-                    <span>Abrir</span>
-                    <ArrowRight className="w-3.5 h-3.5" />
-                  </button>
                 </div>
 
               </div>
@@ -446,7 +402,7 @@ export const HomePage: React.FC<HomePageProps> = () => {
           })}
         </div>
 
-        {filteredWorks.length === 0 && (
+        {filteredMateriais.length === 0 && (
           <div className="p-12 mb-8 text-center rounded-3xl space-y-3">
             <FolderOpen className="w-10 h-10 mx-auto text-stone-400" />
             <h4 className="font-bold text-sm text-stone-700">Nenhum material encontrado nesta categoria</h4>

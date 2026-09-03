@@ -7,6 +7,7 @@ import {
   UsersRound,
   Filter,
   ChevronDown,
+  Clock,
 } from 'lucide-react';
 import { THEME_COLORS } from '../../constants/colors';
 import { getAllTurmas, addTurma } from '../../data/mockData';
@@ -23,7 +24,7 @@ const SERIES_ORDER = [
   '3º Ano EM',
 ];
 
-type SortOption = 'alphabetical' | 'quantity';
+type SortOption = 'alphabetical' | 'quantity' | 'recent';
 
 type SortDirection = 'asc' | 'desc';
 
@@ -40,10 +41,10 @@ export const TurmasTab: React.FC<TurmasTabProps> = () => {
   const [seriesFilter, setSeriesFilter] = useState('all');
 
   const [sortOption, setSortOption] =
-    useState<SortOption>('alphabetical');
+    useState<SortOption>('recent');
 
   const [sortDirection, setSortDirection] =
-    useState<SortDirection>('asc');
+    useState<SortDirection>('desc');
 
   const uniqueSeries = useMemo(
     () =>
@@ -73,6 +74,15 @@ export const TurmasTab: React.FC<TurmasTabProps> = () => {
 
       // Ordenação
       .sort((a, b) => {
+        if (sortOption === 'recent') {
+          const comparison =
+            (b.lastModifiedAt ?? 0) -
+            (a.lastModifiedAt ?? 0);
+          return sortDirection === 'desc'
+            ? comparison
+            : -comparison;
+        }
+
         if (sortOption === 'alphabetical') {
           const comparison = a.school.localeCompare(
             b.school,
@@ -95,6 +105,18 @@ export const TurmasTab: React.FC<TurmasTabProps> = () => {
 
   const hasActiveFilters =
     search.trim() !== '' || seriesFilter !== 'all';
+
+  const handleRecentSort = () => {
+    if (sortOption === 'recent') {
+      setSortDirection((current) =>
+        current === 'desc' ? 'asc' : 'desc'
+      );
+      return;
+    }
+
+    setSortOption('recent');
+    setSortDirection('desc');
+  };
 
   const handleAlphabeticalSort = () => {
     if (sortOption === 'alphabetical') {
@@ -309,6 +331,44 @@ export const TurmasTab: React.FC<TurmasTabProps> = () => {
                 />
               </div>
 
+              {/* Ordenação por mais recente */}
+              <button
+                type="button"
+                onClick={handleRecentSort}
+                className={`
+                  h-10
+                  inline-flex
+                  items-center
+                  justify-center
+                  gap-2
+                  px-4
+                  rounded-xl
+                  border
+                  text-xs
+                  font-bold
+                  transition-all
+                  cursor-pointer
+                  hover:-translate-y-0.5
+                  ${
+                    sortOption === 'recent'
+                      ? 'bg-[#b55b43] text-white border-[#b55b43]'
+                      : 'bg-white/60 text-stone-600 hover:border-[#b55b43]'
+                  }
+                `}
+                style={
+                  sortOption === 'recent'
+                    ? undefined
+                    : {
+                        borderColor:
+                          THEME_COLORS.borderLight,
+                      }
+                }
+              >
+                <Clock className="w-4 h-4" />
+
+                <span>Recentes</span>
+              </button>
+
               {/* Ordenação alfabética */}
               <button
                 type="button"
@@ -344,11 +404,9 @@ export const TurmasTab: React.FC<TurmasTabProps> = () => {
               >
                 <ArrowDownAZ className="w-4 h-4" />
 
-                {sortOption === 'alphabetical' && (
-                  <span className="text-[10px]">
-                    {sortDirection === 'asc' ? 'A-Z' : 'Z-A'}
-                  </span>
-                )}
+                <span>
+                  {sortDirection === 'asc' ? 'A-Z' : 'Z-A'}
+                </span>
               </button>
 
               {/* Ordenação por quantidade de alunos */}
@@ -467,6 +525,58 @@ export const TurmasTab: React.FC<TurmasTabProps> = () => {
             /* =================================================== */
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
+              {/* ================================================= */}
+              {/* ADD TURMA */}
+              {/* ================================================= */}
+
+              <div
+                className="flex flex-col template-action-in"
+                style={{
+                  animationDelay: `300ms`,
+                }}
+              >
+                <span className="text-lg font-bold mb-2 pl-1">
+                  Adicionar turma
+                </span>
+
+                <button
+                  type="button"
+                  onClick={() => setIsCreateOpen(true)}
+                  className="
+                    mt-2
+                    flex
+                    items-center
+                    gap-3
+                    p-3
+                    rounded-xl
+                    border
+                    transition-all
+                    hover:scale-[1.02]
+                    cursor-pointer
+                  "
+                  style={{
+                    backgroundColor:
+                      THEME_COLORS.lightPrimary,
+                    borderColor:
+                      THEME_COLORS.lightPrimary,
+                    color: THEME_COLORS.primary,
+                  }}
+                >
+                  <div className="w-10 h-10 rounded-lg flex items-center justify-center">
+                    <Plus className="w-5 h-5" />
+                  </div>
+
+                  <div className="text-left">
+                    <p className="text-sm font-bold">
+                      Nova turma
+                    </p>
+                    <p className="text-[10px] font-medium opacity-70">
+                      Associe alunos e série
+                    </p>
+                  </div>
+                </button>
+              </div>
+
               {filteredTurmas.map((turma, idx) => (
                 <div
                   key={`${turma.school}-${turma.series}-${turma.idSeries}-${turma.id}`}
@@ -540,60 +650,6 @@ export const TurmasTab: React.FC<TurmasTabProps> = () => {
                   </div>
                 </div>
               ))}
-
-              {/* ================================================= */}
-              {/* ADD TURMA */}
-              {/* ================================================= */}
-
-              <div
-                className="flex flex-col template-action-in"
-                style={{
-                  animationDelay: `${
-                    300 + filteredTurmas.length * 90
-                  }ms`,
-                }}
-              >
-                <span className="text-lg font-bold mb-2 pl-1">
-                  Adicionar turma
-                </span>
-
-                <button
-                  type="button"
-                  onClick={() => setIsCreateOpen(true)}
-                  className="
-                    mt-2
-                    flex
-                    items-center
-                    gap-3
-                    p-3
-                    rounded-xl
-                    border
-                    transition-all
-                    hover:scale-[1.02]
-                    cursor-pointer
-                  "
-                  style={{
-                    backgroundColor:
-                      THEME_COLORS.lightPrimary,
-                    borderColor:
-                      THEME_COLORS.lightPrimary,
-                    color: THEME_COLORS.primary,
-                  }}
-                >
-                  <div className="w-10 h-10 rounded-lg flex items-center justify-center">
-                    <Plus className="w-5 h-5" />
-                  </div>
-
-                  <div className="text-left">
-                    <p className="text-sm font-bold">
-                      Nova turma
-                    </p>
-                    <p className="text-[10px] font-medium opacity-70">
-                      Associe alunos e série
-                    </p>
-                  </div>
-                </button>
-              </div>
             </div>
           )}
         </>

@@ -14,19 +14,19 @@ export const MOCK_TEACHER_PROFILE: TeacherProfile = {
 };
 
 export const MOCK_TURMAS: Turma[] = [
-  { id: 'turma-001', school: 'E.E. Cecília Meireles', series: '6º Ano', idSeries: 'A', qtd: 32, name: 'Turma A - Manhã', color: '#b55b43' },
-  { id: 'turma-002', school: 'Colégio Alvorada', series: '6º Ano', idSeries: 'A', qtd: 40, name: 'Turma A - Tarde', color: '#c98a5e' },
-  { id: 'turma-003', school: 'E.E. Maria Aparecida', series: '6º Ano', idSeries: 'A', qtd: 18, color: '#7d9465' },
-  { id: 'turma-004', school: 'Colégio São Bento', series: '7º Ano', idSeries: 'A', qtd: 29, color: '#5b8fa3' },
-  { id: 'turma-005', school: 'E.E. Cecília Meireles', series: '7º Ano', idSeries: 'A', qtd: 27, name: 'Turma A - Manhã', color: '#d5b657' },
-  { id: 'turma-006', school: 'Instituto Alpha', series: '7º Ano', idSeries: 'A', qtd: 35, color: '#9b6fa3' },
-  { id: 'turma-007', school: 'Colégio Alvorada', series: '8º Ano', idSeries: 'A', qtd: 22, color: '#e07b7b' },
-  { id: 'turma-008', school: 'E.E. Fernando Pessoa', series: '8º Ano', idSeries: 'A', qtd: 31, color: '#6f8691' },
-  { id: 'turma-009', school: 'Escola Nova Esperança', series: '8º Ano', idSeries: 'A', qtd: 0, color: '#b55b43' },
-  { id: 'turma-010', school: 'Instituto Alpha', series: '9º Ano', idSeries: 'A', qtd: 38, color: '#5b8fa3' },
-  { id: 'turma-011', school: 'E.E. Cecília Meireles', series: '1º Ano EM', idSeries: 'A', qtd: 36, color: '#9b6fa3' },
-  { id: 'turma-012', school: 'Colégio Alvorada', series: '2º Ano EM', idSeries: 'A', qtd: 24, color: '#7d9465' },
-  { id: 'turma-013', school: 'Instituto Alpha', series: '3º Ano EM', idSeries: 'A', qtd: 26, color: '#e07b7b' },
+  { id: 'turma-001', school: 'E.E. Cecília Meireles', series: '6º Ano', idSeries: 'A', qtd: 32, name: 'Turma A - Manhã', color: '#b55b43', lastModifiedAt: Date.now() - 1 * 3600000 },
+  { id: 'turma-002', school: 'Colégio Alvorada', series: '6º Ano', idSeries: 'A', qtd: 40, name: 'Turma A - Tarde', color: '#c98a5e', lastModifiedAt: Date.now() - 3 * 3600000 },
+  { id: 'turma-003', school: 'E.E. Maria Aparecida', series: '6º Ano', idSeries: 'A', qtd: 18, color: '#7d9465', lastModifiedAt: Date.now() - 5 * 3600000 },
+  { id: 'turma-004', school: 'Colégio São Bento', series: '7º Ano', idSeries: 'A', qtd: 29, color: '#5b8fa3', lastModifiedAt: Date.now() - 1 * 86400000 },
+  { id: 'turma-005', school: 'E.E. Cecília Meireles', series: '7º Ano', idSeries: 'A', qtd: 27, name: 'Turma A - Manhã', color: '#d5b657', lastModifiedAt: Date.now() - 2 * 86400000 },
+  { id: 'turma-006', school: 'Instituto Alpha', series: '7º Ano', idSeries: 'A', qtd: 35, color: '#9b6fa3', lastModifiedAt: Date.now() - 3 * 86400000 },
+  { id: 'turma-007', school: 'Colégio Alvorada', series: '8º Ano', idSeries: 'A', qtd: 22, color: '#e07b7b', lastModifiedAt: Date.now() - 5 * 86400000 },
+  { id: 'turma-008', school: 'E.E. Fernando Pessoa', series: '8º Ano', idSeries: 'A', qtd: 31, color: '#6f8691', lastModifiedAt: Date.now() - 8 * 86400000 },
+  { id: 'turma-009', school: 'Escola Nova Esperança', series: '8º Ano', idSeries: 'A', qtd: 0, color: '#b55b43', lastModifiedAt: Date.now() - 10 * 86400000 },
+  { id: 'turma-010', school: 'Instituto Alpha', series: '9º Ano', idSeries: 'A', qtd: 38, color: '#5b8fa3', lastModifiedAt: Date.now() - 12 * 86400000 },
+  { id: 'turma-011', school: 'E.E. Cecília Meireles', series: '1º Ano EM', idSeries: 'A', qtd: 36, color: '#9b6fa3', lastModifiedAt: Date.now() - 15 * 86400000 },
+  { id: 'turma-012', school: 'Colégio Alvorada', series: '2º Ano EM', idSeries: 'A', qtd: 24, color: '#7d9465', lastModifiedAt: Date.now() - 20 * 86400000 },
+  { id: 'turma-013', school: 'Instituto Alpha', series: '3º Ano EM', idSeries: 'A', qtd: 26, color: '#e07b7b', lastModifiedAt: Date.now() - 30 * 86400000 },
 ];
 
 export const MOCK_RECENT_WORKS: RecentWorkItem[] = [
@@ -184,6 +184,7 @@ export const MOCK_TEMPLATES: Template[] = [
     description: 'Estrutura padrão de plano de aula com objetivos, desenvolvimento por momentos e avaliação.',
     htmlContent: buildTemplateHtml('Plano de Aula Padrão'),
     turmaIds: ['turma-001'],
+    lastModifiedAt: Date.now() - 1 * 3600000,
   },
   {
     id: 'template-002',
@@ -192,6 +193,7 @@ export const MOCK_TEMPLATES: Template[] = [
     description: 'Template em branco para preenchimento livre.',
     htmlContent: buildTemplateHtml('Plano de Aula em Branco'),
     turmaIds: [],
+    lastModifiedAt: Date.now() - 5 * 3600000,
   },
   {
     id: 'template-003',
@@ -200,6 +202,7 @@ export const MOCK_TEMPLATES: Template[] = [
     description: 'Modelo direcionado às aulas de leitura e interpretação.',
     htmlContent: buildTemplateHtml('Plano de Aula de Leitura'),
     turmaIds: ['turma-002', 'turma-011'],
+    lastModifiedAt: Date.now() - 1 * 86400000,
   },
   {
     id: 'template-004',
@@ -208,6 +211,7 @@ export const MOCK_TEMPLATES: Template[] = [
     description: 'Estrutura com etapas de laboratório e experimentação.',
     htmlContent: buildTemplateHtml('Plano de Aula de Ciências'),
     turmaIds: [],
+    lastModifiedAt: Date.now() - 3 * 86400000,
   },
   {
     id: 'template-005',
@@ -216,6 +220,7 @@ export const MOCK_TEMPLATES: Template[] = [
     description: 'Modelo para oficinas e atividades práticas.',
     htmlContent: buildTemplateHtml('Plano de Oficina'),
     turmaIds: ['turma-004', 'turma-008'],
+    lastModifiedAt: Date.now() - 6 * 86400000,
   },
   {
     id: 'template-006',
@@ -224,6 +229,7 @@ export const MOCK_TEMPLATES: Template[] = [
     description: 'Template focado em avaliações e provas.',
     htmlContent: buildTemplateHtml('Plano de Avaliação'),
     turmaIds: ['turma-005', 'turma-010'],
+    lastModifiedAt: Date.now() - 9 * 86400000,
   },
   {
     id: 'template-007',
@@ -232,6 +238,7 @@ export const MOCK_TEMPLATES: Template[] = [
     description: 'Modelo compacto para revisão rápida de conteúdo.',
     htmlContent: buildTemplateHtml('Plano de Revisão'),
     turmaIds: ['turma-006', 'turma-012'],
+    lastModifiedAt: Date.now() - 14 * 86400000,
   },
 ];
 
@@ -290,13 +297,16 @@ export const MATERIAL_COLORS = [
 ];
 
 export const MOCK_MATERIAIS: Material[] = [
-  { id: 'material-001', title: 'Livro de Português Ensino Médio Vol. 1', autoral: false, orientation: 'V', type: 'source', fileType: 'pdf', qtd: 4, htmlContent: materialHtml('Livro de Português Vol. 1'), turmaIds: ['turma-001', 'turma-002'] },
-  { id: 'material-002', title: 'Livro de Português Ensino Médio Vol. 2', autoral: false, orientation: 'V', type: 'source', fileType: 'pdf', qtd: 2, htmlContent: materialHtml('Livro de Português Vol. 2'), turmaIds: ['turma-003'] },
-  { id: 'material-003', title: 'Escrita Argumentativa', autoral: true, orientation: 'H', type: 'slide', fileType: 'html', qtd: 5, htmlContent: materialHtml('Escrita Argumentativa'), turmaIds: ['turma-004', 'turma-005'] },
-  { id: 'material-004', title: 'Português Ensino Médio Vol. 3', autoral: false, orientation: 'V', type: 'source', fileType: 'pdf', qtd: 0, htmlContent: materialHtml('Português Vol. 3'), turmaIds: [] },
-  { id: 'material-005', title: 'Redação', autoral: true, orientation: 'H', type: 'slide', fileType: 'html', qtd: 3, htmlContent: materialHtml('Redação'), turmaIds: ['turma-006'] },
-  { id: 'material-006', title: 'Atividade de redação', autoral: true, orientation: 'V', type: 'atv', fileType: 'html', qtd: 6, htmlContent: materialHtml('Atividade de redação'), turmaIds: ['turma-001', 'turma-007'] },
-  { id: 'material-007', title: 'Planejamento de Atividade assíncrona', autoral: true, orientation: 'V', type: 'atv', fileType: 'html', qtd: 1, htmlContent: materialHtml('Planejamento de Atividade assíncrona'), turmaIds: ['turma-008'] },
+  { id: 'material-001', title: 'Livro de Português Ensino Médio Vol. 1', autoral: false, orientation: 'V', type: 'source', category: 'material', fileType: 'pdf', qtd: 4, status: 'Pronto para usar', htmlContent: materialHtml('Livro de Português Vol. 1'), turmaIds: ['turma-001', 'turma-002'], lastModified: 'Editado há 2 horas', lastModifiedAt: Date.now() - 2 * 3600000 },
+  { id: 'material-002', title: 'Livro de Português Ensino Médio Vol. 2', autoral: false, orientation: 'V', type: 'source', category: 'material', fileType: 'pdf', qtd: 2, status: 'Criando', htmlContent: materialHtml('Livro de Português Vol. 2'), turmaIds: ['turma-003'], lastModified: 'Editado ontem às 18:40', lastModifiedAt: Date.now() - 26 * 3600000 },
+  { id: 'material-003', title: 'Escrita Argumentativa', autoral: true, orientation: 'H', type: 'slide', category: 'atividade', fileType: 'html', qtd: 5, status: 'Pronto para usar', htmlContent: materialHtml('Escrita Argumentativa'), turmaIds: ['turma-004', 'turma-005'], lastModified: 'Editado há 3 dias', lastModifiedAt: Date.now() - 3 * 86400000 },
+  { id: 'material-004', title: 'Português Ensino Médio Vol. 3', autoral: false, orientation: 'V', type: 'source', category: 'material', fileType: 'pdf', qtd: 0, status: 'Criando', htmlContent: materialHtml('Português Vol. 3'), turmaIds: [], lastModified: 'Editado semana passada', lastModifiedAt: Date.now() - 7 * 86400000 },
+  { id: 'material-005', title: 'Redação', autoral: true, orientation: 'H', type: 'slide', category: 'plano', fileType: 'html', qtd: 3, status: 'Pronto para usar', htmlContent: materialHtml('Redação'), turmaIds: ['turma-006'], lastModified: 'Editado em 14/08', lastModifiedAt: Date.now() - 20 * 86400000 },
+  { id: 'material-008', title: 'Redação 2', autoral: true, orientation: 'H', type: 'slide', category: 'plano', fileType: 'html', qtd: 3, status: 'Pronto para usar', htmlContent: materialHtml('Redação'), turmaIds: ['turma-006'], lastModified: 'Editado em 14/08', lastModifiedAt: Date.now() - 19 * 86400000 },
+  { id: 'material-005', title: 'Redação 3', autoral: true, orientation: 'H', type: 'slide', category: 'plano', fileType: 'html', qtd: 3, status: 'Pronto para usar', htmlContent: materialHtml('Redação'), turmaIds: ['turma-006'], lastModified: 'Editado em 14/08', lastModifiedAt: Date.now() - 18 * 86400000 },
+  { id: 'material-0010', title: 'Redação 4', autoral: true, orientation: 'V', type: 'slide', category: 'plano', fileType: 'html', qtd: 3, status: 'Pronto para usar', htmlContent: materialHtml('Redação'), turmaIds: ['turma-006'], lastModified: 'Editado em 14/08', lastModifiedAt: Date.now() - 17 * 86400000 },
+  { id: 'material-006', title: 'Atividade de redação', autoral: true, orientation: 'V', type: 'atv', category: 'atividade', fileType: 'html', qtd: 6, status: 'Criando', htmlContent: materialHtml('Atividade de redação'), turmaIds: ['turma-001', 'turma-007'], lastModified: 'Editado em 08/08', lastModifiedAt: Date.now() - 26 * 86400000 },
+  { id: 'material-007', title: 'Planejamento de Atividade assíncrona', autoral: true, orientation: 'V', type: 'atv', category: 'plano', fileType: 'html', qtd: 1, status: 'Pronto para usar', htmlContent: materialHtml('Planejamento de Atividade assíncrona'), turmaIds: ['turma-008'], lastModified: 'Editado em 01/09', lastModifiedAt: Date.now() - 2 * 86400000 },
 ];
 
 let _allMateriais: Material[] = [...MOCK_MATERIAIS];
@@ -367,6 +377,6 @@ export function getAtividadesByTurmaId(turmaId: string): Atividade[] {
   return MOCK_ATIVIDADES.filter((a) => a.turmaId === turmaId);
 }
 
-export function getMateriaisByTurmaId(turmaId: string): MaterialTurma[] {
-  return MOCK_MATERIAIS_TURMA.filter((m) => m.turmaId === turmaId);
+export function getMateriaisByTurmaId(turmaId: string): Material[] {
+  return _allMateriais.filter((m) => m.turmaIds?.includes(turmaId));
 }
