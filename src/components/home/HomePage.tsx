@@ -89,7 +89,7 @@ export const HomePage: React.FC<HomePageProps> = () => {
         lastModified: 'Criado agora',
         tags: ['Educação Básica', 'Metodologias Ativas', 'Novo'],
         excerpt: 'Plano estruturado gerado a partir do brainstorm docente. Contém problematização inicial, textos motivadores e critérios de avaliação formativa.',
-        status: 'Em andamento',
+        status: 'Criando',
         accentColor: THEME_COLORS.accent,
         duration: 'A definir',
       };
@@ -163,7 +163,7 @@ export const HomePage: React.FC<HomePageProps> = () => {
           </svg>
 
           {/* Central Search / Idea Creation Input */}
-          <form onSubmit={handleGenerateIdea} className="relative max-w-2xl mx-auto input-in"
+          <form onSubmit={handleGenerateIdea} className="relative sm:w-lg md:w-2xl mx-auto input-in"
                 style={{
                   animationDelay: "180ms",
                 }}

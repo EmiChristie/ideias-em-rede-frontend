@@ -33,7 +33,7 @@ type StatusFilter = 'all' | ContentStatus;
 type SortDirection = 'asc' | 'desc';
 
 const STATUS_COLORS: Record<ContentStatus, string> = {
-  'Em andamento': '#d5b657',
+  'Criando': '#d5b657',
   'Pronto para usar': '#7d9465',
 };
 
@@ -352,7 +352,7 @@ export const TurmaDetailPage: React.FC = () => {
               <div className="flex items-center gap-1">
                 {[
                   { value: 'all' as StatusFilter, label: 'Todos' },
-                  { value: 'Em andamento' as StatusFilter, label: 'Em andamento' },
+                  { value: 'Criando' as StatusFilter, label: 'Criando' },
                   { value: 'Pronto para usar' as StatusFilter, label: 'Pronto para usar' },
                 ].map((option) => {
                   const active = statusFilter === option.value;

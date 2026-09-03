@@ -8,7 +8,7 @@ const OPTIONS = [
     defaultChecked: true,
   },
   {
-    label: 'Lembrar de planos em andamento antes do início da semana letiva',
+    label: 'Lembrar de planos Criando antes do início da semana letiva',
     defaultChecked: true,
   },
 ];

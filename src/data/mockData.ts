@@ -1,4 +1,4 @@
-﻿import type { TeacherProfile, RecentWorkItem, Turma, PlanoDeAula, Atividade, MaterialTurma, Template } from '../types';
+﻿import type { TeacherProfile, RecentWorkItem, Turma, PlanoDeAula, Atividade, MaterialTurma, Template, Material } from '../types';
 import { THEME_COLORS } from '../constants/colors';
 
 export const MOCK_TEACHER_PROFILE: TeacherProfile = {
@@ -38,7 +38,7 @@ export const MOCK_RECENT_WORKS: RecentWorkItem[] = [
     lastModified: 'Editado há 2 horas',
     tags: ['Ensino Médio', 'Redes Sociais', 'Direito'],
     excerpt: 'Dinâmica com 4 bancadas: Defesa da autorregulação, defensores do marco civil, moderadores da corte simulada e fact-checkers.',
-    status: 'Em andamento',
+    status: 'Criando',
     accentColor: THEME_COLORS.accent,
     duration: '2 aulas (100 min)',
   },
@@ -74,7 +74,7 @@ export const MOCK_RECENT_WORKS: RecentWorkItem[] = [
     lastModified: 'Editado semana passada',
     tags: ['Fundamental II', 'Poder Legislativo', 'Oratória'],
     excerpt: 'Roteiro para divisão em comissões temáticas (Educação, Saúde, Tecnologia) e votação em plenário aberto.',
-    status: 'Em andamento',
+    status: 'Criando',
     accentColor: THEME_COLORS.accent,
     duration: '4 aulas',
   },
@@ -106,35 +106,35 @@ export const MOCK_RECENT_WORKS: RecentWorkItem[] = [
 
 export const MOCK_PLANOS_DE_AULA: PlanoDeAula[] = [
   { id: 'plano-001', title: 'Introdução à Equação do 2º Grau', description: 'Aula expositiva com exercícios práticos sobre discriminante e fórmula de Bhaskara.', duration: '2 aulas', status: 'Pronto para usar', turmaId: 'turma-001' },
-  { id: 'plano-002', title: 'Revolução Francesa: Causas e Consequências', description: 'Análise de fontes primárias e debate sobre o iluminismo.', duration: '3 aulas', status: 'Em andamento', turmaId: 'turma-001' },
-  { id: 'plano-003', title: 'Leitura Crítica de Textos Narrativos', description: 'Identificação de narrador, tempo e espaço em contos brasileiros.', duration: '1 aula', status: 'Em andamento', turmaId: 'turma-002' },
+  { id: 'plano-002', title: 'Revolução Francesa: Causas e Consequências', description: 'Análise de fontes primárias e debate sobre o iluminismo.', duration: '3 aulas', status: 'Criando', turmaId: 'turma-001' },
+  { id: 'plano-003', title: 'Leitura Crítica de Textos Narrativos', description: 'Identificação de narrador, tempo e espaço em contos brasileiros.', duration: '1 aula', status: 'Criando', turmaId: 'turma-002' },
   { id: 'plano-004', title: 'Sistema Solar e Movimento dos Planetas', description: 'Simulação digital do sistema heliocêntrico.', duration: '2 aulas', status: 'Pronto para usar', turmaId: 'turma-004' },
-  { id: 'plano-005', title: 'Funções do 1º Grau', description: 'Gráficos, inclinação e interceptação no plano cartesiano.', duration: '2 aulas', status: 'Em andamento', turmaId: 'turma-005' },
+  { id: 'plano-005', title: 'Funções do 1º Grau', description: 'Gráficos, inclinação e interceptação no plano cartesiano.', duration: '2 aulas', status: 'Criando', turmaId: 'turma-005' },
   { id: 'plano-006', title: 'O Brasil Colônia: Capitanias Hereditárias', description: 'Mapa interativo e análise de contrato de sesmaria.', duration: '3 aulas', status: 'Pronto para usar', turmaId: 'turma-006' },
-  { id: 'plano-007', title: 'Proporção e Escala em Mapas', description: 'Atividade prática de leitura e construção de escalas.', duration: '1 aula', status: 'Em andamento', turmaId: 'turma-010' },
+  { id: 'plano-007', title: 'Proporção e Escala em Mapas', description: 'Atividade prática de leitura e construção de escalas.', duration: '1 aula', status: 'Criando', turmaId: 'turma-010' },
 ];
 
 export const MOCK_ATIVIDADES: Atividade[] = [
   { id: 'atv-001', title: 'Prova Bimestral - Álgebra', type: 'prova', description: 'Avaliação com questões de equações do 2º grau e interpretação gráfica.', status: 'Pronto para usar', turmaId: 'turma-001' },
-  { id: 'atv-002', title: 'Trabalho em Grupo: Mapa Mental sobre Revolução Francesa', type: 'trabalho', description: 'Produção coletá com uso de ferramentas digitais.', status: 'Em andamento', turmaId: 'turma-001' },
-  { id: 'atv-003', title: 'Exercício: Interpretação de Texto Narrativo', type: 'exercicio', description: 'Folha de exercícios com questões de compreensão leitora.', status: 'Em andamento', turmaId: 'turma-002' },
+  { id: 'atv-002', title: 'Trabalho em Grupo: Mapa Mental sobre Revolução Francesa', type: 'trabalho', description: 'Produção coletá com uso de ferramentas digitais.', status: 'Criando', turmaId: 'turma-001' },
+  { id: 'atv-003', title: 'Exercício: Interpretação de Texto Narrativo', type: 'exercicio', description: 'Folha de exercícios com questões de compreensão leitora.', status: 'Criando', turmaId: 'turma-002' },
   { id: 'atv-004', title: 'Oficina de Escrita: Crônica Escolar', type: 'oficina', description: 'Oficina prática de escrita criativa com roteiro e revisão entre pares.', status: 'Pronto para usar', turmaId: 'turma-004' },
   { id: 'atv-005', title: 'Lista de Exercícios: Funções', type: 'exercicio', description: '30 questões progressivas sobre funções do 1º grau.', status: 'Pronto para usar', turmaId: 'turma-005' },
-  { id: 'atv-006', title: 'Prova de História: Brasil Colônia', type: 'prova', description: 'Avaliação objetiva e discursiva sobre o período colonial.', status: 'Em andamento', turmaId: 'turma-006' },
+  { id: 'atv-006', title: 'Prova de História: Brasil Colônia', type: 'prova', description: 'Avaliação objetiva e discursiva sobre o período colonial.', status: 'Criando', turmaId: 'turma-006' },
   { id: 'atv-007', title: 'Trabalho: Análise de Quadro Pintoresco', type: 'trabalho', description: 'Análise formal e contextual de uma obra do Barroco brasileiro.', status: 'Pronto para usar', turmaId: 'turma-010' },
 ];
 
 export const MOCK_MATERIAIS_TURMA: MaterialTurma[] = [
   { id: 'mat-t-001', title: 'Apostila de Matemática Vol. 3', type: 'source', status: 'Pronto para usar', turmaId: 'turma-001' },
-  { id: 'mat-t-002', title: 'Slide: Equação do 2º Grau', type: 'slide', status: 'Em andamento', turmaId: 'turma-001' },
+  { id: 'mat-t-002', title: 'Slide: Equação do 2º Grau', type: 'slide', status: 'Criando', turmaId: 'turma-001' },
   { id: 'mat-t-003', title: 'Atividade: Equações - Nível Básico', type: 'atv', status: 'Pronto para usar', turmaId: 'turma-001' },
-  { id: 'mat-t-004', title: 'Slides: Revolução Francesa', type: 'slide', status: 'Em andamento', turmaId: 'turma-001' },
+  { id: 'mat-t-004', title: 'Slides: Revolução Francesa', type: 'slide', status: 'Criando', turmaId: 'turma-001' },
   { id: 'mat-t-005', title: 'Livro didático de Português - 6º Ano', type: 'source', status: 'Pronto para usar', turmaId: 'turma-002' },
-  { id: 'mat-t-006', title: 'Atividade: Leitura de Crônicas', type: 'atv', status: 'Em andamento', turmaId: 'turma-002' },
+  { id: 'mat-t-006', title: 'Atividade: Leitura de Crônicas', type: 'atv', status: 'Criando', turmaId: 'turma-002' },
   { id: 'mat-t-007', title: 'Slide: Sistema Solar', type: 'slide', status: 'Pronto para usar', turmaId: 'turma-004' },
-  { id: 'mat-t-008', title: 'Apostila de Ciências - Astronomia', type: 'source', status: 'Em andamento', turmaId: 'turma-004' },
+  { id: 'mat-t-008', title: 'Apostila de Ciências - Astronomia', type: 'source', status: 'Criando', turmaId: 'turma-004' },
   { id: 'mat-t-009', title: 'Atividade: Gráficos de Funções', type: 'atv', status: 'Pronto para usar', turmaId: 'turma-005' },
-  { id: 'mat-t-010', title: 'Slides: Brasil Colônia', type: 'slide', status: 'Em andamento', turmaId: 'turma-006' },
+  { id: 'mat-t-010', title: 'Slides: Brasil Colônia', type: 'slide', status: 'Criando', turmaId: 'turma-006' },
 ];
 
 export const buildTemplateHtml = (title: string): string => `
@@ -263,6 +263,70 @@ export function getTurmasByTemplateId(templateId: string): Turma[] {
   return MOCK_TURMAS.filter((turma) => ids.includes(turma.id));
 }
 
+/* ========================================================= */
+/* MATERIAIS                                                */
+/* ========================================================= */
+
+export const materialHtml = (title: string): string => `
+<style>
+  body { font-family: 'Segoe UI', Arial, sans-serif; color: #333; margin: 24px; line-height: 1.6; }
+  h1 { font-size: 17px; color: #b55b43; border-bottom: 2px solid #b55b43; padding-bottom: 6px; }
+  p { font-size: 12px; }
+</style>
+  <h1>${title}</h1>
+  <p>Este material foi estruturado para apoiar o planejamento das aulas.</p>
+  <p>Conteúdo de referência, exemplos e atividades serão exibidos aqui.</p>
+`;
+
+export const MATERIAL_COLORS = [
+  '#b55b43',
+  '#5b8fa3',
+  '#7d9465',
+  '#c98a3d',
+  '#8a6fb0',
+  '#4f7490',
+  '#b0765a',
+  '#6f8f7f',
+];
+
+export const MOCK_MATERIAIS: Material[] = [
+  { id: 'material-001', title: 'Livro de Português Ensino Médio Vol. 1', autoral: false, orientation: 'V', type: 'source', fileType: 'pdf', qtd: 4, htmlContent: materialHtml('Livro de Português Vol. 1'), turmaIds: ['turma-001', 'turma-002'] },
+  { id: 'material-002', title: 'Livro de Português Ensino Médio Vol. 2', autoral: false, orientation: 'V', type: 'source', fileType: 'pdf', qtd: 2, htmlContent: materialHtml('Livro de Português Vol. 2'), turmaIds: ['turma-003'] },
+  { id: 'material-003', title: 'Escrita Argumentativa', autoral: true, orientation: 'H', type: 'slide', fileType: 'html', qtd: 5, htmlContent: materialHtml('Escrita Argumentativa'), turmaIds: ['turma-004', 'turma-005'] },
+  { id: 'material-004', title: 'Português Ensino Médio Vol. 3', autoral: false, orientation: 'V', type: 'source', fileType: 'pdf', qtd: 0, htmlContent: materialHtml('Português Vol. 3'), turmaIds: [] },
+  { id: 'material-005', title: 'Redação', autoral: true, orientation: 'H', type: 'slide', fileType: 'html', qtd: 3, htmlContent: materialHtml('Redação'), turmaIds: ['turma-006'] },
+  { id: 'material-006', title: 'Atividade de redação', autoral: true, orientation: 'V', type: 'atv', fileType: 'html', qtd: 6, htmlContent: materialHtml('Atividade de redação'), turmaIds: ['turma-001', 'turma-007'] },
+  { id: 'material-007', title: 'Planejamento de Atividade assíncrona', autoral: true, orientation: 'V', type: 'atv', fileType: 'html', qtd: 1, htmlContent: materialHtml('Planejamento de Atividade assíncrona'), turmaIds: ['turma-008'] },
+];
+
+let _allMateriais: Material[] = [...MOCK_MATERIAIS];
+
+export function getAllMateriais(): Material[] {
+  return _allMateriais;
+}
+
+export function getMaterialById(id: string): Material | undefined {
+  return _allMateriais.find((m) => m.id === id);
+}
+
+export function addMaterial(material: Material): void {
+  _allMateriais = [..._allMateriais, material];
+}
+
+export function updateMaterial(updated: Material): void {
+  _allMateriais = _allMateriais.map((m) => (m.id === updated.id ? updated : m));
+}
+
+export function removeMaterial(id: string): void {
+  _allMateriais = _allMateriais.filter((m) => m.id !== id);
+}
+
+export function getTurmasByMaterialId(materialId: string): Turma[] {
+  const material = _allMateriais.find((m) => m.id === materialId);
+  const ids = material?.turmaIds ?? [];
+  return MOCK_TURMAS.filter((turma) => ids.includes(turma.id));
+}
+
 let _allTurmas: Turma[] = [...MOCK_TURMAS];
 
 export function getAllTurmas(): Turma[] {
@@ -287,6 +351,11 @@ export function removeTurma(id: string): void {
     if (!t.turmaIds?.includes(id)) return t;
     const turmaIds = t.turmaIds.filter((tid) => tid !== id);
     return { ...t, turmaIds, qtd: turmaIds.length };
+  });
+  _allMateriais = _allMateriais.map((m) => {
+    if (!m.turmaIds?.includes(id)) return m;
+    const turmaIds = m.turmaIds.filter((tid) => tid !== id);
+    return { ...m, turmaIds, qtd: turmaIds.length };
   });
 }
 

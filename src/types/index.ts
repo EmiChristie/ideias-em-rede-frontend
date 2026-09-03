@@ -7,6 +7,19 @@ export type AuthMode = 'login' | 'register' | 'forgot_password';
 
 export type MaterialType = 'source' | 'slide' | 'atv';
 
+export interface Material {
+  id: string;
+  title: string;
+  autoral: boolean;
+  orientation: 'V' | 'H';
+  type: MaterialType;
+  fileType: 'pdf' | 'html';
+  qtd: number;
+  htmlContent: string;
+  fileUrl?: string;
+  turmaIds?: string[];
+}
+
 export interface Turma {
   id: string;
   school: string;
@@ -27,7 +40,7 @@ export interface Template {
   turmaIds?: string[];
 }
 
-export type ContentStatus = 'Em andamento' | 'Pronto para usar';
+export type ContentStatus = 'Criando' | 'Pronto para usar';
 
 export interface PlanoDeAula {
   id: string;
@@ -77,7 +90,7 @@ export interface RecentWorkItem {
   lastModified: string;
   tags: string[];
   excerpt: string;
-  status: 'Em andamento' | 'Rascunho' | 'Pronto para aula';
+  status: 'Criando' | 'Rascunho' | 'Pronto para aula';
   accentColor: string;
   questionsCount?: number;
   duration?: string;

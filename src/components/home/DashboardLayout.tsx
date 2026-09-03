@@ -16,7 +16,8 @@ export const DashboardLayout: React.FC = () => {
 
   const isTurmaDetail = location.pathname.startsWith('/home/turmas/');
   const isTemplateDetail = location.pathname.startsWith('/home/templates/');
-  const isDetailPage = isTurmaDetail || isTemplateDetail;
+  const isMaterialDetail = location.pathname.startsWith('/home/materiais/');
+  const isDetailPage = isTurmaDetail || isTemplateDetail || isMaterialDetail;
 
   useEffect(() => {
     const p = location.pathname;
@@ -24,7 +25,7 @@ export const DashboardLayout: React.FC = () => {
       setActiveMenu('turmas');
     } else if (p === '/home/templates' || p.startsWith('/home/templates/')) {
       setActiveMenu('templates');
-    } else if (p === '/home/materiais') {
+    } else if (p === '/home/materiais' || p.startsWith('/home/materiais/')) {
       setActiveMenu('materiais');
     } else if (p === '/home') {
       setActiveMenu('criar');

@@ -1,4 +1,5 @@
 import React, { useMemo, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
   File,
   Plus,
@@ -8,34 +9,16 @@ import {
 } from 'lucide-react';
 
 import { THEME_COLORS } from '../../constants/colors';
-import { MOCK_TURMAS } from '../../data/mockData';
+import { MOCK_TURMAS, getAllMateriais, addMaterial } from '../../data/mockData';
 import { CriarMaterialModal } from '../criar/CriarMaterialModal';
 import { HtmlPreview } from '../general/HtmlPreview';
 
 interface MateriaisTabProps {}
 
-const materialHtml = (title: string): string => `
-<style>
-  body { font-family: 'Segoe UI', Arial, sans-serif; color: #333; margin: 24px; line-height: 1.6; }
-  h1 { font-size: 17px; color: #b55b43; border-bottom: 2px solid #b55b43; padding-bottom: 6px; }
-  p { font-size: 12px; }
-</style>
-  <h1>${title}</h1>
-  <p>Este material foi estruturado para apoiar o planejamento das aulas.</p>
-  <p>Conteúdo de referência, exemplos e atividades serão exibidos aqui.</p>
-`;
-
-const INITIAL_MATERIAIS = [
-  { title: 'Livro de Português Ensino Médio Vol. 1', autoral: false, orientation: 'V', type: 'source', qtd: 4, htmlContent: materialHtml('Livro de Português Vol. 1') },
-  { title: 'Livro de Português Ensino Médio Vol. 2', autoral: false, orientation: 'V', type: 'source', qtd: 2, htmlContent: materialHtml('Livro de Português Vol. 2') },
-  { title: 'Escrita Argumentativa', autoral: true, orientation: 'H', type: 'slide', qtd: 5, htmlContent: materialHtml('Escrita Argumentativa') },
-  { title: 'Português Ensino Médio Vol. 3', autoral: false, orientation: 'V', type: 'source', qtd: 0, htmlContent: materialHtml('Português Vol. 3') },
-  { title: 'Redação', autoral: true, orientation: 'H', type: 'slide', qtd: 3, htmlContent: materialHtml('Redação') },
-  { title: 'Atividade de redação', autoral: true, orientation: 'V', type: 'atv', qtd: 6, htmlContent: materialHtml('Atividade de redação') },
-  { title: 'Planejamento de Atividade assíncrona', autoral: true, orientation: 'V', type: 'atv', qtd: 1, htmlContent: materialHtml('Planejamento de Atividade assíncrona') },
-];
+const INITIAL_MATERIAIS = getAllMateriais();
 
 export const MateriaisTab: React.FC<MateriaisTabProps> = () => {
+  const navigate = useNavigate();
   const [materiais, setMateriais] = useState(INITIAL_MATERIAIS);
 
   const [isCreateOpen, setIsCreateOpen] = useState(false);
@@ -570,7 +553,10 @@ export const MateriaisTab: React.FC<MateriaisTabProps> = () => {
               {filteredMateriais.map(
                 (material, idx) => (
                   <div
-                    key={material.title}
+                    key={material.id}
+                    onClick={() =>
+                      navigate(`/home/materiais/${material.id}`)
+                    }
                     className={`
                       template-card-in
                       cursor-pointer
@@ -613,6 +599,9 @@ export const MateriaisTab: React.FC<MateriaisTabProps> = () => {
                     >
                       <HtmlPreview
                         html={material.htmlContent}
+                        fit
+                        refWidth={material.orientation === 'H' ? 1900 : 900}
+                        refHeight={material.orientation === 'H' ? 900 : 1273}
                         className="w-full h-full"
                       />
                     </div>
@@ -815,7 +804,8 @@ export const MateriaisTab: React.FC<MateriaisTabProps> = () => {
           turmas={MOCK_TURMAS}
           onClose={() => setIsCreateOpen(false)}
           onCreated={(material) => {
-            setMateriais((current) => [...current, material]);
+            addMaterial(material);
+            setMateriais(getAllMateriais());
           }}
         />
       )}

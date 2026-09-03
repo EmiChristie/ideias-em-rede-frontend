@@ -1,31 +1,15 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { BookMarked, CheckCircle2, PenLine, Upload } from 'lucide-react';
+import { BookMarked, CheckCircle2, FileText, PenLine, Upload } from 'lucide-react';
 import { THEME_COLORS } from '../../constants/colors';
-import type { MaterialType, Turma } from '../../types';
+import type { Material, MaterialType, Turma } from '../../types';
+import { materialHtml } from '../../data/mockData';
 import { BaseModal } from './BaseModal';
 
 interface CriarMaterialModalProps {
   turmas: Turma[];
   onClose: () => void;
-  onCreated: (material: {
-    title: string;
-    autoral: boolean;
-    orientation: 'V' | 'H';
-    type: MaterialType;
-    qtd: number;
-    htmlContent: string;
-  }) => void;
+  onCreated: (material: Material) => void;
 }
-
-const buildMaterialHtml = (title: string): string => `
-<style>
-  body { font-family: 'Segoe UI', Arial, sans-serif; color: #333; margin: 24px; line-height: 1.6; }
-  h1 { font-size: 17px; color: #b55b43; border-bottom: 2px solid #b55b43; padding-bottom: 6px; }
-  p { font-size: 12px; }
-</style>
-  <h1>${title}</h1>
-  <p>Material preparado para apoiar o planejamento das aulas.</p>
-`;
 
 const inputClassName =
   'w-full pl-10 pr-4 py-2.5 rounded-xl text-sm border focus:outline-none focus:ring-2 focus:ring-[#b55b43]/10';
@@ -46,6 +30,7 @@ export const CriarMaterialModal: React.FC<CriarMaterialModalProps> = ({
 }) => {
   const [name, setName] = useState('');
   const [type, setType] = useState<MaterialType>('source');
+  const [fileType, setFileType] = useState<'pdf' | 'html'>('html');
   const [isAutoral, setIsAutoral] = useState(false);
   const [selectedKeys, setSelectedKeys] = useState<string[]>([]);
   const [fileName, setFileName] = useState('');
@@ -79,12 +64,22 @@ export const CriarMaterialModal: React.FC<CriarMaterialModalProps> = ({
 
     timerRef.current = setTimeout(() => {
       onCreated({
+        id: crypto.randomUUID(),
         title: name.trim(),
         autoral: isAutoral,
         orientation: 'V',
         type,
+        fileType,
         qtd: selectedKeys.length,
-        htmlContent: buildMaterialHtml(name.trim()),
+        htmlContent:
+          fileType === 'html'
+            ? materialHtml(name.trim())
+            : materialHtml(name.trim()),
+        turmaIds: turmas
+          .filter((t) =>
+            selectedKeys.includes(turmaKey(t))
+          )
+          .map((t) => t.id),
       });
       onClose();
     }, 850);
@@ -199,7 +194,7 @@ export const CriarMaterialModal: React.FC<CriarMaterialModalProps> = ({
               </div>
             </div>
 
-            <div className="flex items-end pb-1">
+            <div className="flex items-end pb-2">
               <label
                 className="flex items-center gap-2.5 cursor-pointer text-xs font-semibold"
                 style={{ color: THEME_COLORS.textDark }}
@@ -213,6 +208,40 @@ export const CriarMaterialModal: React.FC<CriarMaterialModalProps> = ({
                 <PenLine className="w-3.5 h-3.5" />
                 Material autoral
               </label>
+            </div>
+          </div>
+
+          {/* Tipo do arquivo */}
+          <div>
+            <label className="block text-xs font-bold uppercase tracking-wider mb-1.5" style={{ color: THEME_COLORS.textDark }}>
+              Tipo do arquivo
+            </label>
+            <div className="relative">
+              <FileText className="w-4 h-4 text-stone-400 absolute left-3.5 top-3.5" />
+              <select
+                value={fileType}
+                onChange={(e) => setFileType(e.target.value as 'pdf' | 'html')}
+                className={`${inputClassName} appearance-none pr-9 cursor-pointer`}
+                style={{
+                  backgroundColor: THEME_COLORS.bgLight,
+                  borderColor: THEME_COLORS.borderLight,
+                  color: THEME_COLORS.textDark,
+                }}
+              >
+                <option value="html">HTML</option>
+                <option value="pdf">PDF</option>
+              </select>
+              <svg
+                className="w-4 h-4 text-stone-400 absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <path d="m6 9 6 6 6-6" />
+              </svg>
             </div>
           </div>
 

@@ -1,8 +1,10 @@
 import React, { useMemo, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import {
+  BookMarked,
   Download,
   File,
+  FileText,
   Pencil,
   PencilRuler,
   Plus,
@@ -11,42 +13,35 @@ import {
 } from 'lucide-react';
 import { THEME_COLORS } from '../../constants/colors';
 import {
-  getAllTemplates,
-  addTemplate,
-  updateTemplate,
-  removeTemplate,
-  getTemplateById,
-  getTurmasByTemplateId,
-  getAllTurmas,
+  getAllMateriais,
+  addMaterial,
+  removeMaterial,
+  getMaterialById,
+  getTurmasByMaterialId,
   MOCK_TURMAS,
+  MATERIAL_COLORS,
 } from '../../data/mockData';
-import type { Template } from '../../types';
-import { downloadTemplateHtml } from '../../utils/downloadTemplate';
+import type { Material, MaterialType } from '../../types';
+import { downloadMaterialHtml } from '../../utils/downloadMaterial';
 import { HtmlPreview } from '../general/HtmlPreview';
-import { CriarTemplateModal } from '../criar/CriarTemplateModal';
-import { EditarTemplateModal } from '../criar/EditarTemplateModal';
+import { CriarMaterialModal } from '../criar/CriarMaterialModal';
 import { ConfirmDeleteModal } from '../criar/ConfirmDeleteModal';
 
-const TEMPLATE_COLORS = [
-  '#b55b43',
-  '#5b8fa3',
-  '#7d9465',
-  '#c98a3d',
-  '#8a6fb0',
-  '#4f7490',
-  '#b0765a',
-  '#6f8f7f',
-];
+const TYPE_LABELS: Record<MaterialType, string> = {
+  source: 'Fonte / Livro',
+  slide: 'Slides / Apresentação',
+  atv: 'Atividade',
+};
 
-interface TemplatesSidebarProps {
-  templates: Template[];
+interface MateriaisSidebarProps {
+  materiais: Material[];
   activeId: string;
   onSelect: (id: string) => void;
   onCreate: () => void;
 }
 
-const TemplatesSidebar: React.FC<TemplatesSidebarProps> = ({
-  templates,
+const MateriaisSidebar: React.FC<MateriaisSidebarProps> = ({
+  materiais,
   activeId,
   onSelect,
   onCreate,
@@ -58,20 +53,20 @@ const TemplatesSidebar: React.FC<TemplatesSidebarProps> = ({
     >
       <div className="p-5 pb-3 flex items-center justify-between">
         <h2 className="text-lg font-black tracking-tight" style={{ color: THEME_COLORS.textDark }}>
-          Templates
+          Materiais
         </h2>
-        <span className="text-xs font-bold text-stone-400">{templates.length}</span>
+        <span className="text-xs font-bold text-stone-400">{materiais.length}</span>
       </div>
 
       <div className="flex-1 overflow-y-auto px-3 pb-3 space-y-2">
-        {templates.map((t, idx) => {
-          const isActive = t.id === activeId;
-          const color = TEMPLATE_COLORS[idx % TEMPLATE_COLORS.length];
+        {materiais.map((m, idx) => {
+          const isActive = m.id === activeId;
+          const color = MATERIAL_COLORS[idx % MATERIAL_COLORS.length];
           return (
             <button
-              key={t.id}
+              key={m.id}
               type="button"
-              onClick={() => onSelect(t.id)}
+              onClick={() => onSelect(m.id)}
               className={`w-full flex items-center gap-3 p-2.5 rounded-xl border text-left transition-all cursor-pointer ${
                 isActive
                   ? 'bg-[#b55b43] text-white shadow-sm'
@@ -82,24 +77,28 @@ const TemplatesSidebar: React.FC<TemplatesSidebarProps> = ({
               }}
             >
               <span
-                className="w-9 h-9 rounded-lg shrink-0 flex items-center justify-center text-xs font-black text-white"
+                className="w-9 h-9 rounded-lg shrink-0 flex items-center justify-center"
                 style={{
                   backgroundColor: isActive ? '#ffffff33' : color,
-                  color: isActive ? '#fff' : '#fff',
                 }}
               >
+                {m.fileType === 'pdf' ? (
+                  <FileText className="w-4 h-4 text-white" />
+                ) : (
+                  <File className="w-4 h-4 text-white" />
+                )}
               </span>
 
               <span className="min-w-0 flex-1">
                 <span className={`block text-sm font-bold truncate ${isActive ? 'text-white' : ''}`}>
-                  {t.title}
+                  {m.title}
                 </span>
                 <span
                   className={`block text-[11px] font-semibold truncate ${
                     isActive ? 'text-white/80' : 'text-stone-500'
                   }`}
                 >
-                  {t.qtd} {t.qtd === 1 ? 'turma' : 'turmas'}
+                  {m.qtd} {m.qtd === 1 ? 'turma' : 'turmas'} • {TYPE_LABELS[m.type]}
                 </span>
               </span>
             </button>
@@ -122,9 +121,9 @@ const TemplatesSidebar: React.FC<TemplatesSidebarProps> = ({
             <Plus className="w-4 h-4" />
           </span>
           <span className="text-left">
-            <span className="block text-sm font-bold">Novo template</span>
+            <span className="block text-sm font-bold">Novo material</span>
             <span className="block text-[10px] font-medium opacity-70">
-              Adicionar template
+              Adicionar material
             </span>
           </span>
         </button>
@@ -133,47 +132,46 @@ const TemplatesSidebar: React.FC<TemplatesSidebarProps> = ({
   );
 };
 
-export const TemplateDetailPage: React.FC = () => {
+export const MaterialDetailPage: React.FC = () => {
   const navigate = useNavigate();
   const { id } = useParams<{ id: string }>();
 
   const [version, setVersion] = useState(0);
   const [isCreateOpen, setIsCreateOpen] = useState(false);
-  const [isEditOpen, setIsEditOpen] = useState(false);
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
 
-  const templates = useMemo(() => getAllTemplates(), [version]);
+  const materiais = useMemo(() => getAllMateriais(), [version]);
 
-  const template = useMemo(
-    () => (id ? getTemplateById(id) : undefined),
+  const material = useMemo(
+    () => (id ? getMaterialById(id) : undefined),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [id, version]
   );
 
   const turmasAssociadas = useMemo(
-    () => (id ? getTurmasByTemplateId(id) : []),
+    () => (id ? getTurmasByMaterialId(id) : []),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [id, version]
   );
 
-  if (!template) {
+  if (!material) {
     return (
       <div className="flex min-h-screen w-full template-page-in">
-        <TemplatesSidebar
-          templates={templates}
+        <MateriaisSidebar
+          materiais={materiais}
           activeId={id ?? ''}
-          onSelect={(tId) => navigate(`/home/templates/${tId}`)}
+          onSelect={(mId) => navigate(`/home/materiais/${mId}`)}
           onCreate={() => setIsCreateOpen(true)}
         />
 
         <div className="flex-1 p-8 lg:px-20 lg:py-16 max-w-7xl mx-auto w-full min-w-0">
           <div className="p-12 text-center rounded-3xl mt-8 space-y-3">
-            <File className="w-10 h-10 mx-auto text-stone-400" />
+            <BookMarked className="w-10 h-10 mx-auto text-stone-400" />
             <h4 className="font-bold text-sm text-stone-700">
-              Template não encontrado
+              Material não encontrado
             </h4>
             <p className="text-xs text-stone-500">
-              O template que você procura não existe ou foi removido.
+              O material que você procura não existe ou foi removido.
             </p>
           </div>
         </div>
@@ -181,12 +179,14 @@ export const TemplateDetailPage: React.FC = () => {
     );
   }
 
+  const isLandscape = material.orientation === 'H';
+
   return (
     <div className="flex min-h-screen w-full template-page-in">
-      <TemplatesSidebar
-        templates={templates}
-        activeId={template.id}
-        onSelect={(tId) => navigate(`/home/templates/${tId}`)}
+      <MateriaisSidebar
+        materiais={materiais}
+        activeId={material.id}
+        onSelect={(mId) => navigate(`/home/materiais/${mId}`)}
         onCreate={() => setIsCreateOpen(true)}
       />
 
@@ -206,14 +206,13 @@ export const TemplateDetailPage: React.FC = () => {
                   className="text-3xl xl:text-4xl font-black pt-6 tracking-tight"
                   style={{ color: THEME_COLORS.textDark }}
                 >
-                  {template.title}
+                  {material.title}
                 </h1>
 
                 <button
                   type="button"
-                  onClick={() => setIsEditOpen(true)}
-                  aria-label="Editar template"
-                  title="Editar template"
+                  aria-label="Editar material"
+                  title="Editar material"
                   className="p-2.5 rounded-xl transition-all hover:scale-105 cursor-pointer border"
                   style={{
                     backgroundColor: THEME_COLORS.bgLight,
@@ -227,8 +226,8 @@ export const TemplateDetailPage: React.FC = () => {
                 <button
                   type="button"
                   onClick={() => setIsDeleteOpen(true)}
-                  aria-label="Excluir template"
-                  title="Excluir template"
+                  aria-label="Excluir material"
+                  title="Excluir material"
                   className="p-2.5 rounded-xl transition-all hover:scale-105 cursor-pointer border"
                   style={{
                     backgroundColor: THEME_COLORS.bgLight,
@@ -288,45 +287,79 @@ export const TemplateDetailPage: React.FC = () => {
                 Baixar
               </span>
 
-              <button
-                type="button"
-                onClick={() => downloadTemplateHtml(template)}
-                title="Baixar como HTML"
-                className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold border transition-all hover:scale-105 cursor-pointer"
-                style={{
-                  backgroundColor: THEME_COLORS.bgLight,
-                  borderColor: THEME_COLORS.borderLight,
-                  color: THEME_COLORS.textDark,
-                }}
-              >
-                HTML
-              </button>
+              {material.fileType === 'html' && (
+                <>
+                  <button
+                    type="button"
+                    onClick={() => downloadMaterialHtml(material)}
+                    title="Baixar como HTML"
+                    className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold border transition-all hover:scale-105 cursor-pointer"
+                    style={{
+                      backgroundColor: THEME_COLORS.bgLight,
+                      borderColor: THEME_COLORS.borderLight,
+                      color: THEME_COLORS.textDark,
+                    }}
+                  >
+                    HTML
+                  </button>
 
-              <button
-                type="button"
-                title="Baixar como PDF"
-                className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold border transition-all hover:scale-105 cursor-pointer"
-                style={{
-                  backgroundColor: THEME_COLORS.bgLight,
-                  borderColor: THEME_COLORS.borderLight,
-                  color: THEME_COLORS.textDark,
-                }}
-              >
-                PDF
-              </button>
+                  <button
+                    type="button"
+                    title="Baixar como PDF"
+                    className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold border transition-all hover:scale-105 cursor-pointer"
+                    style={{
+                      backgroundColor: THEME_COLORS.bgLight,
+                      borderColor: THEME_COLORS.borderLight,
+                      color: THEME_COLORS.textDark,
+                    }}
+                  >
+                    PDF
+                  </button>
 
-              <button
-                type="button"
-                title="Baixar como DOCX"
-                className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold border transition-all hover:scale-105 cursor-pointer"
-                style={{
-                  backgroundColor: THEME_COLORS.bgLight,
-                  borderColor: THEME_COLORS.borderLight,
-                  color: THEME_COLORS.textDark,
-                }}
-              >
-                DOCX
-              </button>
+                  <button
+                    type="button"
+                    title="Baixar como DOCX"
+                    className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold border transition-all hover:scale-105 cursor-pointer"
+                    style={{
+                      backgroundColor: THEME_COLORS.bgLight,
+                      borderColor: THEME_COLORS.borderLight,
+                      color: THEME_COLORS.textDark,
+                    }}
+                  >
+                    DOCX
+                  </button>
+
+                  {material.type === 'slide' && (
+                    <button
+                      type="button"
+                      title="Baixar como PPTX"
+                      className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold border transition-all hover:scale-105 cursor-pointer"
+                      style={{
+                        backgroundColor: THEME_COLORS.bgLight,
+                        borderColor: THEME_COLORS.borderLight,
+                        color: THEME_COLORS.textDark,
+                      }}
+                    >
+                      PPTX
+                    </button>
+                  )}
+                </>
+              )}
+
+              {material.fileType === 'pdf' && (
+                <button
+                  type="button"
+                  title="Baixar como PDF"
+                  className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold border transition-all hover:scale-105 cursor-pointer"
+                  style={{
+                    backgroundColor: THEME_COLORS.bgLight,
+                    borderColor: THEME_COLORS.borderLight,
+                    color: THEME_COLORS.textDark,
+                  }}
+                >
+                  PDF
+                </button>
+              )}
 
               <span className="flex-1" />
 
@@ -336,56 +369,65 @@ export const TemplateDetailPage: React.FC = () => {
                 style={{ backgroundColor: THEME_COLORS.secondary }}
               >
                 <PencilRuler className="w-4 h-4" />
-                Editar template
+                Editar material
               </button>
             </div>
 
-            {/* Prévia do HTML */}
+            {/* Prévia */}
             <div className="overflow-auto bg-stone-100 p-6 md:p-10 flex justify-center">
-              <div className="shadow-xl shrink-0" style={{ boxShadow: '0 10px 30px rgba(0,0,0,0.15)' }}>
-                <HtmlPreview
-                  html={template.htmlContent}
-                  width={794}
-                  height={1123}
-                />
-              </div>
+              {material.fileType === 'html' ? (
+                <div className="shadow-xl shrink-0" style={{ boxShadow: '0 10px 30px rgba(0,0,0,0.15)' }}>
+                  <HtmlPreview
+                    html={material.htmlContent}
+                    width={isLandscape ? 960 : 794}
+                    height={isLandscape ? 540 : 1123}
+                  />
+                </div>
+              ) : (
+                <div
+                  className="w-[794px] max-w-full shrink-0 flex flex-col items-center justify-center rounded-lg bg-white py-16 px-10 text-center"
+                  style={{ boxShadow: '0 10px 30px rgba(0,0,0,0.15)' }}
+                >
+                  <span
+                    className="w-20 h-20 rounded-2xl flex items-center justify-center mb-5"
+                    style={{ backgroundColor: THEME_COLORS.lightPrimary, color: THEME_COLORS.primary }}
+                  >
+                    <FileText className="w-10 h-10" />
+                  </span>
+                  <h4 className="text-base font-bold" style={{ color: THEME_COLORS.textDark }}>
+                    Arquivo PDF
+                  </h4>
+                  <p className="mt-1 text-xs font-semibold text-stone-500 max-w-sm">
+                    A visualização do PDF estará disponível quando o arquivo estiver
+                    vinculado a este material.
+                  </p>
+                </div>
+              )}
             </div>
           </div>
         </div>
       </div>
 
       {isCreateOpen && (
-        <CriarTemplateModal
+        <CriarMaterialModal
           turmas={MOCK_TURMAS}
           onClose={() => setIsCreateOpen(false)}
-          onCreated={(newTemplate) => {
-            addTemplate(newTemplate);
+          onCreated={(newMaterial) => {
+            addMaterial(newMaterial);
             setVersion((v) => v + 1);
-            navigate(`/home/templates/${newTemplate.id}`);
-          }}
-        />
-      )}
-
-      {isEditOpen && (
-        <EditarTemplateModal
-          template={template}
-          turmas={getAllTurmas()}
-          onClose={() => setIsEditOpen(false)}
-          onUpdated={(updated) => {
-            updateTemplate(updated);
-            setVersion((v) => v + 1);
+            navigate(`/home/materiais/${newMaterial.id}`);
           }}
         />
       )}
 
       {isDeleteOpen && (
         <ConfirmDeleteModal
-          title="Excluir template?"
-          message={`Tem certeza que deseja excluir "${template.title}"? Esta ação não pode ser desfeita.`}
+          title="Excluir material?"
+          message={`Tem certeza que deseja excluir "${material.title}"? Esta ação não pode ser desfeita.`}
           onCancel={() => setIsDeleteOpen(false)}
           onConfirm={() => {
-            removeTemplate(template.id);
-            navigate('/home/templates');
+            removeMaterial(material.id);
+            navigate('/home/materiais');
           }}
         />
       )}
@@ -393,4 +435,4 @@ export const TemplateDetailPage: React.FC = () => {
   );
 };
 
-export default TemplateDetailPage;
+export default MaterialDetailPage;
