@@ -10,17 +10,29 @@ import {
 import { THEME_COLORS } from '../../constants/colors';
 import { MOCK_TURMAS } from '../../data/mockData';
 import { CriarMaterialModal } from '../criar/CriarMaterialModal';
+import { HtmlPreview } from '../general/HtmlPreview';
 
 interface MateriaisTabProps {}
 
+const materialHtml = (title: string): string => `
+<style>
+  body { font-family: 'Segoe UI', Arial, sans-serif; color: #333; margin: 24px; line-height: 1.6; }
+  h1 { font-size: 17px; color: #b55b43; border-bottom: 2px solid #b55b43; padding-bottom: 6px; }
+  p { font-size: 12px; }
+</style>
+  <h1>${title}</h1>
+  <p>Este material foi estruturado para apoiar o planejamento das aulas.</p>
+  <p>Conteúdo de referência, exemplos e atividades serão exibidos aqui.</p>
+`;
+
 const INITIAL_MATERIAIS = [
-  { title: 'Livro de Português Ensino Médio Vol. 1', autoral: false, orientation: 'V', type: 'source', qtd: 4 },
-  { title: 'Livro de Português Ensino Médio Vol. 2', autoral: false, orientation: 'V', type: 'source', qtd: 2 },
-  { title: 'Escrita Argumentativa', autoral: true, orientation: 'H', type: 'slide', qtd: 5 },
-  { title: 'Português Ensino Médio Vol. 3', autoral: false, orientation: 'V', type: 'source', qtd: 0 },
-  { title: 'Redação', autoral: true, orientation: 'H', type: 'slide', qtd: 3 },
-  { title: 'Atividade de redação', autoral: true, orientation: 'V', type: 'atv', qtd: 6 },
-  { title: 'Planejamento de Atividade assíncrona', autoral: true, orientation: 'V', type: 'atv', qtd: 1 },
+  { title: 'Livro de Português Ensino Médio Vol. 1', autoral: false, orientation: 'V', type: 'source', qtd: 4, htmlContent: materialHtml('Livro de Português Vol. 1') },
+  { title: 'Livro de Português Ensino Médio Vol. 2', autoral: false, orientation: 'V', type: 'source', qtd: 2, htmlContent: materialHtml('Livro de Português Vol. 2') },
+  { title: 'Escrita Argumentativa', autoral: true, orientation: 'H', type: 'slide', qtd: 5, htmlContent: materialHtml('Escrita Argumentativa') },
+  { title: 'Português Ensino Médio Vol. 3', autoral: false, orientation: 'V', type: 'source', qtd: 0, htmlContent: materialHtml('Português Vol. 3') },
+  { title: 'Redação', autoral: true, orientation: 'H', type: 'slide', qtd: 3, htmlContent: materialHtml('Redação') },
+  { title: 'Atividade de redação', autoral: true, orientation: 'V', type: 'atv', qtd: 6, htmlContent: materialHtml('Atividade de redação') },
+  { title: 'Planejamento de Atividade assíncrona', autoral: true, orientation: 'V', type: 'atv', qtd: 1, htmlContent: materialHtml('Planejamento de Atividade assíncrona') },
 ];
 
 export const MateriaisTab: React.FC<MateriaisTabProps> = () => {
@@ -591,9 +603,6 @@ export const MateriaisTab: React.FC<MateriaisTabProps> = () => {
                       className="
                         h-36
                         relative
-                        flex
-                        items-center
-                        justify-center
                         overflow-hidden
                         shrink-0
                       "
@@ -602,15 +611,10 @@ export const MateriaisTab: React.FC<MateriaisTabProps> = () => {
                           'rgba(240, 235, 234, 0.4)',
                       }}
                     >
-                      <div
-                        className="w-14 h-14 rounded-2xl flex items-center justify-center"
-                        style={{
-                          backgroundColor: '#ffffffcc',
-                          color: '#9e9a97',
-                        }}
-                      >
-                        <File className="w-6 h-6" />
-                      </div>
+                      <HtmlPreview
+                        html={material.htmlContent}
+                        className="w-full h-full"
+                      />
                     </div>
 
                     {/* Content */}

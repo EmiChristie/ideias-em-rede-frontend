@@ -1,4 +1,4 @@
-﻿import React, { useState } from 'react';
+﻿import React, { useEffect, useState } from 'react';
 import { useNavigate, useLocation, Outlet } from 'react-router-dom';
 import { Sidebar } from './Sidebar';
 import type { SidebarMenuId } from './Sidebar';
@@ -15,6 +15,21 @@ export const DashboardLayout: React.FC = () => {
   const [activeMenu, setActiveMenu] = useState<SidebarMenuId>('criar');
 
   const isTurmaDetail = location.pathname.startsWith('/home/turmas/');
+  const isTemplateDetail = location.pathname.startsWith('/home/templates/');
+  const isDetailPage = isTurmaDetail || isTemplateDetail;
+
+  useEffect(() => {
+    const p = location.pathname;
+    if (p === '/home/turmas' || p.startsWith('/home/turmas/')) {
+      setActiveMenu('turmas');
+    } else if (p === '/home/templates' || p.startsWith('/home/templates/')) {
+      setActiveMenu('templates');
+    } else if (p === '/home/materiais') {
+      setActiveMenu('materiais');
+    } else if (p === '/home') {
+      setActiveMenu('criar');
+    }
+  }, [location.pathname]);
 
   const handleSelectMenu = (menu: SidebarMenuId) => {
     setActiveMenu(menu);
@@ -47,7 +62,7 @@ export const DashboardLayout: React.FC = () => {
 
       {/* Rota de detalhe da turma: renderiza fora do <main> para ocupar a página cheia
           mantendo a Sidebar global do app */}
-      {isTurmaDetail ? (
+      {isDetailPage ? (
         <Outlet />
       ) : (
         <main

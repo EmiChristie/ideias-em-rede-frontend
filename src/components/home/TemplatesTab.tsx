@@ -6,41 +6,12 @@ import {
   ArrowDownAZ,
   UsersRound,
 } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 import { THEME_COLORS } from '../../constants/colors';
-import { MOCK_TURMAS } from '../../data/mockData';
+import { MOCK_TURMAS, getAllTemplates, addTemplate } from '../../data/mockData';
 import { CriarTemplateModal } from '../criar/CriarTemplateModal';
-
-const INITIAL_TEMPLATES = [
-  {
-    title: 'Escola XYZ Nome Maior Pra Comer Espaço Grande Aaaaaa',
-    qtd: 1,
-  },
-  {
-    title: 'Escola XYZ Nome Maior Pra Comer Espaço Grande Aaaaaa',
-    qtd: 0,
-  },
-  {
-    title: 'Escola XYZ Nome Maior Pra Comer Espaço Grande Aaaaaa',
-    qtd: 2,
-  },
-  {
-    title: 'Escola XYZ Nome Maior Pra Comer Espaço Grande Aaaaaa',
-    qtd: 0,
-  },
-  {
-    title: 'Escola XYZ',
-    qtd: 2,
-  },
-  {
-    title: 'Escola XYZ Nome Maior Pra Comer Espaço Grande Aaaaaa',
-    qtd: 2,
-  },
-  {
-    title: 'Escola XYZ Nome Pequeno',
-    qtd: 2,
-  },
-];
+import { HtmlPreview } from '../general/HtmlPreview';
 
 type SortOption = 'alphabetical' | 'quantity';
 
@@ -49,7 +20,9 @@ type SortDirection = 'asc' | 'desc';
 interface TemplatesTabProps {}
 
 export const TemplatesTab: React.FC<TemplatesTabProps> = () => {
-  const [templates, setTemplates] = useState(INITIAL_TEMPLATES);
+  const navigate = useNavigate();
+  const [version, setVersion] = useState(0);
+  const templates = useMemo(() => getAllTemplates(), [version]);
 
   const [isCreateOpen, setIsCreateOpen] = useState(false);
 
@@ -502,7 +475,10 @@ export const TemplatesTab: React.FC<TemplatesTabProps> = () => {
               {filteredTemplates.map(
                 (tmpl, idx) => (
                   <div
-                    key={`${tmpl.title}-${idx}`}
+                    key={tmpl.id}
+                    onClick={() =>
+                      navigate(`/home/templates/${tmpl.id}`)
+                    }
                     className="
                       template-card-in
                       cursor-pointer
@@ -513,6 +489,7 @@ export const TemplatesTab: React.FC<TemplatesTabProps> = () => {
                       shadow-sm
                       flex
                       flex-col
+                      overflow-hidden
                     "
                     style={{
                       backgroundColor:
@@ -529,9 +506,6 @@ export const TemplatesTab: React.FC<TemplatesTabProps> = () => {
                       className="
                         h-36
                         relative
-                        flex
-                        items-center
-                        justify-center
                         overflow-hidden
                         shrink-0
                       "
@@ -540,15 +514,11 @@ export const TemplatesTab: React.FC<TemplatesTabProps> = () => {
                           'rgba(240, 235, 234, 0.4)',
                       }}
                     >
-                      <div
-                        className="w-14 h-14 rounded-2xl flex items-center justify-center"
-                        style={{
-                          backgroundColor: '#ffffffcc',
-                          color: '#9e9a97',
-                        }}
-                      >
-                        <File className="w-6 h-6" />
-                      </div>
+                      <HtmlPreview
+                        html={tmpl.htmlContent}
+                        fit
+                        className="w-full h-full"
+                      />
                     </div>
 
                     {/* Content */}
@@ -695,7 +665,8 @@ export const TemplatesTab: React.FC<TemplatesTabProps> = () => {
           turmas={MOCK_TURMAS}
           onClose={() => setIsCreateOpen(false)}
           onCreated={(template) => {
-            setTemplates((current) => [...current, template]);
+            addTemplate(template);
+            setVersion((v) => v + 1);
           }}
         />
       )}

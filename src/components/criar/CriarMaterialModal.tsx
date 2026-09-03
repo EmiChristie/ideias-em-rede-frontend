@@ -13,8 +13,19 @@ interface CriarMaterialModalProps {
     orientation: 'V' | 'H';
     type: MaterialType;
     qtd: number;
+    htmlContent: string;
   }) => void;
 }
+
+const buildMaterialHtml = (title: string): string => `
+<style>
+  body { font-family: 'Segoe UI', Arial, sans-serif; color: #333; margin: 24px; line-height: 1.6; }
+  h1 { font-size: 17px; color: #b55b43; border-bottom: 2px solid #b55b43; padding-bottom: 6px; }
+  p { font-size: 12px; }
+</style>
+  <h1>${title}</h1>
+  <p>Material preparado para apoiar o planejamento das aulas.</p>
+`;
 
 const inputClassName =
   'w-full pl-10 pr-4 py-2.5 rounded-xl text-sm border focus:outline-none focus:ring-2 focus:ring-[#b55b43]/10';
@@ -73,6 +84,7 @@ export const CriarMaterialModal: React.FC<CriarMaterialModalProps> = ({
         orientation: 'V',
         type,
         qtd: selectedKeys.length,
+        htmlContent: buildMaterialHtml(name.trim()),
       });
       onClose();
     }, 850);

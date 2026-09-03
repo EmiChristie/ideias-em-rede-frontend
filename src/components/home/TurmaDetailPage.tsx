@@ -7,6 +7,7 @@ import {
   Pencil,
   Plus,
   Search,
+  Trash2,
   UsersRound,
 } from 'lucide-react';
 import { THEME_COLORS } from '../../constants/colors';
@@ -18,10 +19,12 @@ import {
   getMateriaisByTurmaId,
   updateTurma,
   addTurma,
+  removeTurma,
 } from '../../data/mockData';
 import type { MaterialTurma, Atividade, Turma, ContentStatus } from '../../types';
 import { EditarTurmaModal } from '../criar/EditarTurmaModal';
 import { CriarTurmaModal } from '../criar/CriarTurmaModal';
+import { ConfirmDeleteModal } from '../criar/ConfirmDeleteModal';
 
 type ContentFilter = 'all' | 'plano' | 'atividade' | 'material';
 
@@ -57,6 +60,7 @@ export const TurmaDetailPage: React.FC = () => {
   const [sortDirection, setSortDirection] = useState<SortDirection>('asc');
   const [isEditOpen, setIsEditOpen] = useState(false);
   const [isCreateOpen, setIsCreateOpen] = useState(false);
+  const [isDeleteOpen, setIsDeleteOpen] = useState(false);
   const [version, setVersion] = useState(0);
 
   const turmasList = useMemo(
@@ -234,6 +238,16 @@ export const TurmaDetailPage: React.FC = () => {
                   className="p-2.5 rounded-xl bg-white/20 border border-white/40 text-white backdrop-blur-sm transition-all hover:scale-105 hover:bg-white/30 cursor-pointer"
                 >
                   <Pencil className="w-4 h-4" />
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => setIsDeleteOpen(true)}
+                  aria-label="Excluir turma"
+                  title="Excluir turma"
+                  className="p-2.5 rounded-xl bg-white/20 border border-white/40 text-white backdrop-blur-sm transition-all hover:scale-105 hover:bg-white/30 cursor-pointer"
+                >
+                  <Trash2 className="w-4 h-4" />
                 </button>
               </div>
 
@@ -491,6 +505,18 @@ export const TurmaDetailPage: React.FC = () => {
             addTurma(novaTurma);
             setVersion((v) => v + 1);
             setIsCreateOpen(false);
+          }}
+        />
+      )}
+
+      {isDeleteOpen && turma && (
+        <ConfirmDeleteModal
+          title="Excluir turma?"
+          message={`Tem certeza que deseja excluir a turma "${turma.series} ${turma.idSeries}"? Esta ação não pode ser desfeita.`}
+          onCancel={() => setIsDeleteOpen(false)}
+          onConfirm={() => {
+            removeTurma(turma.id);
+            navigate('/home/turmas');
           }}
         />
       )}

@@ -1,4 +1,4 @@
-﻿import type { TeacherProfile, RecentWorkItem, Turma, PlanoDeAula, Atividade, MaterialTurma } from '../types';
+﻿import type { TeacherProfile, RecentWorkItem, Turma, PlanoDeAula, Atividade, MaterialTurma, Template } from '../types';
 import { THEME_COLORS } from '../constants/colors';
 
 export const MOCK_TEACHER_PROFILE: TeacherProfile = {
@@ -137,6 +137,132 @@ export const MOCK_MATERIAIS_TURMA: MaterialTurma[] = [
   { id: 'mat-t-010', title: 'Slides: Brasil Colônia', type: 'slide', status: 'Em andamento', turmaId: 'turma-006' },
 ];
 
+export const buildTemplateHtml = (title: string): string => `
+<style>
+  body { font-family: 'Segoe UI', Arial, sans-serif; color: #333; margin: 32px; line-height: 1.6; }
+  h1 { font-size: 22px; color: #b55b43; border-bottom: 3px solid #b55b43; padding-bottom: 8px; }
+  h2 { font-size: 16px; color: #5b8fa3; margin-top: 24px; }
+  table { width: 100%; border-collapse: collapse; margin-top: 12px; }
+  th, td { border: 1px solid #ddd; padding: 8px 12px; text-align: left; }
+  th { background: #f5f0ee; }
+  .label { font-weight: 700; color: #7d9465; }
+</style>
+  <h1>${title}</h1>
+  <p><span class="label">Disciplina:</span> ______________ &nbsp;&nbsp; <span class="label">Série:</span> ______________</p>
+  <p><span class="label">Duração:</span> __ aulas &nbsp;&nbsp; <span class="label">Data:</span> __/__/____</p>
+
+  <h2>Objetivos da aula</h2>
+  <ul>
+    <li>Objetivo de aprendizagem 1</li>
+    <li>Objetivo de aprendizagem 2</li>
+    <li>Objetivo de aprendizagem 3</li>
+  </ul>
+
+  <h2>Desenvolvimento</h2>
+  <table>
+    <tr><th>Momento</th><th>Atividade</th><th>Tempo</th></tr>
+    <tr><td>Abertura</td><td>Contextualização e levantamento de conhecimentos prévios</td><td>10 min</td></tr>
+    <tr><td>Desenvolvimento</td><td>Exposição e atividade prática</td><td>30 min</td></tr>
+    <tr><td>Fechamento</td><td>Síntese e avaliação formativa</td><td>10 min</td></tr>
+  </table>
+
+  <h2>Avaliação</h2>
+  <p>Observação da participação e produção dos estudantes durante as atividades.</p>
+
+  <h2>Recursos</h2>
+  <ul>
+    <li>Quadro / projetor</li>
+    <li>Material impresso / digital</li>
+  </ul>
+`;
+
+export const MOCK_TEMPLATES: Template[] = [
+  {
+    id: 'template-001',
+    title: 'Escola XYZ Nome Maior Pra Comer Espaço Grande Aaaaaa',
+    qtd: 1,
+    description: 'Estrutura padrão de plano de aula com objetivos, desenvolvimento por momentos e avaliação.',
+    htmlContent: buildTemplateHtml('Plano de Aula Padrão'),
+    turmaIds: ['turma-001'],
+  },
+  {
+    id: 'template-002',
+    title: 'Escola XYZ Nome Maior Pra Comer Espaço Grande Aaaaaa',
+    qtd: 0,
+    description: 'Template em branco para preenchimento livre.',
+    htmlContent: buildTemplateHtml('Plano de Aula em Branco'),
+    turmaIds: [],
+  },
+  {
+    id: 'template-003',
+    title: 'Escola XYZ Nome Maior Pra Comer Espaço Grande Aaaaaa',
+    qtd: 2,
+    description: 'Modelo direcionado às aulas de leitura e interpretação.',
+    htmlContent: buildTemplateHtml('Plano de Aula de Leitura'),
+    turmaIds: ['turma-002', 'turma-011'],
+  },
+  {
+    id: 'template-004',
+    title: 'Escola XYZ Nome Maior Pra Comer Espaço Grande Aaaaaa',
+    qtd: 0,
+    description: 'Estrutura com etapas de laboratório e experimentação.',
+    htmlContent: buildTemplateHtml('Plano de Aula de Ciências'),
+    turmaIds: [],
+  },
+  {
+    id: 'template-005',
+    title: 'Escola XYZ',
+    qtd: 2,
+    description: 'Modelo para oficinas e atividades práticas.',
+    htmlContent: buildTemplateHtml('Plano de Oficina'),
+    turmaIds: ['turma-004', 'turma-008'],
+  },
+  {
+    id: 'template-006',
+    title: 'Escola XYZ Nome Maior Pra Comer Espaço Grande Aaaaaa',
+    qtd: 2,
+    description: 'Template focado em avaliações e provas.',
+    htmlContent: buildTemplateHtml('Plano de Avaliação'),
+    turmaIds: ['turma-005', 'turma-010'],
+  },
+  {
+    id: 'template-007',
+    title: 'Escola XYZ Nome Pequeno',
+    qtd: 2,
+    description: 'Modelo compacto para revisão rápida de conteúdo.',
+    htmlContent: buildTemplateHtml('Plano de Revisão'),
+    turmaIds: ['turma-006', 'turma-012'],
+  },
+];
+
+let _allTemplates: Template[] = [...MOCK_TEMPLATES];
+
+export function getAllTemplates(): Template[] {
+  return _allTemplates;
+}
+
+export function getTemplateById(id: string): Template | undefined {
+  return _allTemplates.find((t) => t.id === id);
+}
+
+export function addTemplate(template: Template): void {
+  _allTemplates = [..._allTemplates, template];
+}
+
+export function updateTemplate(updated: Template): void {
+  _allTemplates = _allTemplates.map((t) => (t.id === updated.id ? updated : t));
+}
+
+export function removeTemplate(id: string): void {
+  _allTemplates = _allTemplates.filter((t) => t.id !== id);
+}
+
+export function getTurmasByTemplateId(templateId: string): Turma[] {
+  const template = _allTemplates.find((t) => t.id === templateId);
+  const ids = template?.turmaIds ?? [];
+  return MOCK_TURMAS.filter((turma) => ids.includes(turma.id));
+}
+
 let _allTurmas: Turma[] = [...MOCK_TURMAS];
 
 export function getAllTurmas(): Turma[] {
@@ -153,6 +279,15 @@ export function addTurma(turma: Turma): void {
 
 export function updateTurma(updated: Turma): void {
   _allTurmas = _allTurmas.map((t) => (t.id === updated.id ? updated : t));
+}
+
+export function removeTurma(id: string): void {
+  _allTurmas = _allTurmas.filter((t) => t.id !== id);
+  _allTemplates = _allTemplates.map((t) => {
+    if (!t.turmaIds?.includes(id)) return t;
+    const turmaIds = t.turmaIds.filter((tid) => tid !== id);
+    return { ...t, turmaIds, qtd: turmaIds.length };
+  });
 }
 
 export function getPlanosByTurmaId(turmaId: string): PlanoDeAula[] {

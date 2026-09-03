@@ -18,6 +18,15 @@ export interface Turma {
   image?: string;
 }
 
+export interface Template {
+  id: string;
+  title: string;
+  qtd: number;
+  description?: string;
+  htmlContent: string;
+  turmaIds?: string[];
+}
+
 export type ContentStatus = 'Em andamento' | 'Pronto para usar';
 
 export interface PlanoDeAula {

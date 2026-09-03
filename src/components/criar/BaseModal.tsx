@@ -6,9 +6,10 @@ import { THEME_COLORS } from '../../constants/colors';
 interface BaseModalProps {
   onClose: () => void;
   children: React.ReactNode;
+  maxWidthClass?: string;
 }
 
-export const BaseModal: React.FC<BaseModalProps> = ({ onClose, children }) => {
+export const BaseModal: React.FC<BaseModalProps> = ({ onClose, children, maxWidthClass = 'max-w-lg' }) => {
   useEffect(() => {
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
@@ -21,10 +22,10 @@ export const BaseModal: React.FC<BaseModalProps> = ({ onClose, children }) => {
   return createPortal(
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 backdrop-blur-sm animate-in fade-in duration-200">
       <div
-        className="
+        className={`
           relative
           w-full
-          max-w-lg
+          ${maxWidthClass}
           max-h-[90vh]
           overflow-y-auto
           rounded-3xl
@@ -32,7 +33,7 @@ export const BaseModal: React.FC<BaseModalProps> = ({ onClose, children }) => {
           p-6
           sm:p-8
           modal-in
-        "
+        `}
         style={{
           backgroundColor: THEME_COLORS.bgLight,
           borderColor: THEME_COLORS.borderLight,

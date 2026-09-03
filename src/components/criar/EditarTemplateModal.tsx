@@ -1,34 +1,29 @@
 import React, { useEffect, useRef, useState } from 'react';
-import {
-  CheckCircle2,
-  LayoutTemplate,
-  Upload,
-} from 'lucide-react';
+import { CheckCircle2, LayoutTemplate } from 'lucide-react';
 import { THEME_COLORS } from '../../constants/colors';
 import type { Turma, Template } from '../../types';
-import { buildTemplateHtml } from '../../data/mockData';
 import { BaseModal } from './BaseModal';
 
-interface CriarTemplateModalProps {
+interface EditarTemplateModalProps {
+  template: Template;
   turmas: Turma[];
   onClose: () => void;
-  onCreated: (template: Template) => void;
+  onUpdated: (template: Template) => void;
 }
 
 const inputClassName =
   'w-full pl-10 pr-4 py-2.5 rounded-xl text-sm border focus:outline-none focus:ring-2 focus:ring-[#b55b43]/10';
-const textareaClassName =
-  'w-full px-4 py-2.5 rounded-xl text-sm border focus:outline-none focus:ring-2 focus:ring-[#b55b43]/10 resize-none';
 
-export const CriarTemplateModal: React.FC<CriarTemplateModalProps> = ({
+export const EditarTemplateModal: React.FC<EditarTemplateModalProps> = ({
+  template,
   turmas,
   onClose,
-  onCreated,
+  onUpdated,
 }) => {
-  const [name, setName] = useState('');
-  const [description, setDescription] = useState('');
-  const [selectedIds, setSelectedIds] = useState<string[]>([]);
-  const [fileName, setFileName] = useState('');
+  const [name, setName] = useState(template.title);
+  const [selectedIds, setSelectedIds] = useState<string[]>(
+    template.turmaIds ?? []
+  );
   const [saved, setSaved] = useState(false);
 
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -47,12 +42,6 @@ export const CriarTemplateModal: React.FC<CriarTemplateModalProps> = ({
     );
   };
 
-  const handleFile = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const f = e.target.files?.[0]?.name ?? '';
-    setFileName(f);
-    if (f) setDescription('');
-  };
-
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!name.trim()) return;
@@ -60,13 +49,11 @@ export const CriarTemplateModal: React.FC<CriarTemplateModalProps> = ({
     setSaved(true);
 
     timerRef.current = setTimeout(() => {
-      onCreated({
-        id: crypto.randomUUID(),
+      onUpdated({
+        ...template,
         title: name.trim(),
-        description: description.trim() || undefined,
-        qtd: selectedIds.length,
-        htmlContent: buildTemplateHtml(name.trim()),
         turmaIds: selectedIds,
+        qtd: selectedIds.length,
       });
       onClose();
     }, 850);
@@ -83,7 +70,7 @@ export const CriarTemplateModal: React.FC<CriarTemplateModalProps> = ({
   }, [turmas]);
 
   return (
-    <BaseModal onClose={onClose} maxWidthClass="max-w-2xl">
+    <BaseModal onClose={onClose}>
       {saved ? (
         <div className="py-10 text-center space-y-3">
           <CheckCircle2 className="w-14 h-14 mx-auto text-emerald-600" />
@@ -92,7 +79,7 @@ export const CriarTemplateModal: React.FC<CriarTemplateModalProps> = ({
             className="text-lg font-bold"
             style={{ color: THEME_COLORS.textDark }}
           >
-            Template criado com sucesso!
+            Template atualizado com sucesso!
           </h3>
 
           <p className="text-xs font-semibold text-stone-500">
@@ -114,12 +101,12 @@ export const CriarTemplateModal: React.FC<CriarTemplateModalProps> = ({
               className="text-2xl font-black tracking-tight"
               style={{ color: THEME_COLORS.textDark }}
             >
-              Novo Template
+              Editar Template
             </h2>
 
             <p className="mt-1 text-xs font-semibold text-stone-500">
-              Associe uma ou mais turmas ao template de
-              plano de aula
+              Atualize o nome e as turmas associadas ao
+              template de plano de aula
             </p>
           </div>
 
@@ -141,85 +128,6 @@ export const CriarTemplateModal: React.FC<CriarTemplateModalProps> = ({
                   color: THEME_COLORS.textDark,
                 }}
               />
-            </div>
-          </div>
-
-          {/* Geração do template: descrição OU arquivo */}
-          <div className="rounded-2xl space-y-4" style={{ borderColor: THEME_COLORS.borderLight }}>
-            <div>
-              <h3 className="text-sm font-black tracking-tight" style={{ color: THEME_COLORS.textDark }}>
-                Como você quer gerar o template?
-              </h3>
-              <p className="mt-1 text-[11px] font-semibold text-stone-500">
-                Escolha uma das duas opções: descreva o template abaixo{' '}
-                <span className="font-black">ou</span> anexe um arquivo.
-              </p>
-            </div>
-
-            <div className=" grid grid-cols-1 sm:grid-cols-2 gap-4">
-              {/* Opção 1: descrição */}
-              <div>
-                <label className="block text-xs font-bold uppercase tracking-wider mb-1.5" style={{ color: THEME_COLORS.textDark }}>
-                  Descrição do template
-                </label>
-                <textarea
-                  value={description}
-                  onChange={(e) => {
-                    setDescription(e.target.value);
-                    if (e.target.value.trim()) setFileName('');
-                  }}
-                  rows={5}
-                  disabled={!!fileName}
-                  placeholder="Descreva como você imagina o layout do seu template, que seções são necessárias..."
-                  className={`${textareaClassName} disabled:opacity-50 ${fileName ? 'cursor-not-allowed' : ''}`}
-                  style={{
-                    backgroundColor: THEME_COLORS.bgLight,
-                    borderColor: THEME_COLORS.borderLight,
-                    color: THEME_COLORS.textDark,
-                  }}
-                />
-              </div>
-
-              {/* Opção 2: arquivo */}
-              <div className="flex flex-col h-full">
-                <label className="block text-xs font-bold uppercase tracking-wider mb-1.5" style={{ color: THEME_COLORS.textDark }}>
-                  Arquivo da estrutura
-                </label>
-                <div className="flex-1 flex flex-col">
-                  <label
-                    className={`flex-1 flex items-center gap-3 p-3 rounded-xl border cursor-pointer transition-all hover:scale-[1.02] ${
-                      description.trim() ? 'opacity-50 pointer-events-none' : ''
-                    }`}
-                    style={{
-                      backgroundColor: THEME_COLORS.lightPrimary,
-                      borderColor: THEME_COLORS.lightPrimary,
-                      color: THEME_COLORS.primary,
-                    }}
-                  >
-                    <span className="w-10 h-10 rounded-lg flex items-center justify-center bg-white/60">
-                      <Upload className="w-5 h-5" />
-                    </span>
-                    <span className="text-left min-w-0">
-                      <span className="block text-sm font-bold truncate">
-                        {fileName || 'Carregar arquivo'}
-                      </span>
-                      <span className="block text-[10px] font-medium opacity-70">
-                        DOCX, PDF ou texto
-                      </span>
-                    </span>
-                    <input type="file" className="hidden" onChange={handleFile} />
-                  </label>
-                  {fileName && (
-                    <button
-                      type="button"
-                      onClick={() => setFileName('')}
-                      className="mt-1 text-[10px] font-bold text-stone-500 hover:text-red-600 text-left cursor-pointer"
-                    >
-                      Remover arquivo
-                    </button>
-                  )}
-                </div>
-              </div>
             </div>
           </div>
 
@@ -308,7 +216,7 @@ export const CriarTemplateModal: React.FC<CriarTemplateModalProps> = ({
               className="px-6 py-2.5 rounded-xl text-xs font-black uppercase tracking-wider text-white shadow-sm transition-all hover:scale-105 cursor-pointer"
               style={{ backgroundColor: THEME_COLORS.primary }}
             >
-              Criar Template
+              Salvar Alterações
             </button>
           </div>
         </form>
@@ -317,4 +225,4 @@ export const CriarTemplateModal: React.FC<CriarTemplateModalProps> = ({
   );
 };
 
-export default CriarTemplateModal;
+export default EditarTemplateModal;
