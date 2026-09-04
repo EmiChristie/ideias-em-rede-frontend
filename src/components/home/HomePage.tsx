@@ -105,14 +105,14 @@ export const HomePage: React.FC<HomePageProps> = () => {
       {/* 1. CANVA-INSPIRED HERO BANNER: "O que você quer criar hoje?"               */}
       {/* ========================================================================= */}
       <section 
-        className="rounded-3xl p-8 sm:p-12 relative overflow-hidden"
+        className="rounded-3xl sm:pt-12 relative overflow-hidden"
       >
         
-        <div className="max-w-4xl mx-auto place-items-center space-y-8 relative z-10">
+        <div className="max-w-4xl space-y-8 relative z-10">
           
           {/* Main Title with Brand Outline & Solid Typography */}
           <svg
-            viewBox="-6 0 774 100"
+            viewBox="0 0 774 100"
             className=" h-auto hero-title-in"
           >
             <defs>
@@ -153,7 +153,7 @@ export const HomePage: React.FC<HomePageProps> = () => {
             </text>
           </svg>
 
-          {/* Central Search / Idea Creation Input */}
+          {/* Central Search / Idea Creation Input 
           <form onSubmit={handleGenerateIdea} className="relative sm:w-lg md:w-2xl mx-auto input-in"
                 style={{
                   animationDelay: "180ms",
@@ -181,8 +181,9 @@ export const HomePage: React.FC<HomePageProps> = () => {
               />
             </div>
           </form>
+          */}
 
-          {/* Quick Idea Inspiration Chips */}
+          {/* Quick Idea Inspiration Chips 
           <div  className="flex flex-wrap items-center justify-center gap-2 pt-1 chips-in"   
                 style={{
                   animationDelay: "350ms",
@@ -222,6 +223,7 @@ export const HomePage: React.FC<HomePageProps> = () => {
                 </button>
               ))}
           </div>
+          */}
 
           {/* Toast Notification */}
           {generatedToast && (
@@ -234,15 +236,13 @@ export const HomePage: React.FC<HomePageProps> = () => {
         </div>
       </section>
 
-      {/* ========================================================================= */}
-      {/* 2. CANVA-STYLE CATEGORY SHORTCUTS CAROUSEL / GRID                         */}
-      {/* ========================================================================= */}
+
       <section className="space-y-6">
         <div className="flex items-center justify-between">
+          {/* 
           <h2 className="text-xl font-bold" style={{ color: THEME_COLORS.textDark }}>
             Formatos & Ferramentas Rápidas
           </h2>
-          {/* 
           <span className="text-xs font-bold text-stone-500">Selecione para estruturar</span>
           */}
           </div>
