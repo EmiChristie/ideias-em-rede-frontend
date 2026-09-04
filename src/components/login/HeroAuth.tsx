@@ -37,12 +37,12 @@ export const HeroAuth: React.FC<HeroAuthProps> = ({ onOpenAuth }) => {
             <div 
               className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-black uppercase tracking-wider border backdrop-blur-sm"
               style={{
-                backgroundColor: 'rgba(234, 227, 225, 0.7)',
+                backgroundColor: 'rgba(226, 221, 240, 0.7)',
                 borderColor: THEME_COLORS.borderLight,
                 color: THEME_COLORS.primary,
               }}
             >
-              <span className="w-2 h-2 rounded-full" style={{ backgroundColor: THEME_COLORS.accent }} />
+              <span className="w-2 h-2 rounded-full" style={{ backgroundColor: THEME_COLORS.primary }} />
               <span>Educação Básica • Cidadania & Pensamento Crítico</span>
             </div>*/}
 
@@ -70,9 +70,9 @@ export const HeroAuth: React.FC<HeroAuthProps> = ({ onOpenAuth }) => {
                 <span 
                   className="relative inline-block text-4xl sm:text-5xl lg:text-5xl font-black px-4 py-1 rounded-full border-2 -rotate-4 backdrop-blur-xs"
                   style={{ 
-                    color: THEME_COLORS.accent,
-                    borderColor: THEME_COLORS.accent,
-                    backgroundColor: 'rgba(234, 227, 225, 0.4)',
+                    color: THEME_COLORS.primary,
+                    borderColor: THEME_COLORS.primary,
+                    backgroundColor: 'rgba(226, 221, 240, 0.4)',
                   }}
                 >
                   descobrir
@@ -96,7 +96,7 @@ export const HeroAuth: React.FC<HeroAuthProps> = ({ onOpenAuth }) => {
                 style={{ 
                   backgroundColor: THEME_COLORS.primary,
                 }}
-                onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = THEME_COLORS.accent)}
+                onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = THEME_COLORS.primaryHover)}
                 onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = THEME_COLORS.primary)}
               >
                 <LogIn className="w-4 h-4 stroke-[2.5]" />
@@ -107,7 +107,7 @@ export const HeroAuth: React.FC<HeroAuthProps> = ({ onOpenAuth }) => {
               <button
                 type="button"
                 onClick={() => onOpenAuth('register')}
-                className="px-7 py-3.5 rounded-full text-white font-extrabold text-sm uppercase tracking-wider transition-all transform hover:-translate-y-0.5 active:translate-y-0 flex items-center gap-2.5 cursor-pointer shadow-lg shadow-[#4b788b]/40 hover:shadow-xl hover:shadow-[#4b788b]/60"
+                className="px-7 py-3.5 rounded-full text-white font-extrabold text-sm uppercase tracking-wider transition-all transform hover:-translate-y-0.5 active:translate-y-0 flex items-center gap-2.5 cursor-pointer shadow-lg shadow-[#00B8A9]/40 hover:shadow-xl hover:shadow-[#00B8A9]/60"
                 style={{ 
                   backgroundColor: THEME_COLORS.secondary,
                   color: THEME_COLORS.textLight,
@@ -127,7 +127,7 @@ export const HeroAuth: React.FC<HeroAuthProps> = ({ onOpenAuth }) => {
               style={{ borderColor: THEME_COLORS.borderLight, color: THEME_COLORS.gray }}
             >
               <div className="flex items-center gap-1.5">
-                <CheckCircle2 className="w-4 h-4" style={{ color: THEME_COLORS.accent }} />
+                <CheckCircle2 className="w-4 h-4" style={{ color: THEME_COLORS.primary }} />
                 <span>Plural & Não-Partidário</span>
               </div>
               <div className="flex items-center gap-1.5">

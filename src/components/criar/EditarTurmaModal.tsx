@@ -31,18 +31,18 @@ const SERIES = [
 ];
 
 const TURMA_COLORS = [
-  '#b55b43',
-  '#c98a5e',
-  '#d5b657',
-  '#7d9465',
-  '#5b8fa3',
-  '#9b6fa3',
-  '#e07b7b',
-  '#6f8691',
+  '#7C3AED',
+  '#9333EA',
+  '#00B8A9',
+  '#FFB800',
+  '#EC4899',
+  '#22C55E',
+  '#3B82F6',
+  '#F43F5E',
 ];
 
 const inputClassName =
-  'w-full pl-10 pr-4 py-2.5 rounded-xl text-sm border focus:outline-none focus:ring-2 focus:ring-[#b55b43]/10';
+  'w-full pl-10 pr-4 py-2.5 rounded-xl text-sm border focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/10';
 
 export const EditarTurmaModal: React.FC<EditarTurmaModalProps> = ({
   turma,

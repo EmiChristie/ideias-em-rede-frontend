@@ -73,7 +73,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
           title="Criar novo plano de aula ou debate"
         >
           <div
-            className="w-10 h-10 rounded-full flex items-center justify-center text-white shadow-md shadow-[#b55b43]/20 transition-transform hover:scale-105"
+            className="w-10 h-10 rounded-full flex items-center justify-center text-white shadow-md shadow-[#7C3AED]/20 transition-transform hover:scale-105"
             style={{ backgroundColor: THEME_COLORS.primary }}
           >
             <Plus className="w-5 h-5 stroke-[3]" />
@@ -105,7 +105,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
                   isActive ? 'scale-105' : ''
                 }`}
                 style={{
-                  backgroundColor: isActive ? THEME_COLORS.primary : 'rgba(240, 235, 234, 0.0)',
+                  backgroundColor: isActive ? THEME_COLORS.primary : 'rgba(226, 221, 240, 0.0)',
                   color: isActive ? THEME_COLORS.textLight : THEME_COLORS.gray,
                 }}
               >
@@ -113,7 +113,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
               </div>
               <span
                 className={`text-[10px] tracking-tight leading-tight text-center ${
-                  isActive ? 'text-[#b55b43]' : ''
+                  isActive ? 'text-[#7C3AED]' : ''
                 }`}
                 style={{ color: isActive ? THEME_COLORS.primary : THEME_COLORS.textDark }}
               >

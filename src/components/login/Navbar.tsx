@@ -25,7 +25,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenAuth }) => {
   };
 
   return (
-    <header className="sticky top-0 z-40 bg-[#F0EBEA]/95 backdrop-blur-md border-b border-[#DCD4D2] transition-all">
+    <header className="sticky top-0 z-40 bg-[#F2F0F7]/95 backdrop-blur-md border-b border-[#E4D6FF] transition-all">
       <div className="max-w-7xl mx-auto px-6 lg:px-12">
         <div className="flex items-center justify-between h-24">
           
@@ -33,7 +33,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenAuth }) => {
           <Logo href="#hero" showBadge showSubtitle size="md" onClick={() => handleNavClick('#hero')} />
 
           {/* Center: Capsule Navbar */}
-          <nav className="hidden lg:flex items-center gap-1 px-4 py-1.5 rounded-full border border-[#DCD4D2] bg-[#EAE3E1]/50 shadow-xs">
+          <nav className="hidden lg:flex items-center gap-1 px-4 py-1.5 rounded-full border border-[#E4D6FF] bg-[#EAE0FF]/50 shadow-xs">
             {navLinks.map((link, idx) => (
               <a
                 key={link.label}
@@ -41,8 +41,8 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenAuth }) => {
                 onClick={(e) => { e.preventDefault(); handleNavClick(link.href); }}
                 className={`px-4 py-2 rounded-full text-xs font-bold tracking-wider transition-all ${
                   idx === 0 
-                    ? 'text-[#b55b43] bg-[#F0EBEA] shadow-xs' 
-                    : 'text-[#291C19] hover:text-[#de5737] hover:bg-[#F0EBEA]/70'
+                    ? 'text-[#7C3AED] bg-[#F2F0F7] shadow-xs' 
+                    : 'text-[#231942] hover:text-[#7C3AED] hover:bg-[#F2F0F7]/70'
                 }`}
               >
                 {link.label}
@@ -58,7 +58,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenAuth }) => {
                 placeholder="BUSCAR TEMAS..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-44 pl-8 pr-4 py-2 rounded-full border border-[#DCD4D2] text-xs font-bold placeholder-stone-400 focus:outline-none focus:border-[#b55b43] focus:w-56 transition-all bg-[#F0EBEA]"
+                className="w-44 pl-8 pr-4 py-2 rounded-full border border-[#E4D6FF] text-xs font-bold placeholder-stone-400 focus:outline-none focus:border-[#7C3AED] focus:w-56 transition-all bg-[#F2F0F7]"
               />
               <Search className="w-3.5 h-3.5 text-stone-400 absolute left-3 pointer-events-none" />
             </div>
@@ -66,7 +66,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenAuth }) => {
             <button
               type="button"
               onClick={() => onOpenAuth('login')}
-              className="px-4 py-2 text-xs font-extrabold text-[#291C19] hover:text-[#b55b43] uppercase tracking-wider transition-colors cursor-pointer"
+              className="px-4 py-2 text-xs font-extrabold text-[#231942] hover:text-[#7C3AED] uppercase tracking-wider transition-colors cursor-pointer"
             >
               Entrar
             </button>
@@ -74,7 +74,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenAuth }) => {
             <button
               type="button"
               onClick={() => onOpenAuth('register')}
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#4b788b] hover:bg-[#3b6170] text-[#F0EBEA] text-xs font-extrabold uppercase tracking-wider shadow-md shadow-[#4b788b]/20 transition-all transform active:scale-95 cursor-pointer"
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#00B8A9] hover:bg-[#009489] text-[#F2F0F7] text-xs font-extrabold uppercase tracking-wider shadow-md shadow-[#00B8A9]/20 transition-all transform active:scale-95 cursor-pointer"
             >
               <Sparkles className="w-3.5 h-3.5" />
               <span>Criar Conta</span>

@@ -104,7 +104,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
         {/* Header Tabs (Transparent background active state) */}
         <div 
           className="flex p-1.5 rounded-2xl mb-8 border"
-          style={{ backgroundColor: 'rgba(240, 235, 234, 0.6)', borderColor: THEME_COLORS.borderLight }}
+          style={{ backgroundColor: 'rgba(226, 221, 240, 0.6)', borderColor: THEME_COLORS.borderLight }}
         >
           <button
             type="button"
@@ -228,7 +228,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
               disabled={loading}
               className="w-full mt-4 py-3.5 px-4 rounded-xl text-white font-bold text-sm transition-all flex items-center justify-center gap-2 cursor-pointer shadow-sm"
               style={{ backgroundColor: THEME_COLORS.primary }}
-              onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = THEME_COLORS.accent)}
+              onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = THEME_COLORS.primaryHover)}
               onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = THEME_COLORS.primary)}
             >
               {loading ? (
@@ -351,7 +351,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
             <button
               type="submit"
               disabled={loading}
-              className="w-full mt-3 py-3.5 px-4 rounded-xl text-white font-bold text-sm transition-all flex items-center justify-center gap-2 cursor-pointer shadow-lg shadow-[#4b788b]/30"
+              className="w-full mt-3 py-3.5 px-4 rounded-xl text-white font-bold text-sm transition-all flex items-center justify-center gap-2 cursor-pointer shadow-lg shadow-[#00B8A9]/30"
               style={{ backgroundColor: THEME_COLORS.secondary }}
               onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = THEME_COLORS.secondaryHover)}
               onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = THEME_COLORS.secondary)}

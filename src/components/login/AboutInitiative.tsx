@@ -20,7 +20,7 @@ export const AboutInitiative: React.FC = () => {
       icon: HeartHandshake,
       title: 'Cidadania Ativa & Empatia',
       description: 'Exercício contínuo de escuta atenta, mediação de conflitos e construção coletiva de soluções para os desafios reais da comunidade escolar.',
-      accentColor: THEME_COLORS.accent,
+      accentColor: THEME_COLORS.primary,
     },
     {
       icon: BookMarked,
@@ -111,10 +111,10 @@ export const AboutInitiative: React.FC = () => {
               />
               <div 
                 className="absolute inset-0 flex items-end p-6"
-                style={{ background: 'linear-gradient(to top, rgba(41,28,25,0.85) 0%, transparent 70%)' }}
+                style={{ background: 'linear-gradient(to top, rgba(32,20,54,0.85) 0%, transparent 70%)' }}
               >
                 <div style={{ color: THEME_COLORS.textLight }}>
-                  <span className="text-xs uppercase tracking-wider font-extrabold" style={{ color: THEME_COLORS.accent }}>Ambiente Colaborativo</span>
+                  <span className="text-xs uppercase tracking-wider font-extrabold" style={{ color: THEME_COLORS.textLight }}>Ambiente Colaborativo</span>
                   <p className="text-sm font-medium mt-1">Escuta qualificada, argumentação e respeito à diversidade de ideias.</p>
                 </div>
               </div>

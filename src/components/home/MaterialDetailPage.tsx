@@ -72,11 +72,11 @@ const MateriaisSidebar: React.FC<MateriaisSidebarProps> = ({
               onClick={() => onSelect(m.id)}
               className={`w-full flex items-center gap-3 p-2.5 rounded-xl border text-left transition-all cursor-pointer ${
                 isActive
-                  ? 'bg-[#b55b43] text-white shadow-sm'
+                  ? 'bg-[#7C3AED] text-white shadow-sm'
                   : 'bg-white/60 hover:scale-[1.01]'
               }`}
               style={{
-                borderColor: isActive ? '#b55b43' : THEME_COLORS.borderLight,
+                borderColor: isActive ? '#7C3AED' : THEME_COLORS.borderLight,
               }}
             >
               <span

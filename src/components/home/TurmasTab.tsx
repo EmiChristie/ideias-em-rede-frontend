@@ -255,9 +255,9 @@ export const TurmasTab: React.FC<TurmasTabProps> = () => {
                     font-semibold
                     outline-none
                     transition-all
-                    focus:border-[#b55b43]
+                    focus:border-[#7C3AED]
                     focus:ring-2
-                    focus:ring-[#b55b43]/10
+                    focus:ring-[#7C3AED]/10
                   "
                   style={{
                     borderColor: THEME_COLORS.borderLight,
@@ -300,9 +300,9 @@ export const TurmasTab: React.FC<TurmasTabProps> = () => {
                     transition-all
                     appearance-none
                     cursor-pointer
-                    focus:border-[#b55b43]
+                    focus:border-[#7C3AED]
                     focus:ring-2
-                    focus:ring-[#b55b43]/10
+                    focus:ring-[#7C3AED]/10
                   "
                   style={{
                     borderColor: THEME_COLORS.borderLight,
@@ -351,8 +351,8 @@ export const TurmasTab: React.FC<TurmasTabProps> = () => {
                   hover:-translate-y-0.5
                   ${
                     sortOption === 'recent'
-                      ? 'bg-[#b55b43] text-white border-[#b55b43]'
-                      : 'bg-white/60 text-stone-600 hover:border-[#b55b43]'
+                      ? 'bg-[#7C3AED] text-white border-[#7C3AED]'
+                      : 'bg-white/60 text-stone-600 hover:border-[#7C3AED]'
                   }
                 `}
                 style={
@@ -389,8 +389,8 @@ export const TurmasTab: React.FC<TurmasTabProps> = () => {
                   hover:-translate-y-0.5
                   ${
                     sortOption === 'alphabetical'
-                      ? 'bg-[#b55b43] text-white border-[#b55b43]'
-                      : 'bg-white/60 text-stone-600 hover:border-[#b55b43]'
+                      ? 'bg-[#7C3AED] text-white border-[#7C3AED]'
+                      : 'bg-white/60 text-stone-600 hover:border-[#7C3AED]'
                   }
                 `}
                 style={
@@ -429,8 +429,8 @@ export const TurmasTab: React.FC<TurmasTabProps> = () => {
                   hover:-translate-y-0.5
                   ${
                     sortOption === 'quantity'
-                      ? 'bg-[#b55b43] text-white border-[#b55b43]'
-                      : 'bg-white/60 text-stone-600 hover:border-[#b55b43]'
+                      ? 'bg-[#7C3AED] text-white border-[#7C3AED]'
+                      : 'bg-white/60 text-stone-600 hover:border-[#7C3AED]'
                   }
                 `}
                 style={
@@ -601,7 +601,7 @@ export const TurmasTab: React.FC<TurmasTabProps> = () => {
                   className="h-36 relative rounded-t-2xl flex items-center justify-center overflow-hidden shrink-0"
                   style={{
                     backgroundColor:
-                      turma.color ?? 'rgba(240, 235, 234, 0.4)',
+                      turma.color ?? 'rgba(226, 221, 240, 0.4)',
                   }}
                 >
                   {turma.image ? (

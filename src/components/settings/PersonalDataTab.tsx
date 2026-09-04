@@ -86,7 +86,7 @@ export const PersonalDataTab: React.FC = () => {
               type="text"
               value={profile.name}
               onChange={(e) => setProfile({ ...profile, name: e.target.value })}
-              className="w-full pl-10 pr-4 py-2.5 rounded-xl text-sm border focus:outline-none focus:ring-2 focus:ring-[#b55b43]/10"
+              className="w-full pl-10 pr-4 py-2.5 rounded-xl text-sm border focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/10"
               style={{
                 backgroundColor: THEME_COLORS.bgLight,
                 borderColor: THEME_COLORS.borderLight,
@@ -106,7 +106,7 @@ export const PersonalDataTab: React.FC = () => {
               type="email"
               value={profile.email}
               onChange={(e) => setProfile({ ...profile, email: e.target.value })}
-              className="w-full pl-10 pr-4 py-2.5 rounded-xl text-sm border focus:outline-none focus:ring-2 focus:ring-[#b55b43]/10"
+              className="w-full pl-10 pr-4 py-2.5 rounded-xl text-sm border focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/10"
               style={{
                 backgroundColor: THEME_COLORS.bgLight,
                 borderColor: THEME_COLORS.borderLight,
@@ -175,9 +175,9 @@ export const PersonalDataTab: React.FC = () => {
                         text-sm
                         font-semibold
                         outline-none
-                        focus:border-[#b55b43]
+                        focus:border-[#7C3AED]
                         focus:ring-2
-                        focus:ring-[#b55b43]/10
+                        focus:ring-[#7C3AED]/10
                       "
                       style={{
                         backgroundColor: 'white',
@@ -260,7 +260,7 @@ export const PersonalDataTab: React.FC = () => {
                 }
               }}
               placeholder="Ex: E.E. Cecília Meireles"
-              className="w-full pl-10 pr-4 py-2.5 rounded-xl text-sm border focus:outline-none focus:ring-2 focus:ring-[#b55b43]/10"
+              className="w-full pl-10 pr-4 py-2.5 rounded-xl text-sm border focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/10"
               style={{
                 backgroundColor: THEME_COLORS.bgLight,
                 borderColor: THEME_COLORS.borderLight,
@@ -323,7 +323,7 @@ export const PersonalDataTab: React.FC = () => {
           <p className="text-[10px] font-bold uppercase tracking-wider mt-0.5" style={{ color: THEME_COLORS.gray }}>Planos Criados</p>
         </div>
         <div className="p-4 rounded-2xl border text-center" style={{ backgroundColor: THEME_COLORS.bgLight, borderColor: THEME_COLORS.borderLight }}>
-          <span className="text-2xl font-black" style={{ color: THEME_COLORS.accent }}>{profile.generatedMaterialsCount}</span>
+          <span className="text-2xl font-black" style={{ color: THEME_COLORS.primary }}>{profile.generatedMaterialsCount}</span>
           <p className="text-[10px] font-bold uppercase tracking-wider mt-0.5" style={{ color: THEME_COLORS.gray }}>Materiais Gerados</p>
         </div>
         <div className="p-4 rounded-2xl border text-center" style={{ backgroundColor: THEME_COLORS.bgLight, borderColor: THEME_COLORS.borderLight }}>

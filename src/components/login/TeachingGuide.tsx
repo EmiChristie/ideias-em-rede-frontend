@@ -77,7 +77,7 @@ export const TeachingGuide: React.FC = () => {
       />
       <div 
         className="absolute bottom-10 right-0 w-80 h-80 rounded-bl-full pointer-events-none opacity-20"
-        style={{ backgroundColor: THEME_COLORS.accent }}
+        style={{ backgroundColor: THEME_COLORS.primary }}
       />
 
       <div className="max-w-7xl mx-auto px-6 lg:px-12 relative z-10">
@@ -141,7 +141,7 @@ export const TeachingGuide: React.FC = () => {
                       <Icon className="w-7 h-7 stroke-[2.5]" />
                     </div>
                     <div>
-                      <span className="text-xs font-black uppercase tracking-widest" style={{ color: THEME_COLORS.accent }}>
+                      <span className="text-xs font-black uppercase tracking-widest" style={{ color: THEME_COLORS.primary }}>
                         Estratégia Pedagógica
                       </span>
                       <h3 className="text-2xl sm:text-3xl font-black leading-snug" style={{ color: THEME_COLORS.textDark }}>
@@ -162,7 +162,7 @@ export const TeachingGuide: React.FC = () => {
                       borderColor: THEME_COLORS.borderLight 
                     }}
                   >
-                    <div className="flex items-center gap-2 font-black text-xs uppercase tracking-wide" style={{ color: THEME_COLORS.accent }}>
+                    <div className="flex items-center gap-2 font-black text-xs uppercase tracking-wide" style={{ color: THEME_COLORS.primary }}>
                       <Sparkles className="w-4 h-4" />
                       <span>Sugestão de Atividade em Sala de Aula</span>
                     </div>

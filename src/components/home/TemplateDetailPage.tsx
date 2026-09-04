@@ -28,14 +28,14 @@ import { EditarTemplateModal } from '../criar/EditarTemplateModal';
 import { ConfirmDeleteModal } from '../criar/ConfirmDeleteModal';
 
 const TEMPLATE_COLORS = [
-  '#b55b43',
-  '#5b8fa3',
-  '#7d9465',
-  '#c98a3d',
-  '#8a6fb0',
-  '#4f7490',
-  '#b0765a',
-  '#6f8f7f',
+  '#7C3AED',
+  '#9333EA',
+  '#00B8A9',
+  '#FFB800',
+  '#EC4899',
+  '#22C55E',
+  '#3B82F6',
+  '#F43F5E',
 ];
 
 interface TemplatesSidebarProps {
@@ -74,11 +74,11 @@ const TemplatesSidebar: React.FC<TemplatesSidebarProps> = ({
               onClick={() => onSelect(t.id)}
               className={`w-full flex items-center gap-3 p-2.5 rounded-xl border text-left transition-all cursor-pointer ${
                 isActive
-                  ? 'bg-[#b55b43] text-white shadow-sm'
+                  ? 'bg-[#7C3AED] text-white shadow-sm'
                   : 'bg-white/60 hover:scale-[1.01]'
               }`}
               style={{
-                borderColor: isActive ? '#b55b43' : THEME_COLORS.borderLight,
+                borderColor: isActive ? '#7C3AED' : THEME_COLORS.borderLight,
               }}
             >
               <span

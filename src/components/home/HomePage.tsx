@@ -31,48 +31,48 @@ export const HomePage: React.FC<HomePageProps> = () => {
     'Oficina de Redação: Participação e Voto Jovem',
   ];
 
-  // Canva-style Category format badges
+  // Canva-style Category format badges — cores variadas da paleta vibrante
   const categoryShortcuts = [
     {
       id: 'debate',
       label: 'Roteiros de Debate',
       icon: MessageSquareQuote,
-      color: THEME_COLORS.accent,
+      color: THEME_COLORS.primary,
       badge: 'Tempo & Réplicas',
     },
     {
       id: 'plano',
       label: 'Planos de Aula BNCC',
       icon: LayoutTemplate,
-      color: THEME_COLORS.primary,
+      color: THEME_COLORS.secondary,
       badge: 'Competências 7 e 10',
     },
     {
       id: 'redacao',
       label: 'Oficinas de Redação',
       icon: FileText,
-      color: THEME_COLORS.secondary,
+      color: THEME_COLORS.sunshine,
       badge: 'Intervenção Social',
     },
     {
       id: 'simulacao',
       label: 'Simulações',
       icon: Layers,
-      color: THEME_COLORS.primary,
+      color: '#EC4899',
       badge: 'Role Play Cidadão',
     },
     {
       id: 'materiais',
       label: 'Matrizes & Falácias',
       icon: BookOpen,
-      color: THEME_COLORS.secondary,
+      color: '#3B82F6',
       badge: 'Letramento Midiático',
     },
     {
       id: 'brainstorm',
       label: 'Brainstorm Aberto',
       icon: Zap,
-      color: THEME_COLORS.accent,
+      color: '#F43F5E',
       badge: 'Ideação Livre',
     },
   ];
@@ -116,17 +116,17 @@ export const HomePage: React.FC<HomePageProps> = () => {
             className=" h-auto hero-title-in"
           >
             <defs>
-              <linearGradient id="orangeGradient1" x1="0%" y1="0%" x2="100%" y2="0%">
-                <stop offset="0%" stopColor="#f09a6a" />
-                <stop offset="50%" stopColor="#d66a3f" />
-                <stop offset="100%" stopColor="#8f3d24" />
+              <linearGradient id="purpleGradient1" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stopColor="#8B5CF6" />
+                <stop offset="50%" stopColor="#7C3AED" />
+                <stop offset="100%" stopColor="#4C1D95" />
               </linearGradient>
             </defs>
             <defs>
-              <linearGradient id="orangeGradient2" x1="0%" y1="0%" x2="100%" y2="0%">
-                <stop offset="0%" stopColor="#8f3d24" />
-                <stop offset="50%" stopColor="#d66a3f" />
-                <stop offset="100%" stopColor="#f09a6a" />
+              <linearGradient id="purpleGradient2" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stopColor="#4C1D95" />
+                <stop offset="50%" stopColor="#7C3AED" />
+                <stop offset="100%" stopColor="#8B5CF6" />
               </linearGradient>
             </defs>
 
@@ -136,7 +136,7 @@ export const HomePage: React.FC<HomePageProps> = () => {
               fontSize="56"
               fontWeight="900"
               fill="transparent"
-              stroke="url(#orangeGradient1)"
+              stroke="url(#purpleGradient1)"
               strokeWidth="2"
             >
               O que você quer
@@ -147,7 +147,7 @@ export const HomePage: React.FC<HomePageProps> = () => {
               y="70"
               fontSize="56"
               fontWeight="900"
-              fill="url(#orangeGradient2)"
+              fill="url(#purpleGradient2)"
             >
               criar hoje?
             </text>
@@ -160,11 +160,11 @@ export const HomePage: React.FC<HomePageProps> = () => {
                 }}
           >
             <div 
-              className="flex items-center rounded-2xl border-2 p-2 shadow-md transition-all focus-within:border-[#b55b43]"
+              className="flex items-center rounded-2xl border-2 p-2 shadow-md transition-all focus-within:border-[#7C3AED]"
               style={{ 
                 backgroundColor: THEME_COLORS.white, 
-                borderColor: THEME_COLORS.lightAccent,
-                boxShadow: '0 4px 6px #f1dbcb',
+                borderColor: THEME_COLORS.lightPrimary,
+                boxShadow: '0 4px 6px #E9D5FF',
               }}
             >
               <div className="px-3 text-stone-400">
@@ -189,7 +189,7 @@ export const HomePage: React.FC<HomePageProps> = () => {
                 }}
           >
             <span className="text-xs font-bold text-stone-500 mr-1 flex items-center gap-1">
-              <Zap className="w-3 h-3 text-amber-600" /> Sugestões:
+              <Zap className="w-3 h-3" style={{color: THEME_COLORS.secondary}} /> Sugestões:
             </span>
               {inspirationChips.map((chip, idx) => (
                 <button
@@ -198,7 +198,7 @@ export const HomePage: React.FC<HomePageProps> = () => {
                   onClick={() => setIdeaPrompt(chip)}
                   className="
                     chip-in
-                    hover:bg-[#f7f5f4]/100
+                    hover:bg-[#EBE8F3]/100
                     text-[11px]
                     font-bold
                     px-3
@@ -207,8 +207,8 @@ export const HomePage: React.FC<HomePageProps> = () => {
                     border
                     rounded-full
                     transition-all
-                    hover:border-[#b55b43]
-                    hover:text-[#b55b43]
+                    hover:border-[#7C3AED]
+                    hover:text-[#7C3AED]
                     hover:-translate-y-0.5
                     cursor-pointer
                   "
@@ -304,7 +304,7 @@ export const HomePage: React.FC<HomePageProps> = () => {
               onClick={() => setFilterCategory('all')}
               className={`px-3.5 py-1.5 rounded-full text-xs font-bold shadow-sm transition-all border cursor-pointer ${
                 filterCategory === 'all'
-                  ? 'bg-[#b55b43] text-white border-[#b55b43]'
+                  ? 'bg-[#7C3AED] text-white border-[#7C3AED]'
                   : 'bg-white text-stone-700 border-[#f3ebea] hover:bg-black/[0.05]'
               }`}
             >
@@ -315,7 +315,7 @@ export const HomePage: React.FC<HomePageProps> = () => {
               onClick={() => setFilterCategory('atividade')}
               className={`px-3.5 py-1.5 rounded-full text-xs font-bold shadow-sm transition-all border cursor-pointer ${
                 filterCategory === 'atividade'
-                  ? 'bg-[#b55b43] text-white border-[#b55b43]'
+                  ? 'bg-[#7C3AED] text-white border-[#7C3AED]'
                   : 'bg-white text-stone-700 border-[#f3ebea] hover:bg-black/[0.05]'
               }`}
             >
@@ -326,7 +326,7 @@ export const HomePage: React.FC<HomePageProps> = () => {
               onClick={() => setFilterCategory('plano')}
               className={`px-3.5 py-1.5 rounded-full text-xs shadow-sm font-bold transition-all border cursor-pointer ${
                 filterCategory === 'plano'
-                  ? 'bg-[#b55b43] text-white border-[#b55b43]'
+                  ? 'bg-[#7C3AED] text-white border-[#7C3AED]'
                   : 'bg-white text-stone-700 border-[#f3ebea] hover:bg-black/[0.05]'
               }`}
             >
@@ -337,7 +337,7 @@ export const HomePage: React.FC<HomePageProps> = () => {
               onClick={() => setFilterCategory('material')}
               className={`px-3.5 py-1.5 rounded-full text-xs shadow-sm font-bold transition-all border cursor-pointer ${
                 filterCategory === 'material'
-                  ? 'bg-[#b55b43] text-white border-[#b55b43]'
+                  ? 'bg-[#7C3AED] text-white border-[#7C3AED]'
                   : 'bg-white text-stone-700 border-[#f3ebea] hover:bg-black/[0.05]'
               }`}
             >
@@ -366,7 +366,7 @@ export const HomePage: React.FC<HomePageProps> = () => {
                 {/* Thumbnail */}
                 <div 
                   className="h-40 relative overflow-hidden shrink-0"
-                  style={{ backgroundColor: 'rgba(240, 235, 234, 0.4)' }}
+                  style={{ backgroundColor: 'rgba(226, 221, 240, 0.4)' }}
                 >
                   <HtmlPreview
                     html={material.htmlContent}
@@ -379,7 +379,7 @@ export const HomePage: React.FC<HomePageProps> = () => {
 
                 {/* Content */}
                 <div className="p-6 flex flex-col flex-1 space-y-4">
-                  <h3 className="line-clamp-2 text-base font-bold leading-snug group-hover:text-[#b55b43] transition-colors" style={{ color: THEME_COLORS.textDark }}>
+                  <h3 className="line-clamp-2 text-base font-bold leading-snug group-hover:text-[#7C3AED] transition-colors" style={{ color: THEME_COLORS.textDark }}>
                     {material.title}
                   </h3>
                 </div>

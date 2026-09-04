@@ -32,8 +32,8 @@ type StatusFilter = 'all' | ContentStatus;
 type SortDirection = 'asc' | 'desc';
 
 const STATUS_COLORS: Record<ContentStatus, string> = {
-  'Criando': '#d5b657',
-  'Pronto para usar': '#7d9465',
+  'Criando': '#FFB800',
+  'Pronto para usar': '#00B8A9',
 };
 
 const CONTENT_TYPE_LABEL: Record<ContentFilter, string> = {
@@ -184,7 +184,7 @@ export const TurmaDetailPage: React.FC = () => {
 
         <div
           className="relative w-full h-56 sm:h-64 lg:h-72 flex items-end overflow-hidden shrink-0"
-          style={{ backgroundColor: turma.color ?? 'rgba(240, 235, 234, 0.4)' }}
+          style={{ backgroundColor: turma.color ?? 'rgba(226, 221, 240, 0.4)' }}
         >
           {turma.image && (
             <img
@@ -260,7 +260,7 @@ export const TurmaDetailPage: React.FC = () => {
                   value={search}
                   onChange={(e) => setSearch(e.target.value)}
                   placeholder="Pesquisar conteúdo por nome..."
-                  className="w-full h-10 pl-10 pr-4 rounded-xl border bg-white/60 text-sm font-semibold outline-none transition-all focus:border-[#b55b43] focus:ring-2 focus:ring-[#b55b43]/10"
+                  className="w-full h-10 pl-10 pr-4 rounded-xl border bg-white/60 text-sm font-semibold outline-none transition-all focus:border-[#7C3AED] focus:ring-2 focus:ring-[#7C3AED]/10"
                   style={{
                     borderColor: THEME_COLORS.borderLight,
                     color: THEME_COLORS.textDark,
@@ -271,7 +271,7 @@ export const TurmaDetailPage: React.FC = () => {
               <button
                 type="button"
                 onClick={handleSort}
-                className="h-10 inline-flex items-center justify-center gap-2 px-4 rounded-xl border bg-white/60 text-xs font-bold text-stone-600 transition-all cursor-pointer hover:-translate-y-0.5 hover:border-[#b55b43]"
+                className="h-10 inline-flex items-center justify-center gap-2 px-4 rounded-xl border bg-white/60 text-xs font-bold text-stone-600 transition-all cursor-pointer hover:-translate-y-0.5 hover:border-[#7C3AED]"
                 style={{ borderColor: THEME_COLORS.borderLight }}
               >
                 <ArrowDownAZ className="w-4 h-4" />
@@ -303,8 +303,8 @@ export const TurmaDetailPage: React.FC = () => {
                       onClick={() => setFilter(option.value)}
                       className={`px-3 py-1.5 rounded-lg text-[11px] font-bold border transition-all cursor-pointer ${
                         active
-                          ? 'bg-[#b55b43] text-white border-[#b55b43]'
-                          : 'bg-white/60 text-stone-600 hover:border-[#b55b43]'
+                          ? 'bg-[#7C3AED] text-white border-[#7C3AED]'
+                          : 'bg-white/60 text-stone-600 hover:border-[#7C3AED]'
                       }`}
                       style={
                         active
@@ -336,8 +336,8 @@ export const TurmaDetailPage: React.FC = () => {
                       onClick={() => setStatusFilter(option.value)}
                       className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[11px] font-bold border transition-all cursor-pointer ${
                         active
-                          ? 'bg-[#b55b43] text-white border-[#b55b43]'
-                          : 'bg-white/60 text-stone-600 hover:border-[#b55b43]'
+                          ? 'bg-[#7C3AED] text-white border-[#7C3AED]'
+                          : 'bg-white/60 text-stone-600 hover:border-[#7C3AED]'
                       }`}
                       style={
                         active
@@ -364,7 +364,7 @@ export const TurmaDetailPage: React.FC = () => {
                 <button
                   type="button"
                   onClick={clearFilters}
-                  className="ml-1 px-3 py-1.5 rounded-lg text-[11px] font-bold text-stone-400 hover:text-[#b55b43] transition-all cursor-pointer"
+                  className="ml-1 px-3 py-1.5 rounded-lg text-[11px] font-bold text-stone-400 hover:text-[#7C3AED] transition-all cursor-pointer"
                 >
                   Limpar filtros
                 </button>
@@ -419,7 +419,7 @@ export const TurmaDetailPage: React.FC = () => {
                   {/* Thumbnail do conteúdo */}
                   <div
                     className="h-36 relative overflow-hidden shrink-0"
-                    style={{ backgroundColor: 'rgba(240, 235, 234, 0.4)' }}
+                    style={{ backgroundColor: 'rgba(226, 221, 240, 0.4)' }}
                   >
                     <HtmlPreview
                       html={item.htmlContent}
@@ -446,12 +446,12 @@ export const TurmaDetailPage: React.FC = () => {
                             : '#f7f1e5',
                         borderColor:
                           item.status === 'Pronto para usar'
-                            ? '#eaf5e1'
-                            : '#f7f1e5',
+                            ? '#CCFBF1'
+                            : '#FEF3C7',
                         color:
                           item.status === 'Pronto para usar'
-                            ? '#7d9465'
-                            : '#d5b657',
+                            ? '#009489'
+                            : '#B45309',
                       }}
                     >
                       {item.status}
@@ -536,11 +536,11 @@ const TurmasSidebar: React.FC<TurmasSidebarProps> = ({
               onClick={() => onSelect(t.id)}
               className={`w-full flex items-center gap-3 p-3 rounded-xl border text-left transition-all cursor-pointer ${
                 isActive
-                  ? 'bg-[#b55b43] text-white shadow-sm'
+                  ? 'bg-[#7C3AED] text-white shadow-sm'
                   : 'bg-white/60 hover:scale-[1.01]'
               }`}
               style={{
-                borderColor: isActive ? '#b55b43' : THEME_COLORS.borderLight,
+                borderColor: isActive ? '#7C3AED' : THEME_COLORS.borderLight,
               }}
             >
               <span

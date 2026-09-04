@@ -1,43 +1,48 @@
 ﻿/**
- * Cores Oficiais da Marca IdeiasEmRede
+ * Paleta IdeiasEmRede — roxo como protagonista, cinza bebê lavanda como base
+ * Violeta elétrico (principal) + Turquesa (apoio) + Laranja (micro-detalhes) + Amarelo sol (alertas)
  * Sem uso de branco puro (#FFFFFF).
  */
 export const THEME_COLORS = {
-  // Texto claro / Fundo claro
+  // Base clara — cinza bebê derivado do roxo
   white: '#ffffff31',
-  bgLight: '#fdfcfb',
-  bgLight2: '#f1dbcb',
-  textLight: '#f7f5f4',
+  bgLight: '#F2F0F7',
+  bgLight2: '#E2DDF0',
+  textLight: '#F2F0F7',
 
   // Texto escuro / Fundo escuro
-  bgDark: '#291C19',
-  textDark: '#5e4f4c',
+  bgDark: '#201436',
+  textDark: '#231942',
 
-  // Cor principal (Terracota)
-  primary: '#b55b43',
-  lightPrimary: '#f5e4de',
+  // Cor principal (Violeta Elétrico — criatividade/imaginação)
+  primary: '#7C3AED',
+  lightPrimary: '#EDE9FE',
 
-  // Cor de destaque / Accent (Laranja Vibrante)
-  accent: '#de5737',
-  lightAccent: '#ecb3a6',
+  // Cor de destaque / Accent (Laranja Lava — energia/entusiasmo)
+  accent: '#FF4D24',
+  lightAccent: '#FFE1D6',
 
-  // Cor secundária (Azul Petróleo)
-  secondary: '#4b788b',
-  lightSecondary: '#dbeaf0',
+  // Cor secundária (Turquesa Vibrante — frescor/inovação)
+  secondary: '#00B8A9',
+  lightSecondary: '#CCFBF1',
 
-  // Cinza Neutro
-  gray: '#51595C',
+  // Cor terciária (Amarelo Sol — otimismo/ludicidade)
+  sunshine: '#FFB800',
+  lightSunshine: '#FEF3C7',
+
+  // Cinza Neutro (arroxeado para harmonizar)
+  gray: '#625D75',
 
   // Derivadas e tons de apoio (sem branco puro)
-  cardBg: 'rgba(240, 231, 227, 0.65)',
-  cardBgLight: '#fcf1e8',
-  cardBgSolid: '#EAE3E1',
-  borderLightBg: '#e9e5e4',
-  borderLight: '#f3ebea',
-  borderDark: '#3D2D29',
-  primaryHover: '#9e4c36',
-  accentHover: '#c4482b',
-  secondaryHover: '#3b6170',
+  cardBg: 'rgba(226, 221, 240, 0.7)',
+  cardBgLight: '#EBE8F3',
+  cardBgSolid: '#EAE0FF',
+  borderLightBg: '#E9DEFF',
+  borderLight: '#E4D6FF',
+  borderDark: '#322652',
+  primaryHover: '#6D28D9',
+  accentHover: '#D63A12',
+  secondaryHover: '#009489',
 } as const;
 
 export type ThemeColors = typeof THEME_COLORS;

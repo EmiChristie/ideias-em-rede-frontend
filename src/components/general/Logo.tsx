@@ -13,7 +13,7 @@ export interface LogoProps {
    */
   variant?: 'full' | 'icon-only' | 'text-only';
   /**
-   * Tema de contraste: 'light' (para fundos claros #F0EBEA) ou 'dark' (para fundos escuros #291C19)
+   * Tema de contraste: 'light' (para fundos claros #F2F0F7) ou 'dark' (para fundos escuros #201436)
    * @default 'light'
    */
   theme?: 'light' | 'dark';
@@ -108,7 +108,7 @@ export const Logo: React.FC<LogoProps> = ({
           strokeWidth="3.5"
           strokeLinecap="round"
         />
-        <circle cx="20" cy="18" r="3.5" fill={THEME_COLORS.accent} />
+        <circle cx="20" cy="18" r="3.5" fill={THEME_COLORS.primary} />
         <circle cx="10" cy="28" r="3" fill={THEME_COLORS.textLight} />
         <circle cx="30" cy="28" r="3" fill={THEME_COLORS.textLight} />
         <circle cx="20" cy="31" r="2.5" fill={THEME_COLORS.secondary} />
@@ -127,7 +127,7 @@ export const Logo: React.FC<LogoProps> = ({
           style={{ color: isDarkBg ? THEME_COLORS.textLight : THEME_COLORS.textDark }}
         >
           Ideias
-          <span style={{ color: THEME_COLORS.accent }}>Em</span>
+          <span style={{ color: THEME_COLORS.primary }}>Em</span>
           <span style={{ color: THEME_COLORS.secondary }}>Rede</span>
         </span>
       </div>
@@ -135,7 +135,7 @@ export const Logo: React.FC<LogoProps> = ({
       {showSubtitle && (
         <span
           className={`font-medium tracking-wide mt-1 ${currentSize.subtitle}`}
-          style={{ color: isDarkBg ? 'rgba(240, 235, 234, 0.7)' : THEME_COLORS.gray }}
+          style={{ color: isDarkBg ? 'rgba(242, 240, 247, 0.7)' : THEME_COLORS.gray }}
         >
           Planejamento de Política & Debates
         </span>

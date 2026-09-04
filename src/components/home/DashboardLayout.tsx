@@ -69,9 +69,9 @@ export const DashboardLayout: React.FC = () => {
               style={{
           background: `linear-gradient(
             to bottom,
-            ${THEME_COLORS.lightAccent} -15%,
-            ${THEME_COLORS.bgLight} 10%,
-            #faf9f8 60%
+            #EBE8F3 -15%,
+            ${THEME_COLORS.lightPrimary} 10%,
+            ${THEME_COLORS.bgLight} 30%
           )`,
         }}
         className="flex-grow flex flex-col min-w-0 overflow-x-hidden">
@@ -85,7 +85,7 @@ export const DashboardLayout: React.FC = () => {
 
           {activeMenu === 'materiais' && <MateriaisTab />}
 
-          {activeMenu === 'settings' && <SettingsPage onLogout={() => navigate('/login')} />}
+          {activeMenu === 'settings' && <SettingsPage onLogout={() => navigate('/')} />}
         </main>
       )}
     </div>

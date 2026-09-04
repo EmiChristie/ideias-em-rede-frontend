@@ -48,7 +48,7 @@ export const ForgotPasswordModal: React.FC<ForgotPasswordModalProps> = ({
         {/* Decorative Top Line */}
         <div 
           className="absolute top-0 inset-x-0 h-2" 
-          style={{ backgroundColor: THEME_COLORS.accent }}
+          style={{ backgroundColor: THEME_COLORS.primary }}
         />
 
         {/* Close Button */}
@@ -106,7 +106,7 @@ export const ForgotPasswordModal: React.FC<ForgotPasswordModalProps> = ({
                 disabled={isLoading}
                 className="w-full py-3.5 px-4 rounded-xl text-white font-bold text-sm transition-all flex items-center justify-center gap-2 cursor-pointer shadow-sm"
                 style={{ backgroundColor: THEME_COLORS.primary }}
-                onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = THEME_COLORS.accent)}
+                onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = THEME_COLORS.primaryHover)}
                 onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = THEME_COLORS.primary)}
               >
                 {isLoading ? (

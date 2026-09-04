@@ -313,9 +313,9 @@ export const MateriaisTab: React.FC<MateriaisTabProps> = () => {
                     font-semibold
                     outline-none
                     transition-all
-                    focus:border-[#b55b43]
+                    focus:border-[#7C3AED]
                     focus:ring-2
-                    focus:ring-[#b55b43]/10
+                    focus:ring-[#7C3AED]/10
                   "
                   style={{
                     borderColor:
@@ -346,8 +346,8 @@ export const MateriaisTab: React.FC<MateriaisTabProps> = () => {
                   hover:-translate-y-0.5
                   ${
                     sortOption === 'recent'
-                      ? 'bg-[#b55b43] text-white border-[#b55b43]'
-                      : 'bg-white/60 text-stone-600 hover:border-[#b55b43]'
+                      ? 'bg-[#7C3AED] text-white border-[#7C3AED]'
+                      : 'bg-white/60 text-stone-600 hover:border-[#7C3AED]'
                   }
                 `}
                 style={
@@ -384,8 +384,8 @@ export const MateriaisTab: React.FC<MateriaisTabProps> = () => {
                   hover:-translate-y-0.5
                   ${
                     sortOption === 'alphabetical'
-                      ? 'bg-[#b55b43] text-white border-[#b55b43]'
-                      : 'bg-white/60 text-stone-600 hover:border-[#b55b43]'
+                      ? 'bg-[#7C3AED] text-white border-[#7C3AED]'
+                      : 'bg-white/60 text-stone-600 hover:border-[#7C3AED]'
                   }
                 `}
                 style={
@@ -478,8 +478,8 @@ export const MateriaisTab: React.FC<MateriaisTabProps> = () => {
                         cursor-pointer
                         ${
                           active
-                            ? 'bg-[#b55b43] text-white border-[#b55b43]'
-                            : 'bg-white/60 text-stone-600 hover:border-[#b55b43]'
+                            ? 'bg-[#7C3AED] text-white border-[#7C3AED]'
+                            : 'bg-white/60 text-stone-600 hover:border-[#7C3AED]'
                         }
                       `}
                       style={
@@ -554,8 +554,8 @@ export const MateriaisTab: React.FC<MateriaisTabProps> = () => {
                         cursor-pointer
                         ${
                           active
-                            ? 'bg-[#b55b43] text-white border-[#b55b43]'
-                            : 'bg-white/60 text-stone-600 hover:border-[#b55b43]'
+                            ? 'bg-[#7C3AED] text-white border-[#7C3AED]'
+                            : 'bg-white/60 text-stone-600 hover:border-[#7C3AED]'
                         }
                       `}
                       style={
@@ -586,7 +586,7 @@ export const MateriaisTab: React.FC<MateriaisTabProps> = () => {
                     text-[11px]
                     font-bold
                     text-stone-400
-                    hover:text-[#b55b43]
+                    hover:text-[#7C3AED]
                     transition-all
                     cursor-pointer
                   "
@@ -739,7 +739,7 @@ export const MateriaisTab: React.FC<MateriaisTabProps> = () => {
                       "
                       style={{
                         backgroundColor:
-                          'rgba(240, 235, 234, 0.4)',
+                          'rgba(226, 221, 240, 0.4)',
                       }}
                     >
                       <HtmlPreview

@@ -8,9 +8,9 @@ export const EditorPage: React.FC = () => {
       style={{
         background: `linear-gradient(
           to bottom,
-          ${THEME_COLORS.lightAccent} -15%,
+          ${THEME_COLORS.lightPrimary} -15%,
           ${THEME_COLORS.bgLight} 10%,
-          #faf9f8 60%
+          #EBE8F3 60%
         )`,
         color: THEME_COLORS.textDark,
       }}

@@ -11,7 +11,7 @@ interface EditarMaterialModalProps {
 }
 
 const inputClassName =
-  'w-full pl-10 pr-4 py-2.5 rounded-xl text-sm border focus:outline-none focus:ring-2 focus:ring-[#b55b43]/10';
+  'w-full pl-10 pr-4 py-2.5 rounded-xl text-sm border focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/10';
 
 export const EditarMaterialModal: React.FC<EditarMaterialModalProps> = ({
   material,

@@ -43,7 +43,7 @@ export const Footer: React.FC = () => {
             
             <div className="pt-2 space-y-2.5 text-xs font-medium text-stone-300">
               <div className="flex items-center gap-3">
-                <Mail className="w-4 h-4" style={{ color: THEME_COLORS.accent }} />
+                <Mail className="w-4 h-4" style={{ color: THEME_COLORS.primary }} />
                 <span>contato@ideiasemrede.edu.br</span>
               </div>
               <div className="flex items-center gap-3">
@@ -86,7 +86,7 @@ export const Footer: React.FC = () => {
           </div>
 
           {/* Quick Support Message Form */}
-          <div className="lg:col-span-5 bg-stone-850 p-8 rounded-3xl border border-stone-800 shadow-sm" style={{ backgroundColor: '#211613' }}>
+          <div className="lg:col-span-5 bg-stone-850 p-8 rounded-3xl border border-stone-800 shadow-sm" style={{ backgroundColor: '#2A1D4E' }}>
             <h4 className="text-lg font-black text-white tracking-tight mb-1">
               Fale com a Equipe Pedagógica
             </h4>
@@ -131,7 +131,7 @@ export const Footer: React.FC = () => {
                   type="submit"
                   className="w-full py-3 px-4 text-white font-black text-xs uppercase tracking-wider rounded-xl transition-all flex items-center justify-center gap-2 cursor-pointer shadow-sm"
                   style={{ backgroundColor: THEME_COLORS.primary }}
-                  onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = THEME_COLORS.accent)}
+                  onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = THEME_COLORS.primaryHover)}
                   onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = THEME_COLORS.primary)}
                 >
                   <Send className="w-3.5 h-3.5" />
@@ -153,7 +153,7 @@ export const Footer: React.FC = () => {
             <button
               onClick={scrollToTop}
               className="inline-flex items-center gap-1.5 font-bold transition-colors"
-              style={{ color: THEME_COLORS.accent }}
+              style={{ color: THEME_COLORS.textLight }}
             >
               <span>Voltar ao topo</span>
               <ArrowUp className="w-3.5 h-3.5" />

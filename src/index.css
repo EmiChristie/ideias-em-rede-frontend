@@ -1,52 +1,53 @@
 ﻿@import "tailwindcss";
 
 :root {
-  --color-primary: #b55b43;
-  --color-accent: #de5737;
-  --color-secondary: #4b788b;
-  --color-gray: #51595C;
-  --color-text-dark: #291C19;
-  --color-bg-light: #F0EBEA;
+  --color-primary: #7C3AED;
+  --color-accent: #FF4D24;
+  --color-secondary: #00B8A9;
+  --color-sunshine: #FFB800;
+  --color-gray: #625D75;
+  --color-text-dark: #231942;
+  --color-bg-light: #F2F0F7;
 }
 
 @layer base {
   html {
     scroll-behavior: smooth;
-    background-color: #F0EBEA;
-    color: #291C19;
+    background-color: #F2F0F7;
+    color: #231942;
     font-family: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
   }
 
   body {
-    background-color: #F0EBEA;
-    color: #291C19;
+    background-color: #F2F0F7;
+    color: #231942;
   }
 }
 
 /* Tipografia Vazada (Outline / Stroke) como identidade de marca */
 .text-outline-dark {
   color: transparent;
-  -webkit-text-stroke: 2px #291C19;
+  -webkit-text-stroke: 2px #231942;
 }
 
 .text-outline-primary {
   color: transparent;
-  -webkit-text-stroke: 2px #b55b43;
+  -webkit-text-stroke: 2px #7C3AED;
 }
 
 .text-outline-secondary {
   color: transparent;
-  -webkit-text-stroke: 2px #4b788b;
+  -webkit-text-stroke: 2px #00B8A9;
 }
 
 .text-outline-accent {
   color: transparent;
-  -webkit-text-stroke: 2px #de5737;
+  -webkit-text-stroke: 2px #FF4D24;
 }
 
 .text-outline-light {
   color: transparent;
-  -webkit-text-stroke: 2px #F0EBEA;
+  -webkit-text-stroke: 2px #F2F0F7;
 }
 
 @keyframes hero-title-in {

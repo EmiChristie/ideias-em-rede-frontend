@@ -302,9 +302,9 @@ export const TemplatesTab: React.FC<TemplatesTabProps> = () => {
                     font-semibold
                     outline-none
                     transition-all
-                    focus:border-[#b55b43]
+                    focus:border-[#7C3AED]
                     focus:ring-2
-                    focus:ring-[#b55b43]/10
+                    focus:ring-[#7C3AED]/10
                   "
                   style={{
                     borderColor:
@@ -335,8 +335,8 @@ export const TemplatesTab: React.FC<TemplatesTabProps> = () => {
                   hover:-translate-y-0.5
                   ${
                     sortOption === 'recent'
-                      ? 'bg-[#b55b43] text-white border-[#b55b43]'
-                      : 'bg-white/60 text-stone-600 hover:border-[#b55b43]'
+                      ? 'bg-[#7C3AED] text-white border-[#7C3AED]'
+                      : 'bg-white/60 text-stone-600 hover:border-[#7C3AED]'
                   }
                 `}
                 style={
@@ -374,8 +374,8 @@ export const TemplatesTab: React.FC<TemplatesTabProps> = () => {
                   ${
                     sortOption ===
                     'alphabetical'
-                      ? 'bg-[#b55b43] text-white border-[#b55b43]'
-                      : 'bg-white/60 text-stone-600 hover:border-[#b55b43]'
+                      ? 'bg-[#7C3AED] text-white border-[#7C3AED]'
+                      : 'bg-white/60 text-stone-600 hover:border-[#7C3AED]'
                   }
                 `}
                 style={
@@ -416,8 +416,8 @@ export const TemplatesTab: React.FC<TemplatesTabProps> = () => {
                   hover:-translate-y-0.5
                   ${
                     sortOption === 'quantity'
-                      ? 'bg-[#b55b43] text-white border-[#b55b43]'
-                      : 'bg-white/60 text-stone-600 hover:border-[#b55b43]'
+                      ? 'bg-[#7C3AED] text-white border-[#7C3AED]'
+                      : 'bg-white/60 text-stone-600 hover:border-[#7C3AED]'
                   }
                 `}
                 style={
@@ -638,7 +638,7 @@ export const TemplatesTab: React.FC<TemplatesTabProps> = () => {
                       "
                       style={{
                         backgroundColor:
-                          'rgba(240, 235, 234, 0.4)',
+                          'rgba(226, 221, 240, 0.4)',
                       }}
                     >
                       <HtmlPreview
