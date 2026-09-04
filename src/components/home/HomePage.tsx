@@ -254,7 +254,7 @@ export const HomePage: React.FC<HomePageProps> = () => {
               <button
                 key={cat.id}
                 type="button"
-                onClick={() => setFilterCategory(cat.id === filterCategory ? 'all' : cat.id)}
+                onClick={() => navigate('/home/editor')}
                 className={`p-4 rounded-2xl border-r shadow-sm text-left transition-all hover:scale-[1.02] cursor-pointer flex flex-col justify-between min-h-[120px] shadow-sm
                 }`}
                 style={{
@@ -352,7 +352,7 @@ export const HomePage: React.FC<HomePageProps> = () => {
             return (
               <div
                 key={material.id}
-                onClick={() => navigate(`/home/materiais/${material.id}`)}
+                onClick={() => navigate('/home/editor')}
                 className={`
                   rounded-3xl shadow-sm border overflow-hidden flex flex-col
                   transition-all hover:shadow-md hover:-translate-y-1 cursor-pointer group

@@ -17,7 +17,8 @@ export const DashboardLayout: React.FC = () => {
   const isTurmaDetail = location.pathname.startsWith('/home/turmas/');
   const isTemplateDetail = location.pathname.startsWith('/home/templates/');
   const isMaterialDetail = location.pathname.startsWith('/home/materiais/');
-  const isDetailPage = isTurmaDetail || isTemplateDetail || isMaterialDetail;
+  const isEditor = location.pathname === '/home/editor';
+  const isDetailPage = isTurmaDetail || isTemplateDetail || isMaterialDetail || isEditor;
 
   useEffect(() => {
     const p = location.pathname;
@@ -51,9 +52,7 @@ export const DashboardLayout: React.FC = () => {
         onSelectMenu={handleSelectMenu}
         onOpenNewIdea={() => {
           setActiveMenu('criar');
-          navigate('/home');
-          const searchInput = document.querySelector('input[type="text"]');
-          if (searchInput) (searchInput as HTMLInputElement).focus();
+          navigate('/home/editor');
         }}
         onOpenSettings={() => {
           setActiveMenu('settings');

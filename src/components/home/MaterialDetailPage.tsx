@@ -1,6 +1,7 @@
 import React, { useMemo, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import {
+  Book,
   BookMarked,
   Download,
   File,
@@ -84,11 +85,6 @@ const MateriaisSidebar: React.FC<MateriaisSidebarProps> = ({
                   backgroundColor: isActive ? '#ffffff33' : color,
                 }}
               >
-                {m.fileType === 'pdf' ? (
-                  <FileText className="w-4 h-4 text-white" />
-                ) : (
-                  <File className="w-4 h-4 text-white" />
-                )}
               </span>
 
               <span className="min-w-0 flex-1">
@@ -369,6 +365,7 @@ export const MaterialDetailPage: React.FC = () => {
 
               <button
                 type="button"
+                onClick={() => navigate('/home/editor')}
                 className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-black uppercase tracking-wider text-white transition-all hover:scale-105 cursor-pointer"
                 style={{ backgroundColor: THEME_COLORS.secondary }}
               >

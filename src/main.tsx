@@ -7,6 +7,7 @@ import { DashboardLayout } from './components/home/DashboardLayout.tsx'
 import { TurmaDetailPage } from './components/home/TurmaDetailPage.tsx'
 import { TemplateDetailPage } from './components/home/TemplateDetailPage.tsx'
 import { MaterialDetailPage } from './components/home/MaterialDetailPage.tsx'
+import { EditorPage } from './components/editor/EditorPage.tsx'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
@@ -17,6 +18,7 @@ createRoot(document.getElementById('root')!).render(
           <Route path="turmas/:id" element={<TurmaDetailPage />} />
           <Route path="templates/:id" element={<TemplateDetailPage />} />
           <Route path="materiais/:id" element={<MaterialDetailPage />} />
+          <Route path="editor" element={<EditorPage />} />
         </Route>
         <Route path="*" element={<Navigate to="/login" replace />} />
       </Routes>
